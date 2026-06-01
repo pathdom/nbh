@@ -17,8 +17,8 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <script type="module" crossorigin src="./assets/index-B603CUBL.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-FJ9bhB9G.css">
+  <script type="module" crossorigin src="./assets/index-xgmJtbv-.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DbNpvHxW.css">
 </head>
 <body>
 
@@ -81,22 +81,94 @@
         <!-- Sidebar Bộ Lọc trên Desktop -->
         <aside class="desktop-sidebar" id="desktop-sidebar">
           <div class="sidebar-sticky">
-            <h3 class="sidebar-title">Bộ Lọc</h3>
+            <!-- 1. GIÁ TIỀN -->
             <div class="filter-group">
-              <h4 class="filter-group-title">Danh Mục Nón</h4>
+              <h3 class="sidebar-title">GIÁ TIỀN</h3>
+              <div class="price-slider-container">
+                <div class="slider-track-wrap">
+                  <div class="slider-track" id="desktop-slider-track"></div>
+                  <input type="range" min="0" max="10000000" value="0" id="desktop-price-min" class="price-range-input" aria-label="Giá tối thiểu">
+                  <input type="range" min="0" max="10000000" value="10000000" id="desktop-price-max" class="price-range-input" aria-label="Giá tối đa">
+                </div>
+                <div class="price-labels">
+                  <span id="desktop-price-min-lbl">0đ</span>
+                  <span id="desktop-price-max-lbl">10.000.000đ</span>
+                </div>
+              </div>
+            </div>
+
+            <hr class="filter-divider">
+
+            <!-- 2. DANH MỤC SẢN PHẨM -->
+            <div class="filter-group">
+              <h3 class="sidebar-title">DANH MỤC SẢN PHẨM</h3>
               <div class="filter-options">
-                <label class="filter-option" for="sidebar-cat-all">
-                  <input type="radio" name="sidebar-category-filter" id="sidebar-cat-all" value="all" checked class="filter-checkbox">
-                  <span>Tất cả sản phẩm</span>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" name="desktop-cat-filter" value="sport">
+                  <span>NÓN THỂ THAO</span>
                 </label>
-                <label class="filter-option" for="sidebar-cat-urban">
-                  <input type="radio" name="sidebar-category-filter" id="sidebar-cat-urban" value="urban" class="filter-checkbox">
-                  <span>Nón Đô thị (1/2)</span>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" name="desktop-cat-filter" value="urban">
+                  <span>NÓN XE MÁY</span>
                 </label>
-                <label class="filter-option" for="sidebar-cat-sport">
-                  <input type="radio" name="sidebar-category-filter" id="sidebar-cat-sport" value="sport" class="filter-checkbox">
-                  <span>Nón Thể thao (Xe đạp)</span>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" name="desktop-cat-filter" value="kids">
+                  <span>NÓN TRẺ EM</span>
                 </label>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" name="desktop-cat-filter" value="accessories">
+                  <span>PHỤ KIỆN</span>
+                </label>
+              </div>
+            </div>
+
+            <hr class="filter-divider">
+
+            <!-- 3. LOẠI NÓN -->
+            <div class="filter-group">
+              <h3 class="sidebar-title">LOẠI NÓN</h3>
+              <div class="filter-options">
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" checked>
+                  <span>Đường trường</span>
+                </label>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox">
+                  <span>Tính giờ</span>
+                </label>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox">
+                  <span>Leo núi</span>
+                </label>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox">
+                  <span>Biểu diễn</span>
+                </label>
+              </div>
+            </div>
+
+            <hr class="filter-divider">
+
+            <!-- 4. MÀU SẮC -->
+            <div class="filter-group">
+              <h3 class="sidebar-title">MÀU SẮC</h3>
+              <div class="color-swatch-grid">
+                <button class="color-swatch" style="background-color: #ffffff; border: 1px solid #d2d6dc;" data-color="white" aria-label="Màu trắng"></button>
+                <button class="color-swatch" style="background-color: #e53e3e;" data-color="red" aria-label="Màu đỏ"></button>
+                <button class="color-swatch" style="background-color: #8a7b80;" data-color="grey" aria-label="Màu xám"></button>
+                <button class="color-swatch checked-swatch" style="background-color: #5e2e61;" data-color="plum" aria-label="Màu tím">
+                  <i class="ri-check-line swatch-check"></i>
+                </button>
+                <button class="color-swatch" style="background-color: #ffffff; border: 1px solid #d2d6dc;" data-color="white-alt" aria-label="Màu trắng sữa"></button>
+                <button class="color-swatch" style="background-color: #6d7491;" data-color="slate" aria-label="Màu xanh xám"></button>
+                <button class="color-swatch" style="background-color: #222222;" data-color="black" aria-label="Màu đen"></button>
+                <button class="color-swatch" style="background-color: #ffc700;" data-color="yellow" aria-label="Màu vàng"></button>
+                <button class="color-swatch" style="background-color: #ff6f00;" data-color="orange" aria-label="Màu cam"></button>
+                <button class="color-swatch" style="background-color: #ff5ee6;" data-color="pink" aria-label="Màu hồng"></button>
+                <button class="color-swatch" style="background-color: #bd00ff;" data-color="purple" aria-label="Màu tím tươi"></button>
+                <button class="color-swatch" style="background-color: #0f48da;" data-color="blue" aria-label="Màu xanh dương"></button>
+                <button class="color-swatch" style="background-color: #2ce5e9;" data-color="cyan" aria-label="Màu xanh ngọc"></button>
+                <button class="color-swatch" style="background-color: #5b21b6;" data-color="indigo" aria-label="Màu tím đậm"></button>
               </div>
             </div>
           </div>
@@ -224,23 +296,95 @@
         <i class="ri-close-line"></i>
       </button>
     </div>
-    <div class="drawer-body">
-      <!-- Nhóm lọc Category -->
+    <div class="drawer-body" style="overflow-y: auto;">
+      <!-- 1. GIÁ TIỀN -->
       <div class="filter-group">
-        <h4 class="filter-group-title">Danh Mục Nón</h4>
+        <h3 class="sidebar-title">GIÁ TIỀN</h3>
+        <div class="price-slider-container">
+          <div class="slider-track-wrap">
+            <div class="slider-track" id="mobile-slider-track"></div>
+            <input type="range" min="0" max="10000000" value="0" id="mobile-price-min" class="price-range-input" aria-label="Giá tối thiểu di động">
+            <input type="range" min="0" max="10000000" value="10000000" id="mobile-price-max" class="price-range-input" aria-label="Giá tối đa di động">
+          </div>
+          <div class="price-labels">
+            <span id="mobile-price-min-lbl">0đ</span>
+            <span id="mobile-price-max-lbl">10.000.000đ</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="filter-divider">
+
+      <!-- 2. DANH MỤC SẢN PHẨM -->
+      <div class="filter-group">
+        <h3 class="sidebar-title">DANH MỤC SẢN PHẨM</h3>
         <div class="filter-options">
-          <label class="filter-option" for="filter-cat-all">
-            <input type="radio" name="category-filter" id="filter-cat-all" value="all" checked class="filter-checkbox">
-            <span>Tất cả sản phẩm</span>
+          <label class="filter-option checkbox-option">
+            <input type="checkbox" class="custom-checkbox" name="mobile-cat-filter" value="sport">
+            <span>NÓN THỂ THAO</span>
           </label>
-          <label class="filter-option" for="filter-cat-urban">
-            <input type="radio" name="category-filter" id="filter-cat-urban" value="urban" class="filter-checkbox">
-            <span>Nón bảo hiểm Đô thị (1/2)</span>
+          <label class="filter-option checkbox-option">
+            <input type="checkbox" class="custom-checkbox" name="mobile-cat-filter" value="urban">
+            <span>NÓN XE MÁY</span>
           </label>
-          <label class="filter-option" for="filter-cat-sport">
-            <input type="radio" name="category-filter" id="filter-cat-sport" value="sport" class="filter-checkbox">
-            <span>Nón bảo hiểm Thể thao (Xe đạp)</span>
+          <label class="filter-option checkbox-option">
+            <input type="checkbox" class="custom-checkbox" name="mobile-cat-filter" value="kids">
+            <span>NÓN TRẺ EM</span>
           </label>
+          <label class="filter-option checkbox-option">
+            <input type="checkbox" class="custom-checkbox" name="mobile-cat-filter" value="accessories">
+            <span>PHỤ KIỆN</span>
+          </label>
+        </div>
+      </div>
+
+      <hr class="filter-divider">
+
+      <!-- 3. LOẠI NÓN -->
+      <div class="filter-group">
+        <h3 class="sidebar-title">LOẠI NÓN</h3>
+        <div class="filter-options">
+          <label class="filter-option checkbox-option">
+            <input type="checkbox" class="custom-checkbox" checked>
+            <span>Đường trường</span>
+          </label>
+          <label class="filter-option checkbox-option">
+            <input type="checkbox" class="custom-checkbox">
+            <span>Tính giờ</span>
+          </label>
+          <label class="filter-option checkbox-option">
+            <input type="checkbox" class="custom-checkbox">
+            <span>Leo núi</span>
+          </label>
+          <label class="filter-option checkbox-option">
+            <input type="checkbox" class="custom-checkbox">
+            <span>Biểu diễn</span>
+          </label>
+        </div>
+      </div>
+
+      <hr class="filter-divider">
+
+      <!-- 4. MÀU SẮC -->
+      <div class="filter-group">
+        <h3 class="sidebar-title">MÀU SẮC</h3>
+        <div class="color-swatch-grid">
+          <button class="color-swatch" style="background-color: #ffffff; border: 1px solid #d2d6dc;" data-color="white" aria-label="Màu trắng"></button>
+          <button class="color-swatch" style="background-color: #e53e3e;" data-color="red" aria-label="Màu đỏ"></button>
+          <button class="color-swatch" style="background-color: #8a7b80;" data-color="grey" aria-label="Màu xám"></button>
+          <button class="color-swatch checked-swatch" style="background-color: #5e2e61;" data-color="plum" aria-label="Màu tím">
+            <i class="ri-check-line swatch-check"></i>
+          </button>
+          <button class="color-swatch" style="background-color: #ffffff; border: 1px solid #d2d6dc;" data-color="white-alt" aria-label="Màu trắng sữa"></button>
+          <button class="color-swatch" style="background-color: #6d7491;" data-color="slate" aria-label="Màu xanh xám"></button>
+          <button class="color-swatch" style="background-color: #222222;" data-color="black" aria-label="Màu đen"></button>
+          <button class="color-swatch" style="background-color: #ffc700;" data-color="yellow" aria-label="Màu vàng"></button>
+          <button class="color-swatch" style="background-color: #ff6f00;" data-color="orange" aria-label="Màu cam"></button>
+          <button class="color-swatch" style="background-color: #ff5ee6;" data-color="pink" aria-label="Màu hồng"></button>
+          <button class="color-swatch" style="background-color: #bd00ff;" data-color="purple" aria-label="Màu tím tươi"></button>
+          <button class="color-swatch" style="background-color: #0f48da;" data-color="blue" aria-label="Màu xanh dương"></button>
+          <button class="color-swatch" style="background-color: #2ce5e9;" data-color="cyan" aria-label="Màu xanh ngọc"></button>
+          <button class="color-swatch" style="background-color: #5b21b6;" data-color="indigo" aria-label="Màu tím đậm"></button>
         </div>
       </div>
     </div>

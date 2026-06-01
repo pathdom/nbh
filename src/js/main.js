@@ -2,7 +2,10 @@ import { products } from './products.js';
 import { initTheme, toggleTheme } from './theme.js';
 
 // --- STATE MANAGEMENT ---
-let currentCategory = 'all';
+let selectedCategories = []; // Danh mục lọc được chọn (sport, urban, kids, accessories)
+let priceMin = 0;           // Giá tối thiểu lọc
+let priceMax = 10000000;     // Giá tối đa lọc
+let selectedColorFilter = 'plum'; // Màu sắc được chọn lọc (mặc định 'plum')
 let searchQuery = '';
 let currentPage = 1;
 const productsPerPage = 6;
@@ -32,31 +35,218 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Khởi tạo theme
   initTheme();
+  
+  // Khởi tạo các bộ lọc bên trái (Left Filters)
+  initCategoryCheckboxes();
+  initPriceSliders();
+  setupColorSwatches();
+  
   setupEventListeners();
 
   // Render sản phẩm ban đầu
   renderProducts();
+  updateFilterTags();
 });
+
+// --- HELPER FOR SOFT SWATCH BG COLORS (UX DECORATION) ---
+function getSelectedColorRGBA(colorName) {
+  const mapping = {
+    'white': 'rgba(255, 255, 255, 0.95)',
+    'red': 'rgba(229, 62, 62, 0.08)',
+    'grey': 'rgba(138, 123, 128, 0.08)',
+    'plum': 'rgba(94, 46, 97, 0.08)',
+    'white-alt': 'rgba(248, 250, 252, 0.95)',
+    'slate': 'rgba(109, 116, 145, 0.08)',
+    'black': 'rgba(34, 34, 34, 0.08)',
+    'yellow': 'rgba(255, 199, 0, 0.08)',
+    'orange': 'rgba(255, 111, 0, 0.08)',
+    'pink': 'rgba(255, 94, 230, 0.08)',
+    'purple': 'rgba(189, 0, 255, 0.08)',
+    'blue': 'rgba(15, 72, 218, 0.08)',
+    'cyan': 'rgba(44, 229, 233, 0.08)',
+    'indigo': 'rgba(91, 33, 182, 0.08)'
+  };
+  return mapping[colorName] || '#f5f5f7';
+}
 
 // --- SYNC CATEGORY FILTERS CONTROLLER ---
 function syncCategoryFilters(category) {
-  currentCategory = category;
   currentPage = 1;
 
-  // Sync mobile filter drawer radios
-  const mobileRadios = document.querySelectorAll('input[name="category-filter"]');
-  mobileRadios.forEach(radio => {
-    radio.checked = (radio.value === category);
-  });
+  const desktopChecks = document.querySelectorAll('input[name="desktop-cat-filter"]');
+  const mobileChecks = document.querySelectorAll('input[name="mobile-cat-filter"]');
 
-  // Sync desktop sidebar radios
-  const desktopRadios = document.querySelectorAll('input[name="sidebar-category-filter"]');
-  desktopRadios.forEach(radio => {
-    radio.checked = (radio.value === category);
-  });
+  if (category === 'all') {
+    selectedCategories = [];
+    desktopChecks.forEach(chk => chk.checked = false);
+    mobileChecks.forEach(chk => chk.checked = false);
+  } else {
+    selectedCategories = [category];
+    desktopChecks.forEach(chk => chk.checked = (chk.value === category));
+    mobileChecks.forEach(chk => chk.checked = (chk.value === category));
+  }
 
   renderProducts();
   updateFilterTags();
+}
+
+// --- CATEGORY CHECKBOXES SYNC & FILTER LOGIC ---
+function initCategoryCheckboxes() {
+  const desktopChecks = document.querySelectorAll('input[name="desktop-cat-filter"]');
+  const mobileChecks = document.querySelectorAll('input[name="mobile-cat-filter"]');
+
+  function syncAndFilter() {
+    const activeCats = [];
+    desktopChecks.forEach(chk => {
+      if (chk.checked) activeCats.push(chk.value);
+    });
+
+    selectedCategories = activeCats;
+    currentPage = 1;
+    renderProducts();
+    updateFilterTags();
+  }
+
+  desktopChecks.forEach(chk => {
+    chk.addEventListener('change', (e) => {
+      const mobMatch = document.querySelector(`input[name="mobile-cat-filter"][value="${e.target.value}"]`);
+      if (mobMatch) mobMatch.checked = e.target.checked;
+      syncAndFilter();
+    });
+  });
+
+  mobileChecks.forEach(chk => {
+    chk.addEventListener('change', (e) => {
+      const deskMatch = document.querySelector(`input[name="desktop-cat-filter"][value="${e.target.value}"]`);
+      if (deskMatch) deskMatch.checked = e.target.checked;
+      syncAndFilter();
+    });
+  });
+}
+
+// --- PRICE SLIDER SYNC & FILTER LOGIC ---
+function initPriceSliders() {
+  const desktopMin = document.getElementById('desktop-price-min');
+  const desktopMax = document.getElementById('desktop-price-max');
+  const mobileMin = document.getElementById('mobile-price-min');
+  const mobileMax = document.getElementById('mobile-price-max');
+
+  function updateSlider(minInput, maxInput, minLbl, maxLbl, track) {
+    let minVal = parseInt(minInput.value);
+    let maxVal = parseInt(maxInput.value);
+
+    // Giới hạn không chồng lấn (khoảng cách tối thiểu 500.000đ)
+    const gap = 500000;
+    if (maxVal - minVal < gap) {
+      if (document.activeElement === minInput) {
+        minInput.value = maxVal - gap;
+        minVal = maxVal - gap;
+      } else {
+        maxInput.value = minVal + gap;
+        maxVal = minVal + gap;
+      }
+    }
+
+    priceMin = minVal;
+    priceMax = maxVal;
+
+    // Định dạng nhãn hiển thị tiền tệ
+    minLbl.textContent = minVal === 0 ? "0đ" : (minVal / 1000000) + "Mđ";
+    maxLbl.textContent = maxVal === 10000000 ? "10.000.000đ" : (maxVal / 1000000) + "Mđ";
+
+    // Cập nhật thanh ray màu vàng nằm giữa 2 nút trượt
+    const minPercent = (minVal / 10000000) * 100;
+    const maxPercent = (maxVal / 10000000) * 100;
+    track.style.left = minPercent + "%";
+    track.style.width = (maxPercent - minPercent) + "%";
+  }
+
+  function syncAndRender(sourceMin, sourceMax, destMin, destMax, minLbl, maxLbl, track) {
+    updateSlider(sourceMin, sourceMax, minLbl, maxLbl, track);
+    
+    // Đồng bộ sang slider đối ứng
+    destMin.value = sourceMin.value;
+    destMax.value = sourceMax.value;
+    
+    // Cập nhật nhãn & thanh ray của slider đối ứng
+    const destMinLbl = document.getElementById(destMin.id === 'desktop-price-min' ? 'desktop-price-min-lbl' : 'mobile-price-min-lbl');
+    const destMaxLbl = document.getElementById(destMax.id === 'desktop-price-max' ? 'desktop-price-max-lbl' : 'mobile-price-max-lbl');
+    const destTrack = document.getElementById(destMin.id === 'desktop-price-min' ? 'desktop-slider-track' : 'mobile-slider-track');
+    
+    const minVal = parseInt(destMin.value);
+    const maxVal = parseInt(destMax.value);
+    destMinLbl.textContent = minVal === 0 ? "0đ" : (minVal / 1000000) + "Mđ";
+    destMaxLbl.textContent = maxVal === 10000000 ? "10.000.000đ" : (maxVal / 1000000) + "Mđ";
+    
+    const minPercent = (minVal / 10000000) * 100;
+    const maxPercent = (maxVal / 10000000) * 100;
+    destTrack.style.left = minPercent + "%";
+    destTrack.style.width = (maxPercent - minPercent) + "%";
+
+    currentPage = 1;
+    renderProducts();
+    updateFilterTags();
+  }
+
+  if (desktopMin && desktopMax) {
+    const desktopMinLbl = document.getElementById('desktop-price-min-lbl');
+    const desktopMaxLbl = document.getElementById('desktop-price-max-lbl');
+    const desktopTrack = document.getElementById('desktop-slider-track');
+
+    desktopMin.addEventListener('input', () => syncAndRender(desktopMin, desktopMax, mobileMin, mobileMax, desktopMinLbl, desktopMaxLbl, desktopTrack));
+    desktopMax.addEventListener('input', () => syncAndRender(desktopMin, desktopMax, mobileMin, mobileMax, desktopMinLbl, desktopMaxLbl, desktopTrack));
+  }
+
+  if (mobileMin && mobileMax) {
+    const mobileMinLbl = document.getElementById('mobile-price-min-lbl');
+    const mobileMaxLbl = document.getElementById('mobile-price-max-lbl');
+    const mobileTrack = document.getElementById('mobile-slider-track');
+
+    mobileMin.addEventListener('input', () => syncAndRender(mobileMin, mobileMax, desktopMin, desktopMax, mobileMinLbl, mobileMaxLbl, mobileTrack));
+    mobileMax.addEventListener('input', () => syncAndRender(mobileMin, mobileMax, desktopMin, desktopMax, mobileMinLbl, mobileMaxLbl, mobileTrack));
+  }
+}
+
+// --- COLOR SWATCH SYNC & STYLE DECORATION ---
+function setupColorSwatches() {
+  const swatches = document.querySelectorAll('.color-swatch');
+  
+  swatches.forEach(swatch => {
+    swatch.addEventListener('click', () => {
+      const color = swatch.getAttribute('data-color');
+      selectedColorFilter = color;
+      
+      // Xoá tích cũ ở toàn bộ lưới swatches (Cả desktop & mobile)
+      swatches.forEach(s => {
+        s.classList.remove('checked-swatch');
+        s.replaceChildren(); // Xoá dấu tích cũ
+      });
+      
+      // Đồng bộ kích hoạt dấu tích vàng cho các swatches cùng màu ở 2 vùng
+      const matches = document.querySelectorAll(`.color-swatch[data-color="${color}"]`);
+      matches.forEach(m => {
+        m.classList.add('checked-swatch');
+        const icon = document.createElement('i');
+        icon.className = 'ri-check-line swatch-check';
+        m.appendChild(icon);
+      });
+      
+      const colorLabel = (c) => {
+        const labels = {
+          'white': 'Trắng', 'red': 'Đỏ hồng', 'grey': 'Xám', 'plum': 'Tím Mận',
+          'white-alt': 'Trắng sữa', 'slate': 'Xám xanh', 'black': 'Đen nhám',
+          'yellow': 'Vàng', 'orange': 'Cam', 'pink': 'Hồng phấn', 'purple': 'Tím tươi',
+          'blue': 'Xanh dương', 'cyan': 'Xanh ngọc', 'indigo': 'Tím đậm'
+        };
+        return labels[c] || c;
+      };
+      
+      showToast(`Đã chuyển sang phối màu: ${colorLabel(color)}!`, 'success');
+      
+      // Render lại sản phẩm để cập nhật màu nền mềm mại của hộp ảnh
+      renderProducts();
+    });
+  });
 }
 
 // --- EVENT LISTENERS SETUP ---
@@ -111,7 +301,6 @@ function setupEventListeners() {
 
   // Filter Button and Drawer
   const filterBtn = document.getElementById('filter-btn');
-  const filterDrawer = document.getElementById('filter-drawer');
   const filterCloseBtn = document.getElementById('filter-close-btn');
   if (filterBtn) {
     filterBtn.addEventListener('click', openFilterDrawer);
@@ -119,26 +308,6 @@ function setupEventListeners() {
   if (filterCloseBtn) {
     filterCloseBtn.addEventListener('click', closeFilterDrawer);
   }
-
-  // Category filter checkboxes inside Filter Drawer
-  const categoryFilters = document.querySelectorAll('input[name="category-filter"]');
-  categoryFilters.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      if (e.target.checked) {
-        syncCategoryFilters(e.target.value);
-      }
-    });
-  });
-
-  // Category filter checkboxes inside Desktop Sidebar
-  const sidebarCategoryFilters = document.querySelectorAll('input[name="sidebar-category-filter"]');
-  sidebarCategoryFilters.forEach(radio => {
-    radio.addEventListener('change', (e) => {
-      if (e.target.checked) {
-        syncCategoryFilters(e.target.value);
-      }
-    });
-  });
 
   // Dropdown main menu filter click
   const dropdownFilters = document.querySelectorAll('.dropdown-item[data-filter]');
@@ -226,6 +395,7 @@ function openSearchModal() {
   document.body.style.overflow = 'hidden';
 }
 
+// Keep existing search modal close clean
 function closeSearchModal() {
   searchModal.classList.remove('active');
   document.body.style.overflow = '';
@@ -233,13 +403,18 @@ function closeSearchModal() {
 
 // --- RENDER PRODUCTS GRID ---
 function renderProducts() {
-  // Lọc sản phẩm theo danh mục và từ khóa tìm kiếm
+  // Lọc sản phẩm theo danh mục, khoảng giá và từ khóa tìm kiếm
   let filtered = products;
   
-  if (currentCategory !== 'all') {
-    filtered = filtered.filter(p => p.category === currentCategory);
+  // 1. Lọc theo danh mục đã chọn
+  if (selectedCategories.length > 0) {
+    filtered = filtered.filter(p => selectedCategories.includes(p.category));
   }
   
+  // 2. Lọc theo khoảng giá tối thiểu - tối đa
+  filtered = filtered.filter(p => p.price >= priceMin && p.price <= priceMax);
+  
+  // 3. Lọc theo từ khóa tìm kiếm nhập vào
   if (searchQuery) {
     const query = searchQuery.toLowerCase();
     filtered = filtered.filter(p => p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query));
@@ -249,7 +424,6 @@ function renderProducts() {
   const totalItems = filtered.length;
   const totalPages = Math.ceil(totalItems / productsPerPage);
   
-  // Ràng buộc trang hiện tại không vượt quá tổng số trang
   if (currentPage > totalPages && totalPages > 0) {
     currentPage = totalPages;
   }
@@ -283,6 +457,9 @@ function renderProducts() {
     // Khối hình ảnh
     const imgWrapper = document.createElement('div');
     imgWrapper.className = 'product-image-wrapper';
+    
+    // Áp dụng màu nền mềm mại phù hợp với màu swatch đang được chọn
+    imgWrapper.style.backgroundColor = getSelectedColorRGBA(selectedColorFilter);
 
     const img = document.createElement('img');
     img.src = product.image;
@@ -389,24 +566,67 @@ function renderPagination(totalPages) {
 // --- FILTER TAGS CONTROLLER ---
 function updateFilterTags() {
   activeFiltersContainer.replaceChildren();
-  if (currentCategory === 'all') return;
-
-  const tag = document.createElement('div');
-  tag.className = 'filter-tag';
   
-  const text = document.createElement('span');
-  text.textContent = currentCategory === 'urban' ? 'Danh mục: Nón Đô Thị' : 'Danh mục: Nón Thể Thao';
-  tag.appendChild(text);
+  const tagList = [];
+  
+  // Category tags
+  if (selectedCategories.length > 0) {
+    const labels = {
+      'sport': 'Thể thao',
+      'urban': 'Xe máy/Đô thị',
+      'kids': 'Trẻ em',
+      'accessories': 'Phụ kiện'
+    };
+    selectedCategories.forEach(cat => {
+      tagList.push({
+        label: `Danh mục: ${labels[cat] || cat}`,
+        clear: () => {
+          const chk = document.querySelector(`input[name="desktop-cat-filter"][value="${cat}"]`);
+          if (chk) {
+            chk.checked = false;
+            chk.dispatchEvent(new Event('change'));
+          }
+        }
+      });
+    });
+  }
+  
+  // Price tag if not default
+  if (priceMin > 0 || priceMax < 10000000) {
+    const formattedMin = priceMin.toLocaleString('vi-VN') + 'đ';
+    const formattedMax = priceMax.toLocaleString('vi-VN') + 'đ';
+    tagList.push({
+      label: `Giá: ${formattedMin} - ${formattedMax}`,
+      clear: () => {
+        const deskMin = document.getElementById('desktop-price-min');
+        const deskMax = document.getElementById('desktop-price-max');
+        if (deskMin && deskMax) {
+          deskMin.value = 0;
+          deskMax.value = 10000000;
+          deskMin.dispatchEvent(new Event('input'));
+        }
+      }
+    });
+  }
 
-  const clearBtn = document.createElement('span');
-  clearBtn.className = 'filter-tag-clear';
-  clearBtn.textContent = ' ✕';
-  clearBtn.addEventListener('click', () => {
-    syncCategoryFilters('all');
+  // Render tags
+  tagList.forEach(item => {
+    const tag = document.createElement('div');
+    tag.className = 'filter-tag';
+    
+    const text = document.createElement('span');
+    text.textContent = item.label;
+    tag.appendChild(text);
+
+    const clearBtn = document.createElement('span');
+    clearBtn.className = 'filter-tag-clear';
+    clearBtn.textContent = ' ✕';
+    clearBtn.style.cursor = 'pointer';
+    clearBtn.addEventListener('click', item.clear);
+    tag.appendChild(clearBtn);
+
+    activeFiltersContainer.appendChild(tag);
   });
-  tag.appendChild(clearBtn);
-
-  activeFiltersContainer.appendChild(tag);
 }
 
 // --- QUICK VIEW MODAL CONTROLLERS ---
@@ -427,10 +647,8 @@ function openQuickView(product) {
   // Thiết lập form liên hệ trong modal
   const form = document.getElementById('modal-consultation-form');
   if (form) {
-    // Reset form cũ
     form.reset();
     
-    // Gỡ event listener cũ bằng cách clone node
     const newForm = form.cloneNode(true);
     form.parentNode.replaceChild(newForm, form);
     
@@ -450,10 +668,8 @@ function closeQuickView() {
 }
 
 function setupOptionSelectors() {
-  // Màu sắc
   const colors = document.querySelectorAll('.color-option');
   colors.forEach(opt => {
-    // Đặt class active dựa theo màu sắc mặc định
     const colorName = opt.getAttribute('data-color');
     if (colorName === selectedColor) {
       opt.classList.add('active');
@@ -468,7 +684,6 @@ function setupOptionSelectors() {
     };
   });
 
-  // Kích cỡ
   const sizes = document.querySelectorAll('.size-option');
   sizes.forEach(opt => {
     const sizeName = opt.getAttribute('data-size');
@@ -494,14 +709,12 @@ function handleConsultationSubmit(product, formElement) {
   const name = nameInput.value.trim();
   const phone = phoneInput.value.trim();
 
-  // Validate Tên: Không rỗng, độ dài từ 2-50 ký tự
   if (!name || name.length < 2 || name.length > 50) {
     showToast("Vui lòng nhập tên hợp lệ (từ 2 đến 50 ký tự)!", "error");
     nameInput.focus();
     return;
   }
 
-  // Validate Số điện thoại: Định dạng số điện thoại Việt Nam hợp lệ
   const phoneRegex = /^(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})$/;
   if (!phone || !phoneRegex.test(phone)) {
     showToast("Số điện thoại không đúng định dạng (VD: 0987654321)!", "error");
@@ -509,9 +722,7 @@ function handleConsultationSubmit(product, formElement) {
     return;
   }
 
-  // Giả lập gửi lên server thành công
   showToast(`Yêu cầu tư vấn mũ ${product.name} (Màu: ${selectedColor}, Size: ${selectedSize}) của quý khách ${name} đã được tiếp nhận thành công!`, "success");
-  
   closeQuickView();
 }
 
@@ -522,7 +733,6 @@ function handleNewsletterSubmit(e) {
 
   const email = emailInput.value.trim();
 
-  // Validate Email
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!email || !emailRegex.test(email)) {
     showToast("Địa chỉ Email không đúng định dạng!", "error");
@@ -530,22 +740,18 @@ function handleNewsletterSubmit(e) {
     return;
   }
 
-  // Validate Thỏa thuận chính sách
   if (!agreementCheckbox || !agreementCheckbox.checked) {
     showToast("Bạn cần đồng ý với các điều khoản và chính sách của NBH!", "error");
     return;
   }
 
-  // Giả lập đăng ký thành công
   showToast("Chúc mừng! Đăng ký nhận bản tin khuyến mãi của NBH thành công.", "success");
-  
   emailInput.value = '';
   agreementCheckbox.checked = false;
 }
 
 // --- CUSTOM TOAST MESSAGE CONTROLLER ---
 function showToast(message, type = 'success') {
-  // Tạo toast element động
   const toast = document.createElement('div');
   toast.className = `toast toast-${type}`;
   
@@ -559,12 +765,10 @@ function showToast(message, type = 'success') {
 
   toastContainer.appendChild(toast);
 
-  // Trigger animation hiện toast
   setTimeout(() => {
     toast.classList.add('show');
   }, 50);
 
-  // Auto remove sau 4s
   setTimeout(() => {
     toast.classList.remove('show');
     setTimeout(() => {
