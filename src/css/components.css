@@ -62,7 +62,7 @@
 
 /* --- DESKTOP NAVIGATION --- */
 .desktop-nav {
-  display: none; /* Ẩn mặc định trên di động */
+  display: none; /* Hidden by default on mobile */
 }
 
 @media (min-width: 992px) {
@@ -71,7 +71,7 @@
   }
   
   #menu-btn {
-    display: none; /* Ẩn nút hamburger trên desktop */
+    display: none; /* Hide hamburger menu on desktop */
   }
 }
 
@@ -95,7 +95,7 @@
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--text-primary);
-  border-radius: var(--radius-full); /* BO TRÒN MENU */
+  border-radius: var(--radius-full); /* Rounded menu pills */
   transition: all var(--transition-fast);
 }
 
@@ -114,7 +114,7 @@
   transform: rotate(180deg);
 }
 
-/* Dropdown Menu sổ xuống khi di chuột */
+/* Dropdown menu on hover */
 .dropdown-menu {
   position: absolute;
   top: 100%;
@@ -164,7 +164,7 @@
 .dropdown-item:hover {
   background-color: var(--border-color);
   color: var(--primary);
-  padding-left: 1.25rem; /* Hiệu ứng trượt nhẹ */
+  padding-left: 1.25rem; /* Smooth slide hover effect */
 }
 
 /* --- HERO BANNER --- */
@@ -259,7 +259,7 @@
 /* --- PRODUCT GRID --- */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Giữ nguyên 3 cột như ảnh mẫu di động */
+  grid-template-columns: repeat(3, 1fr); /* Keep 3 columns as in reference mobile layout */
   gap: 2rem;
   margin-bottom: 3rem;
 }
@@ -273,15 +273,15 @@
 
 @media (max-width: 576px) {
   .products-grid {
-    grid-template-columns: repeat(3, 1fr); /* 3 cột trên điện thoại nhỏ để giống ảnh mẫu nhất */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on small screens to match reference */
     gap: 0.5rem;
   }
 }
 
 /* Product Card */
 .product-card {
-  background-color: transparent; /* Không có nền cho card */
-  border: none; /* Loại bỏ viền ngoài card để giống ảnh mẫu */
+  background-color: transparent; /* Transparent card background */
+  border: none; /* Remove border to match reference layout */
   overflow: visible;
   display: flex;
   flex-direction: column;
@@ -292,12 +292,12 @@
 
 .product-card:hover {
   transform: translateY(-4px);
-  box-shadow: none; /* Chặn đổ bóng card */
+  box-shadow: none; /* Remove box shadow for a clean flat design */
 }
 
 .product-image-wrapper {
-  background-color: #f5f5f7; /* Màu xám nhẹ tinh tế làm nền ảnh */
-  border-radius: var(--radius-md); /* Bo góc hộp ảnh nhẹ tương tự ảnh mẫu */
+  background-color: #f5f5f7; /* Light grey background for helmet pictures */
+  border-radius: var(--radius-md); /* Slightly rounded corners for image box */
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -324,7 +324,7 @@
 }
 
 .product-info {
-  padding: 0.75rem 0 0 0; /* Căn lề thẳng hàng 100% với hộp ảnh sản phẩm bên trên */
+  padding: 0.75rem 0 0 0; /* Align text edge perfectly with the image wrapper above */
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
@@ -363,7 +363,7 @@
   font-size: 0.95rem;
   font-weight: 700;
   color: var(--text-primary);
-  text-transform: uppercase; /* Viết in hoa toàn bộ giống POC P22, POC PK03S */
+  text-transform: uppercase; /* Uppercase title as in reference image (e.g. POC P22) */
   margin: 0;
 }
 
@@ -658,7 +658,7 @@
 }
 
 .desktop-sidebar {
-  display: none; /* Mặc định ẩn trên di động */
+  display: none; /* Hidden by default on mobile */
   width: 260px;
   flex-shrink: 0;
   background-color: var(--surface-color);
@@ -671,7 +671,7 @@
 
 .sidebar-sticky {
   position: sticky;
-  top: 90px; /* Header cao 64px, giữ khoảng cách đẹp mắt bên dưới */
+  top: 90px; /* Offset to sit nicely below the 64px header */
 }
 
 .sidebar-title {
@@ -685,11 +685,11 @@
 
 @media (min-width: 992px) {
   .desktop-sidebar {
-    display: block; /* Hiện sidebar trên desktop */
+    display: block; /* Show sidebar on desktop */
   }
   
   .filter-btn {
-    display: none; /* Ẩn nút "Bộ lọc" trên desktop */
+    display: none; /* Hide mobile filter button on desktop */
   }
 }
 
