@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+/* Design Tokens & CSS Variables */
+:root {
+  /* Color Palette - HSL values */
+  --primary-hue: 220;
+  --primary-sat: 90%;
+  --primary-lig: 56%;
+  --primary: hsl(var(--primary-hue), var(--primary-sat), var(--primary-lig));
+  --primary-hover: hsl(var(--primary-hue), var(--primary-sat), 46%);
+  
+  --secondary-hue: 260;
+  --secondary-sat: 80%;
+  --secondary-lig: 48%;
+  --secondary: hsl(var(--secondary-hue), var(--secondary-sat), var(--secondary-lig));
+  
+  --accent-hue: 45;
+  --accent-sat: 95%;
+  --accent-lig: 50%;
+  --accent: hsl(var(--accent-hue), var(--accent-sat), var(--accent-lig)); /* Vàng nổi bật */
+  --accent-hover: hsl(var(--accent-hue), var(--accent-sat), 42%);
+  
+  /* System States */
+  --success: hsl(140, 70%, 45%);
+  --warning: hsl(40, 90%, 55%);
+  --danger: hsl(0, 85%, 55%);
+  
+  /* Layout Spacing */
+  --container-max-width: 1200px;
+  --section-padding: 4rem 1.5rem;
+  --section-padding-mobile: 2.5rem 1rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+  
+  /* Border Radius */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-full: 9999px;
+  
+  /* Font Families */
+  --font-title: 'Outfit', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Light Theme Variables */
+[data-theme="light"] {
+  --bg-color: hsl(210, 20%, 98%);
+  --surface-color: hsl(0, 0%, 100%);
+  --surface-hover: hsl(210, 20%, 96%);
+  --border-color: hsla(0, 0%, 0%, 0.06);
+  --text-primary: hsl(220, 30%, 10%);
+  --text-secondary: hsl(220, 15%, 45%);
+  --text-tertiary: hsl(220, 10%, 65%);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.06);
+  --shadow-color: rgba(0, 0, 0, 0.08);
+}
+
+/* Dark Theme Variables */
+[data-theme="dark"] {
+  --bg-color: hsl(220, 30%, 6%);
+  --surface-color: hsl(220, 25%, 10%);
+  --surface-hover: hsl(220, 25%, 14%);
+  --border-color: hsla(0, 0%, 100%, 0.08);
+  --text-primary: hsl(210, 20%, 98%);
+  --text-secondary: hsl(220, 15%, 70%);
+  --text-tertiary: hsl(220, 10%, 50%);
+  --glass-bg: rgba(20, 22, 28, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Base Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--text-primary);
+}
+
+h1 { font-size: 2.5rem; letter-spacing: -0.03em; }
+h2 { font-size: 2rem; letter-spacing: -0.02em; }
+h3 { font-size: 1.5rem; letter-spacing: -0.01em; }
+h4 { font-size: 1.25rem; }
+
+p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: var(--container-max-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Accessibility: Sr-only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

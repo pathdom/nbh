@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <title>NBH Helmet | Mũ Bảo Hiểm Cao Cấp - Tối Giản & An Toàn</title>
+  <meta name="description" content="Khám phá bộ sưu tập mũ bảo hiểm doanh nghiệp NBH phong cách tối giản, hiện đại và chất lượng đạt chuẩn an toàn quốc tế. Đăng ký để nhận báo giá chi tiết.">
+  <meta name="keywords" content="NBH, nbh helmet, mũ bảo hiểm, nón bảo hiểm, mũ bảo hiểm tối giản, mũ bảo hiểm cao cấp">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Content Security Policy (CSP) -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; img-src 'self' data:; connect-src 'self'; script-src 'self';">
+
+  <!-- Icons - Remixicon (Loading from trusted CDN) -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/src/css/main.css?v=1">
+  <link rel="stylesheet" href="/src/css/components.css?v=1">
+</head>
+<body>
+
+  <!-- ==========================================
+       HEADER & NAVIGATION
+       ========================================== -->
+  <header class="header">
+    <div class="container navbar">
+      <!-- Nút Hamburger Menu (Trái - Chỉ hiển thị trên di động) -->
+      <button class="nav-btn" id="menu-btn" aria-label="Mở danh mục điều hướng">
+        <i class="ri-menu-line" aria-hidden="true"></i>
+      </button>
+
+      <!-- Logo NBH -->
+      <a href="/" class="logo" id="nbh-brand-logo">
+        <span>NBH</span><span class="logo-accent">.</span>
+      </a>
+
+      <!-- Menu điều hướng Desktop (Chỉ hiển thị trên máy tính) -->
+      <nav class="desktop-nav" aria-label="Danh mục điều hướng chính">
+        <ul class="nav-menu">
+          <li class="nav-item"><a href="#" class="nav-link">Trang Chủ</a></li>
+          <li class="nav-item has-dropdown">
+            <a href="#san-pham" class="nav-link">Sản Phẩm <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="#san-pham" class="dropdown-item" data-filter="all">Tất cả sản phẩm</a></li>
+              <li><a href="#san-pham" class="dropdown-item" data-filter="urban">Nón bảo hiểm Đô thị</a></li>
+              <li><a href="#san-pham" class="dropdown-item" data-filter="sport">Nón bảo hiểm Thể thao</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a href="#lien-he" class="nav-link">Về NBH</a></li>
+          <li class="nav-item"><a href="#lien-he" class="nav-link">Liên Hệ</a></li>
+        </ul>
+      </nav>
+
+      <!-- Tiện ích bên phải (Màu sắc & Tìm kiếm) -->
+      <div class="nav-right">
+        <button class="nav-btn" id="theme-toggle-btn" aria-label="Chuyển chế độ tối">
+          <i class="ri-moon-line" aria-hidden="true"></i>
+        </button>
+        <button class="nav-btn" id="search-btn" aria-label="Tìm kiếm sản phẩm">
+          <i class="ri-search-line" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       MAIN CONTENT
+       ========================================== -->
+  <main>
+    <!-- 1. Hero Banner Section -->
+    <section class="hero-section" aria-label="Banner quảng bá thương hiệu">
+      <img src="/hero_banner.png" alt="Gia đình đi xe đạp đội mũ bảo hiểm NBH thời thượng dưới ánh nắng ấm" class="hero-banner" id="hero-banner-img">
+    </section>
+
+    <!-- 2. Catalog Section -->
+    <section class="catalog-section" id="san-pham">
+      <div class="container catalog-container">
+        <!-- Sidebar Bộ Lọc trên Desktop -->
+        <aside class="desktop-sidebar" id="desktop-sidebar">
+          <div class="sidebar-sticky">
+            <h3 class="sidebar-title">Bộ Lọc</h3>
+            <div class="filter-group">
+              <h4 class="filter-group-title">Danh Mục Nón</h4>
+              <div class="filter-options">
+                <label class="filter-option" for="sidebar-cat-all">
+                  <input type="radio" name="sidebar-category-filter" id="sidebar-cat-all" value="all" checked class="filter-checkbox">
+                  <span>Tất cả sản phẩm</span>
+                </label>
+                <label class="filter-option" for="sidebar-cat-urban">
+                  <input type="radio" name="sidebar-category-filter" id="sidebar-cat-urban" value="urban" class="filter-checkbox">
+                  <span>Nón Đô thị (1/2)</span>
+                </label>
+                <label class="filter-option" for="sidebar-cat-sport">
+                  <input type="radio" name="sidebar-category-filter" id="sidebar-cat-sport" value="sport" class="filter-checkbox">
+                  <span>Nón Thể thao (Xe đạp)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Khối bên phải chứa tiêu đề, lưới sản phẩm, phân trang -->
+        <div class="catalog-content">
+          <!-- Khối Tiêu Đề Mục -->
+          <div class="catalog-header">
+            <h1 class="catalog-title" id="catalog-main-title">Nón Bảo Hiểm</h1>
+            <button class="filter-btn" id="filter-btn" aria-label="Mở bộ lọc danh mục sản phẩm">
+              <i class="ri-filter-3-line" aria-hidden="true"></i>
+              <span>Bộ lọc</span>
+            </button>
+          </div>
+
+          <!-- Vùng hiển thị tag lọc chủ động -->
+          <div class="active-filters" id="active-filters"></div>
+
+          <!-- Lưới sản phẩm (Sẽ render động từ JS) -->
+          <div class="products-grid" id="products-grid"></div>
+
+          <!-- Phân trang (Sẽ render động từ JS) -->
+          <div class="pagination" id="pagination"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer" id="lien-he">
+    <!-- Hình nền nón bảo hiểm chìm phía sau -->
+    <img src="/helmet_bg_footer.png" alt="" class="footer-bg-graphic">
+
+    <div class="container footer-top">
+      <!-- Cột 1: Thông tin thương hiệu -->
+      <div class="footer-info-col">
+        <h2 class="footer-title">CÔNG TY TNHH QUỐC TẾ NBH VIỆT NAM</h2>
+        <p class="footer-desc">
+          NBH tự hào là đơn vị tiên phong thiết kế và phân phối các dòng mũ bảo hiểm phong cách hiện đại, tối giản. Sản phẩm được nghiên cứu khí động học tinh tế và đạt chứng nhận kiểm định an toàn quốc tế, bảo vệ trọn vẹn mỗi chuyến hành trình của bạn.
+        </p>
+        <div class="footer-social-row">
+          <a href="#" class="social-btn" aria-label="Theo dõi NBH trên Facebook"><i class="ri-facebook-fill"></i></a>
+          <a href="#" class="social-btn" aria-label="Theo dõi NBH trên Youtube"><i class="ri-youtube-fill"></i></a>
+          <a href="#" class="social-btn" aria-label="Theo dõi NBH trên TikTok"><i class="ri-tiktok-fill"></i></a>
+          <a href="#" class="social-btn" aria-label="Theo dõi NBH trên Instagram"><i class="ri-instagram-fill"></i></a>
+        </div>
+      </div>
+
+      <!-- Cột 2: Các Liên Kết nhanh -->
+      <div class="footer-info-col">
+        <h3 class="footer-link-title">Danh Mục</h3>
+        <div class="footer-links-grid">
+          <a href="#san-pham" class="footer-link">Nón bảo hiểm Đô thị</a>
+          <a href="#san-pham" class="footer-link">Nón bảo hiểm Thể thao</a>
+          <a href="#" class="footer-link">Về NBH Helmet</a>
+          <a href="#" class="footer-link">Chính sách Bảo hành</a>
+          <a href="#" class="footer-link">Tin tức doanh nghiệp</a>
+        </div>
+      </div>
+
+      <!-- Cột 3: Form Đăng Ký Nhận Bản Tin -->
+      <div class="footer-form-col">
+        <h3 class="footer-form-title">ĐĂNG KÝ BẢN TIN</h3>
+        <p class="footer-desc">Nhận ngay thông tin các dòng mũ bảo hiểm mới nhất và ưu đãi đặc quyền từ NBH.</p>
+        <form class="footer-form" id="newsletter-form">
+          <div class="footer-input-row">
+            <input type="email" id="newsletter-email" class="footer-input" placeholder="Email của bạn..." required autocomplete="email" aria-label="Nhập địa chỉ email đăng ký">
+            <button type="submit" class="footer-submit-btn" aria-label="Gửi đăng ký bản tin">ĐĂNG&nbsp;KÝ</button>
+          </div>
+          <label class="checkbox-label" for="agreement-checkbox">
+            <input type="checkbox" id="agreement-checkbox" required>
+            <span>Đồng ý chính sách và điều khoản của NBH Helmet.</span>
+          </label>
+        </form>
+      </div>
+    </div>
+
+    <!-- Chân cùng Footer -->
+    <div class="container footer-bottom">
+      <div class="footer-lang">
+        <span class="lang-option active">VI</span>
+        <span>|</span>
+        <span class="lang-option">EN</span>
+      </div>
+      <div>
+        <p class="footer-desc">NBH HELMET COPYRIGHT © 2026. ALL RIGHTS RESERVED.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================
+       OVERLAYS, DRAWER & MODALS
+       ========================================== -->
+
+  <!-- Lớp phủ tối mờ dùng chung -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+
+  <!-- Mobile Menu Drawer (Slide-in Trái) -->
+  <nav class="drawer" id="mobile-drawer" aria-label="Danh mục điều hướng trên thiết bị di động">
+    <div class="drawer-header">
+      <span class="drawer-title">NBH Menu</span>
+      <button class="nav-btn" id="drawer-close-btn" aria-label="Đóng menu">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <a href="#san-pham" class="drawer-link">Nón Đô Thị</a>
+      <a href="#san-pham" class="drawer-link">Nón Thể Thao</a>
+      <a href="#lien-he" class="drawer-link">Về NBH</a>
+      <a href="#lien-he" class="drawer-link">Liên Hệ</a>
+    </div>
+    <div class="drawer-footer">
+      <p class="footer-desc" style="font-size: 0.8rem; text-align: center;">Chất lượng & An toàn vượt trội</p>
+    </div>
+  </nav>
+
+  <!-- Filter Category Drawer (Slide-in Phải) -->
+  <aside class="filter-drawer" id="filter-drawer" aria-label="Bảng chọn lọc sản phẩm">
+    <div class="drawer-header">
+      <span class="drawer-title">Bộ Lọc</span>
+      <button class="nav-btn" id="filter-close-btn" aria-label="Đóng bảng lọc">
+        <i class="ri-close-line"></i>
+      </button>
+    </div>
+    <div class="drawer-body">
+      <!-- Nhóm lọc Category -->
+      <div class="filter-group">
+        <h4 class="filter-group-title">Danh Mục Nón</h4>
+        <div class="filter-options">
+          <label class="filter-option" for="filter-cat-all">
+            <input type="radio" name="category-filter" id="filter-cat-all" value="all" checked class="filter-checkbox">
+            <span>Tất cả sản phẩm</span>
+          </label>
+          <label class="filter-option" for="filter-cat-urban">
+            <input type="radio" name="category-filter" id="filter-cat-urban" value="urban" class="filter-checkbox">
+            <span>Nón bảo hiểm Đô thị (1/2)</span>
+          </label>
+          <label class="filter-option" for="filter-cat-sport">
+            <input type="radio" name="category-filter" id="filter-cat-sport" value="sport" class="filter-checkbox">
+            <span>Nón bảo hiểm Thể thao (Xe đạp)</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="filter-drawer-footer">
+      <p class="footer-desc" style="grid-column: 1 / -1; font-size: 0.8rem; text-align: center;">Tự động lọc sản phẩm khi chọn</p>
+    </div>
+  </aside>
+
+  <!-- Search Fullscreen Overlay -->
+  <div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="Tìm kiếm sản phẩm trên website">
+    <button class="nav-btn search-close-btn" id="search-close-btn" aria-label="Đóng tìm kiếm">
+      <i class="ri-close-line"></i>
+    </button>
+    <div class="search-container">
+      <label for="search-input" class="sr-only">Nhập tên hoặc tính năng mũ bảo hiểm</label>
+      <input type="text" id="search-input" class="search-input" placeholder="Tìm tên nón bảo hiểm (VD: PK03S, P02)..." autocomplete="off">
+      <i class="ri-search-line search-icon-inside" aria-hidden="true"></i>
+    </div>
+  </div>
+
+  <!-- Quick View / Product Detail Modal (XSS Safe) -->
+  <div class="modal-overlay" id="quickview-overlay" role="dialog" aria-modal="true" aria-label="Chi tiết sản phẩm xem nhanh">
+    <div class="product-modal" id="quickview-modal">
+      <!-- Nút Đóng Modal -->
+      <button class="modal-close" id="quickview-close-btn" aria-label="Đóng cửa sổ xem chi tiết">
+        <i class="ri-close-line"></i>
+      </button>
+
+      <!-- Cột 1: Vùng ảnh lớn sản phẩm -->
+      <div class="modal-img-area">
+        <img src="" alt="" class="modal-img" id="modal-img">
+      </div>
+
+      <!-- Cột 2: Thông tin chi tiết & Form tư vấn mua hàng -->
+      <div class="modal-info-area">
+        <div>
+          <span class="product-category-lbl" id="modal-category">Danh mục</span>
+          <h2 class="modal-title" id="modal-title">Tên sản phẩm</h2>
+          <span class="modal-price" id="modal-price">Giá sản phẩm</span>
+        </div>
+        
+        <p class="modal-desc" id="modal-desc">Mô tả chi tiết sản phẩm.</p>
+
+        <!-- Selector Options (Màu sắc & Kích thước) -->
+        <div class="modal-options-grid">
+          <!-- Chọn màu -->
+          <div>
+            <h4 class="option-group-lbl">Màu Sắc (Đen Nhám Mặc Định)</h4>
+            <div class="color-options" role="radiogroup" aria-label="Chọn màu sắc nón">
+              <button class="color-option" data-color="Matte Black" style="background-color: #1a1a1a;" role="radio" aria-checked="false" aria-label="Màu đen nhám"></button>
+              <button class="color-option" data-color="Chalk White" style="background-color: #f3f4f6;" role="radio" aria-checked="false" aria-label="Màu trắng phấn"></button>
+              <button class="color-option" data-color="Titanium Gray" style="background-color: #718096;" role="radio" aria-checked="false" aria-label="Màu xám titan"></button>
+            </div>
+          </div>
+
+          <!-- Chọn kích cỡ -->
+          <div>
+            <h4 class="option-group-lbl">Chọn Kích Cỡ</h4>
+            <div class="size-options" role="radiogroup" aria-label="Chọn kích cỡ đầu">
+              <button class="size-option" data-size="M" role="radio" aria-checked="false">Size M (54-58cm)</button>
+              <button class="size-option" data-size="L" role="radio" aria-checked="false">Size L (58-62cm)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form Đăng Ký Tư Vấn -->
+        <form class="modal-form" id="modal-consultation-form">
+          <h3 class="form-title">ĐĂNG KÝ TƯ VẤN & BÁO GIÁ</h3>
+          <div class="form-group">
+            <input type="text" class="form-input" placeholder="Họ và tên..." required autocomplete="name" aria-label="Nhập họ và tên của bạn">
+            <input type="tel" class="form-input" placeholder="Số điện thoại..." required autocomplete="tel" aria-label="Nhập số điện thoại liên lạc">
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">NHẬN TƯ VẤN NGAY</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bảng Thông Báo Toast (Success/Error Feedbacks) -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Nút Tiện Ích Nổi Góc Phải (Thông tin và Cuộn lên đầu) -->
+  <div class="floating-actions">
+    <button class="float-btn info-float" id="info-btn" aria-label="Xem thông tin thương hiệu">
+      <i class="ri-information-line"></i>
+    </button>
+    <button class="float-btn totop-float" id="totop-btn" aria-label="Cuộn lên đầu trang">
+      <i class="ri-arrow-up-line"></i>
+    </button>
+  </div>
+
+  <!-- Scripts -->
+  <script type="module" src="/src/js/main.js"></script>
+</body>
+</html>
