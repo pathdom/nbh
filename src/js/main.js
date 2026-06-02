@@ -26,8 +26,7 @@ let productsContainer, paginationContainer, activeFiltersContainer;
 let drawerOverlay, mobileDrawer, searchModal;
 let quickviewOverlay, quickviewModal;
 let toastContainer;
-let homepageView, catalogView, adminView;
-let adminProductsContainer, adminPaginationContainer;
+let homepageView, catalogView;
 let adminProductOverlay, adminProductForm;
 
 // --- INITIALIZATION ---
@@ -47,10 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   homepageView = document.getElementById('homepage-view');
   catalogView = document.getElementById('catalog-view');
-  adminView = document.getElementById('admin-view');
   
-  adminProductsContainer = document.getElementById('admin-products-grid');
-  adminPaginationContainer = document.getElementById('admin-pagination');
   adminProductOverlay = document.getElementById('admin-product-overlay');
   adminProductForm = document.getElementById('admin-product-form');
 
@@ -67,8 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Khởi tạo logic và dữ liệu cho Trang Chủ
   initHomepage();
 
-  // Khởi tạo logic và dữ liệu cho Trang Admin
-  initAdminPanel();
+  // Khởi tạo biểu mẫu Quản Trị
+  initAdminForm();
 
   // Render sản phẩm ban đầu cho Catalog
   renderProducts();
@@ -544,11 +540,16 @@ function renderProducts() {
   }
 
   // Tạo các thẻ sản phẩm động bằng createElement (XSS Safe)
+  const isAdminMode = catalogView && catalogView.classList.contains('admin-mode');
   pageItems.forEach(product => {
     const card = document.createElement('article');
     card.className = 'product-card';
     card.setAttribute('data-id', product.id);
-    card.addEventListener('click', () => openQuickView(product));
+    card.addEventListener('click', (e) => {
+      if (!e.target.closest('.admin-act-btn')) {
+        openQuickView(product);
+      }
+    });
 
     // Khối hình ảnh
     const imgWrapper = document.createElement('div');
@@ -564,13 +565,66 @@ function renderProducts() {
     img.loading = 'lazy';
     imgWrapper.appendChild(img);
 
-    // Huy hiệu Quick View nổi
-    const quickviewBadge = document.createElement('div');
-    quickviewBadge.className = 'quickview-badge';
-    const badgeIcon = document.createElement('i');
-    badgeIcon.className = 'ri-eye-line';
-    quickviewBadge.appendChild(badgeIcon);
-    imgWrapper.appendChild(quickviewBadge);
+    if (isAdminMode) {
+      // DỰNG OVERLAY LỚP PHỦ NÚT EDIT & DELETE QUẢN TRỊ
+      const actionsBar = document.createElement('div');
+      actionsBar.className = 'admin-actions-bar';
+
+      // Nút Sửa (Edit)
+      const editBtn = document.createElement('button');
+      editBtn.className = 'admin-act-btn edit-btn';
+      editBtn.setAttribute('aria-label', `Sửa sản phẩm ${product.name}`);
+      const editIcon = document.createElement('i');
+      editIcon.className = 'ri-edit-line';
+      editBtn.appendChild(editIcon);
+      
+      editBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('admin-form-id').value = product.id;
+        document.getElementById('admin-form-name').value = product.name;
+        document.getElementById('admin-form-category').value = product.category;
+        document.getElementById('admin-form-price').value = product.price;
+        document.getElementById('admin-form-image').value = product.image;
+        document.getElementById('admin-form-desc').value = product.description;
+        document.getElementById('admin-modal-title').textContent = 'CẬP NHẬT SẢN PHẨM';
+        adminProductOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+
+      // Nút Xóa (Delete)
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'admin-act-btn delete-btn';
+      deleteBtn.setAttribute('aria-label', `Xóa sản phẩm ${product.name}`);
+      const deleteIcon = document.createElement('i');
+      deleteIcon.className = 'ri-delete-bin-line';
+      deleteBtn.appendChild(deleteIcon);
+
+      deleteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const confirmDel = confirm(`Bạn có chắc chắn muốn xóa mũ bảo hiểm "${product.name}" khỏi cơ sở dữ liệu không?`);
+        if (confirmDel) {
+          products = products.filter(p => p.id !== product.id);
+          saveProductsToStorage();
+          showToast(`Đã xóa sản phẩm "${product.name}" khỏi kho!`, "success");
+          renderProducts();
+          if (typeof renderHomeCategoryProducts === 'function') {
+            renderHomeCategoryProducts('urban');
+          }
+        }
+      });
+
+      actionsBar.appendChild(editBtn);
+      actionsBar.appendChild(deleteBtn);
+      imgWrapper.appendChild(actionsBar);
+    } else {
+      // Huy hiệu Quick View nổi
+      const quickviewBadge = document.createElement('div');
+      quickviewBadge.className = 'quickview-badge';
+      const badgeIcon = document.createElement('i');
+      badgeIcon.className = 'ri-eye-line';
+      quickviewBadge.appendChild(badgeIcon);
+      imgWrapper.appendChild(quickviewBadge);
+    }
 
     card.appendChild(imgWrapper);
 
@@ -877,16 +931,19 @@ function showToast(message, type = 'success') {
 export function switchView(viewName) {
   const homepageView = document.getElementById('homepage-view');
   const catalogView = document.getElementById('catalog-view');
-  const adminView = document.getElementById('admin-view');
   const navHome = document.getElementById('nav-home');
   const navCatalog = document.getElementById('nav-catalog');
+  const adminAddBtn = document.getElementById('admin-add-product-btn');
+  const mainTitle = document.getElementById('catalog-main-title');
 
   if (!homepageView || !catalogView) return;
 
   if (viewName === 'home') {
     homepageView.style.display = 'block';
     catalogView.style.display = 'none';
-    if (adminView) adminView.style.display = 'none';
+    catalogView.classList.remove('admin-mode');
+    if (adminAddBtn) adminAddBtn.style.display = 'none';
+    if (mainTitle) mainTitle.textContent = 'Nón Bảo Hiểm';
 
     // Đánh dấu active navigation pill
     if (navHome) navHome.classList.add('active-nav-pill');
@@ -894,24 +951,27 @@ export function switchView(viewName) {
   } else if (viewName === 'catalog') {
     homepageView.style.display = 'none';
     catalogView.style.display = 'block';
-    if (adminView) adminView.style.display = 'none';
+    catalogView.classList.remove('admin-mode');
+    if (adminAddBtn) adminAddBtn.style.display = 'none';
+    if (mainTitle) mainTitle.textContent = 'Nón Bảo Hiểm';
 
     // Đánh dấu active navigation pill
     if (navHome) navHome.classList.remove('active-nav-pill');
     if (navCatalog) navCatalog.classList.add('active-nav-pill');
+    
+    renderProducts();
   } else if (viewName === 'admin') {
     homepageView.style.display = 'none';
-    catalogView.style.display = 'none';
-    if (adminView) adminView.style.display = 'block';
+    catalogView.style.display = 'block';
+    catalogView.classList.add('admin-mode');
+    if (adminAddBtn) adminAddBtn.style.display = 'inline-flex';
+    if (mainTitle) mainTitle.textContent = 'QUẢN LÝ SẢN PHẨM';
 
     // Xoá active navigation pill vì đây là chế độ admin quản trị riêng
     if (navHome) navHome.classList.remove('active-nav-pill');
     if (navCatalog) navCatalog.classList.remove('active-nav-pill');
 
-    // Tự động render lưới quản trị sản phẩm khi chuyển sang view admin
-    if (typeof renderAdminProducts === 'function') {
-      renderAdminProducts();
-    }
+    renderProducts();
   }
 }
 
@@ -1145,67 +1205,8 @@ function handleUrlRouting() {
   }
 }
 
-// --- ADMIN PANEL CRUD LOGIC ---
-let adminPriceMin = 0;
-let adminPriceMax = 10000000;
-let adminSelectedCategories = [];
-let adminCurrentPage = 1;
-
-function initAdminPanel() {
-  // 1. KHỞI TẠO BỘ LỌC DANH MỤC TRÊN DESKTOP CHO ADMIN
-  const adminChecks = document.querySelectorAll('input[name="admin-desktop-cat-filter"]');
-  adminChecks.forEach(chk => {
-    chk.addEventListener('change', () => {
-      const activeCats = [];
-      adminChecks.forEach(c => {
-        if (c.checked) activeCats.push(c.value);
-      });
-      adminSelectedCategories = activeCats;
-      adminCurrentPage = 1;
-      renderAdminProducts();
-    });
-  });
-
-  // 2. KHỞI TẠO TRƯỢT GIÁ TIỀN CHO ADMIN
-  const adminMin = document.getElementById('admin-desktop-price-min');
-  const adminMax = document.getElementById('admin-desktop-price-max');
-  const adminMinLbl = document.getElementById('admin-desktop-price-min-lbl');
-  const adminMaxLbl = document.getElementById('admin-desktop-price-max-lbl');
-  const adminTrack = document.getElementById('admin-desktop-slider-track');
-
-  if (adminMin && adminMax) {
-    const updateAdminSlider = () => {
-      let minVal = parseInt(adminMin.value);
-      let maxVal = parseInt(adminMax.value);
-      const gap = 500000;
-      if (maxVal - minVal < gap) {
-        if (document.activeElement === adminMin) {
-          adminMin.value = maxVal - gap;
-          minVal = maxVal - gap;
-        } else {
-          adminMax.value = minVal + gap;
-          maxVal = minVal + gap;
-        }
-      }
-      adminPriceMin = minVal;
-      adminPriceMax = maxVal;
-      
-      adminMinLbl.textContent = minVal === 0 ? "0đ" : (minVal / 1000000) + "Mđ";
-      adminMaxLbl.textContent = maxVal === 10000000 ? "10.000.000đ" : (maxVal / 1000000) + "Mđ";
-      
-      const minPercent = (minVal / 10000000) * 100;
-      const maxPercent = (maxVal / 10000000) * 100;
-      adminTrack.style.left = minPercent + "%";
-      adminTrack.style.width = (maxPercent - minPercent) + "%";
-      
-      adminCurrentPage = 1;
-      renderAdminProducts();
-    };
-    adminMin.addEventListener('input', updateAdminSlider);
-    adminMax.addEventListener('input', updateAdminSlider);
-  }
-
-  // 3. ĐÓNG MỞ MODAL THÊM/SỬA SẢN PHẨM ADMIN
+// --- ADMIN PANEL CRUD FORM HANDLERS ---
+function initAdminForm() {
   const adminAddBtn = document.getElementById('admin-add-product-btn');
   const adminCloseBtn = document.getElementById('admin-product-close-btn');
 
@@ -1226,7 +1227,6 @@ function initAdminPanel() {
     });
   }
 
-  // 4. SUBMIT FORM THÊM/SỬA SẢN PHẨM
   if (adminProductForm) {
     adminProductForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -1291,230 +1291,15 @@ function initAdminPanel() {
         showToast(`Đã thêm sản phẩm "${nameVal}" thành công!`, "success");
       }
 
-      // Lưu trữ đồng bộ vào LocalStorage
       saveProductsToStorage();
-
-      // Đóng Modal Form
       adminProductOverlay.classList.remove('active');
       document.body.style.overflow = '';
 
-      // Tải lại lưới sản phẩm trên tất cả các view
-      renderAdminProducts();
+      // Tải lại lưới sản phẩm thống nhất
       renderProducts();
       if (typeof renderHomeCategoryProducts === 'function') {
         renderHomeCategoryProducts('urban');
       }
     });
   }
-}
-
-// --- RENDER PRODUCTS GRID IN ADMIN PANEL ---
-function renderAdminProducts() {
-  let filtered = products;
-
-  // 1. Lọc theo danh mục
-  if (adminSelectedCategories.length > 0) {
-    filtered = filtered.filter(p => adminSelectedCategories.includes(p.category));
-  }
-
-  // 2. Lọc theo khoảng giá tối thiểu - tối đa
-  filtered = filtered.filter(p => p.price >= adminPriceMin && p.price <= adminPriceMax);
-
-  // Phân trang quản trị
-  const totalItems = filtered.length;
-  const totalPages = Math.ceil(totalItems / productsPerPage);
-
-  if (adminCurrentPage > totalPages && totalPages > 0) {
-    adminCurrentPage = totalPages;
-  }
-
-  const startIndex = (adminCurrentPage - 1) * productsPerPage;
-  const endIndex = Math.min(startIndex + productsPerPage, totalItems);
-  const pageItems = filtered.slice(startIndex, endIndex);
-
-  // Xóa nội dung lưới cũ an toàn
-  adminProductsContainer.replaceChildren();
-
-  if (pageItems.length === 0) {
-    const noProductMsg = document.createElement('div');
-    noProductMsg.style.gridColumn = '1 / -1';
-    noProductMsg.style.textAlign = 'center';
-    noProductMsg.style.padding = '3rem';
-    noProductMsg.style.color = 'var(--text-secondary)';
-    noProductMsg.textContent = 'Không tìm thấy sản phẩm nào trong kho để hiển thị.';
-    adminProductsContainer.appendChild(noProductMsg);
-    adminPaginationContainer.replaceChildren();
-    return;
-  }
-
-  // Xây dựng thẻ sản phẩm quản trị kèm nút Sửa/Xóa (XSS Safe)
-  pageItems.forEach(product => {
-    const card = document.createElement('article');
-    card.className = 'product-card';
-    card.setAttribute('data-id', product.id);
-
-    // Click vào card mở Quick View bình thường
-    card.addEventListener('click', (e) => {
-      // Chỉ mở nếu click không xuất phát từ nút quản trị
-      if (!e.target.closest('.admin-act-btn')) {
-        openQuickView(product);
-      }
-    });
-
-    // Khối hình ảnh
-    const imgWrapper = document.createElement('div');
-    imgWrapper.className = 'product-image-wrapper';
-    imgWrapper.style.backgroundColor = getSelectedColorRGBA(selectedColorFilter);
-
-    const img = document.createElement('img');
-    img.src = product.image;
-    img.alt = product.name;
-    img.className = 'product-image';
-    img.loading = 'lazy';
-    imgWrapper.appendChild(img);
-
-    // DỰNG OVERLAY LỚP PHỦ NÚT EDIT & DELETE QUẢN TRỊ
-    const actionsBar = document.createElement('div');
-    actionsBar.className = 'admin-actions-bar';
-
-    // Nút Sửa (Edit)
-    const editBtn = document.createElement('button');
-    editBtn.className = 'admin-act-btn edit-btn';
-    editBtn.setAttribute('aria-label', `Sửa sản phẩm ${product.name}`);
-    const editIcon = document.createElement('i');
-    editIcon.className = 'ri-edit-line';
-    editBtn.appendChild(editIcon);
-    
-    editBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // Cản trở mở Quick View
-      
-      // Điền thông tin cũ vào form
-      document.getElementById('admin-form-id').value = product.id;
-      document.getElementById('admin-form-name').value = product.name;
-      document.getElementById('admin-form-category').value = product.category;
-      document.getElementById('admin-form-price').value = product.price;
-      document.getElementById('admin-form-image').value = product.image;
-      document.getElementById('admin-form-desc').value = product.description;
-
-      document.getElementById('admin-modal-title').textContent = 'CẬP NHẬT SẢN PHẨM';
-      
-      // Mở Modal
-      adminProductOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-
-    // Nút Xóa (Delete)
-    const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'admin-act-btn delete-btn';
-    deleteBtn.setAttribute('aria-label', `Xóa sản phẩm ${product.name}`);
-    const deleteIcon = document.createElement('i');
-    deleteIcon.className = 'ri-delete-bin-line';
-    deleteBtn.appendChild(deleteIcon);
-
-    deleteBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // Cản trở mở Quick View
-
-      const confirmDel = confirm(`Bạn có chắc chắn muốn xóa mũ bảo hiểm "${product.name}" khỏi cơ sở dữ liệu không?`);
-      if (confirmDel) {
-        products = products.filter(p => p.id !== product.id);
-        saveProductsToStorage();
-
-        showToast(`Đã xóa sản phẩm "${product.name}" khỏi kho!`, "success");
-
-        // Làm mới tất cả lưới hiển thị sản phẩm
-        renderAdminProducts();
-        renderProducts();
-        if (typeof renderHomeCategoryProducts === 'function') {
-          renderHomeCategoryProducts('urban');
-        }
-      }
-    });
-
-    actionsBar.appendChild(editBtn);
-    actionsBar.appendChild(deleteBtn);
-    imgWrapper.appendChild(actionsBar);
-
-    card.appendChild(imgWrapper);
-
-    // Khối thông tin
-    const info = document.createElement('div');
-    info.className = 'product-info';
-
-    const catLbl = document.createElement('span');
-    catLbl.className = 'product-category-lbl';
-    catLbl.textContent = product.categoryLabel;
-    info.appendChild(catLbl);
-
-    const metaRow = document.createElement('div');
-    metaRow.className = 'product-meta-row';
-
-    const title = document.createElement('h3');
-    title.className = 'product-title';
-    title.textContent = product.name;
-    metaRow.appendChild(title);
-
-    const price = document.createElement('span');
-    price.className = 'product-price';
-    price.textContent = product.priceStr;
-    metaRow.appendChild(price);
-
-    info.appendChild(metaRow);
-    card.appendChild(info);
-
-    adminProductsContainer.appendChild(card);
-  });
-
-  // Render phân trang quản trị
-  renderAdminPagination(totalPages);
-}
-
-// --- RENDER PAGINATION IN ADMIN PANEL ---
-function renderAdminPagination(totalPages) {
-  adminPaginationContainer.replaceChildren();
-  if (totalPages <= 1) return;
-
-  // Nút lùi trang (<)
-  const prevBtn = document.createElement('button');
-  prevBtn.className = `page-btn ${adminCurrentPage === 1 ? 'disabled' : ''}`;
-  prevBtn.setAttribute('aria-label', 'Trang trước');
-  const prevIcon = document.createElement('i');
-  prevIcon.className = 'ri-arrow-left-s-line';
-  prevBtn.appendChild(prevIcon);
-  if (adminCurrentPage > 1) {
-    prevBtn.addEventListener('click', () => {
-      adminCurrentPage--;
-      renderAdminProducts();
-      window.scrollTo({ top: adminProductsContainer.offsetTop - 100, behavior: 'smooth' });
-    });
-  }
-  adminPaginationContainer.appendChild(prevBtn);
-
-  // Các nút số trang
-  for (let i = 1; i <= totalPages; i++) {
-    const pageNumBtn = document.createElement('button');
-    pageNumBtn.className = `page-btn ${adminCurrentPage === i ? 'active' : ''}`;
-    pageNumBtn.textContent = i.toString();
-    pageNumBtn.addEventListener('click', () => {
-      adminCurrentPage = i;
-      renderAdminProducts();
-      window.scrollTo({ top: adminProductsContainer.offsetTop - 100, behavior: 'smooth' });
-    });
-    adminPaginationContainer.appendChild(pageNumBtn);
-  }
-
-  // Nút tiến trang (>)
-  const nextBtn = document.createElement('button');
-  nextBtn.className = `page-btn ${adminCurrentPage === totalPages ? 'disabled' : ''}`;
-  nextBtn.setAttribute('aria-label', 'Trang tiếp theo');
-  const nextIcon = document.createElement('i');
-  nextIcon.className = 'ri-arrow-right-s-line';
-  nextBtn.appendChild(nextIcon);
-  if (adminCurrentPage < totalPages) {
-    nextBtn.addEventListener('click', () => {
-      adminCurrentPage++;
-      renderAdminProducts();
-      window.scrollTo({ top: adminProductsContainer.offsetTop - 100, behavior: 'smooth' });
-    });
-  }
-  adminPaginationContainer.appendChild(nextBtn);
 }

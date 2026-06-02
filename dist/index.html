@@ -17,7 +17,7 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <script type="module" crossorigin src="./assets/index-DpvBQk7m.js"></script>
+  <script type="module" crossorigin src="./assets/index-Bvbaq77t.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-2AbhrvSO.css">
 </head>
 <body>
@@ -229,87 +229,7 @@
       </section>
     </div>
 
-    <!-- ==========================================
-         GIAO DIỆN QUẢN TRỊ SẢN PHẨM (ADMIN CONTROL)
-         ========================================== -->
-    <div id="admin-view" style="display: none;">
-      <!-- 1. Hero Title Banner Section (nhìn giống catalog nhưng là trang admin) -->
-      <section class="hero-section" aria-label="Banner quảng trị">
-        <div class="admin-hero-banner" style="background-color: #1a1a1a; color: white; padding: 2.5rem 1.5rem; text-align: center; border-bottom: 3px solid var(--accent);">
-          <h1 style="color: white; font-family: var(--font-title); font-size: 1.8rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;">BẢNG ĐIỀU KHIỂN QUẢN TRỊ</h1>
-          <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 0.5rem;">Thêm, sửa, xóa sản phẩm và tự động đồng bộ hóa LocalStorage trong thời gian thực</p>
-        </div>
-      </section>
 
-      <!-- 2. Admin Catalog Section -->
-      <section class="catalog-section">
-      <div class="container catalog-container">
-        <!-- Sidebar Bộ Lọc trên Desktop cho Admin -->
-        <aside class="desktop-sidebar" id="admin-desktop-sidebar">
-          <div class="sidebar-sticky">
-            <!-- 1. GIÁ TIỀN -->
-            <div class="filter-group">
-              <h3 class="sidebar-title">GIÁ TIỀN</h3>
-              <div class="price-slider-container">
-                <div class="slider-track-wrap">
-                  <div class="slider-track" id="admin-desktop-slider-track"></div>
-                  <input type="range" min="0" max="10000000" value="0" id="admin-desktop-price-min" class="price-range-input" aria-label="Giá tối thiểu">
-                  <input type="range" min="0" max="10000000" value="10000000" id="admin-desktop-price-max" class="price-range-input" aria-label="Giá tối đa">
-                </div>
-                <div class="price-labels">
-                  <span id="admin-desktop-price-min-lbl">0đ</span>
-                  <span id="admin-desktop-price-max-lbl">10.000.000đ</span>
-                </div>
-              </div>
-            </div>
-
-            <hr class="filter-divider">
-
-            <!-- 2. DANH MỤC SẢN PHẨM -->
-            <div class="filter-group">
-              <h3 class="sidebar-title">DANH MỤC SẢN PHẨM</h3>
-              <div class="filter-options">
-                <label class="filter-option checkbox-option">
-                  <input type="checkbox" class="custom-checkbox" name="admin-desktop-cat-filter" value="sport">
-                  <span>NÓN THỂ THAO</span>
-                </label>
-                <label class="filter-option checkbox-option">
-                  <input type="checkbox" class="custom-checkbox" name="admin-desktop-cat-filter" value="urban">
-                  <span>NÓN XE MÁY</span>
-                </label>
-                <label class="filter-option checkbox-option">
-                  <input type="checkbox" class="custom-checkbox" name="admin-desktop-cat-filter" value="kids">
-                  <span>NÓN TRẺ EM</span>
-                </label>
-                <label class="filter-option checkbox-option">
-                  <input type="checkbox" class="custom-checkbox" name="admin-desktop-cat-filter" value="accessories">
-                  <span>PHỤ KIỆN</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        <!-- Khối bên phải chứa tiêu đề admin, lưới sản phẩm quản trị, nút thêm sản phẩm -->
-        <div class="catalog-content">
-          <!-- Khối Tiêu Đề Mục Admin -->
-          <div class="catalog-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 2rem;">
-            <h2 class="catalog-title" style="font-size: 1.5rem; font-weight: 800; text-transform: uppercase; margin: 0;">QUẢN LÝ SẢN PHẨM</h2>
-            <button class="btn btn-accent" id="admin-add-product-btn" style="border-radius: 0; font-weight: 700; padding: 0.6rem 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem;">
-              <i class="ri-add-line" style="font-size: 1.2rem;"></i>
-              <span>THÊM SẢN PHẨM</span>
-            </button>
-          </div>
-
-          <!-- Lưới sản phẩm quản trị -->
-          <div class="products-grid" id="admin-products-grid"></div>
-
-          <!-- Phân trang quản trị -->
-          <div class="pagination" id="admin-pagination"></div>
-        </div>
-      </div>
-      </section>
-    </div>
 
     <!-- ==========================================
          GIAO DIỆN BỘ LỌC CỬA HÀNG (CATALOG SHOP)
@@ -422,12 +342,18 @@
         <!-- Khối bên phải chứa tiêu đề, lưới sản phẩm, phân trang -->
         <div class="catalog-content">
           <!-- Khối Tiêu Đề Mục -->
-          <div class="catalog-header">
+          <div class="catalog-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
             <h1 class="catalog-title" id="catalog-main-title">Nón Bảo Hiểm</h1>
-            <button class="filter-btn" id="filter-btn" aria-label="Mở bộ lọc danh mục sản phẩm">
-              <i class="ri-filter-3-line" aria-hidden="true"></i>
-              <span>Bộ lọc</span>
-            </button>
+            <div style="display: flex; align-items: center; gap: 1rem;">
+              <button class="btn btn-accent" id="admin-add-product-btn" style="border-radius: 0; font-weight: 700; padding: 0.6rem 1.25rem; display: none; align-items: center; gap: 0.5rem;">
+                <i class="ri-add-line" style="font-size: 1.2rem;"></i>
+                <span>THÊM SẢN PHẨM</span>
+              </button>
+              <button class="filter-btn" id="filter-btn" aria-label="Mở bộ lọc danh mục sản phẩm">
+                <i class="ri-filter-3-line" aria-hidden="true"></i>
+                <span>Bộ lọc</span>
+              </button>
+            </div>
           </div>
 
           <!-- Vùng hiển thị tag lọc chủ động -->
