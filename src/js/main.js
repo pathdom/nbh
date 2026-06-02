@@ -559,7 +559,7 @@ function renderProducts() {
     imgWrapper.style.backgroundColor = getSelectedColorRGBA(selectedColorFilter);
 
     const img = document.createElement('img');
-    img.src = product.image;
+    img.src = product.image.startsWith('http') || product.image.startsWith('/') ? product.image : '/' + product.image;
     img.alt = product.name;
     img.className = 'product-image';
     img.loading = 'lazy';
@@ -782,7 +782,8 @@ function updateFilterTags() {
 // --- QUICK VIEW MODAL CONTROLLERS ---
 function openQuickView(product) {
   // Gán thông tin sản phẩm (XSS Safe)
-  document.getElementById('modal-img').src = product.image;
+  const safeImgSrc = product.image.startsWith('http') || product.image.startsWith('/') ? product.image : '/' + product.image;
+  document.getElementById('modal-img').src = safeImgSrc;
   document.getElementById('modal-img').alt = product.name;
   document.getElementById('modal-title').textContent = product.name;
   document.getElementById('modal-category').textContent = product.categoryLabel;
@@ -1135,7 +1136,7 @@ function renderHomeCategoryProducts(category) {
     imgWrapper.className = 'featured-img-wrapper';
 
     const img = document.createElement('img');
-    img.src = product.image;
+    img.src = product.image.startsWith('http') || product.image.startsWith('/') ? product.image : '/' + product.image;
     img.alt = product.name;
     img.className = 'featured-img';
     img.loading = 'lazy';
