@@ -28,7 +28,7 @@ let productsContainer, paginationContainer, activeFiltersContainer;
 let drawerOverlay, mobileDrawer, searchModal;
 let quickviewOverlay, quickviewModal;
 let toastContainer;
-let homepageView, catalogView;
+let homepageView, catalogView, contactView;
 let adminProductOverlay, adminProductForm;
 
 // --- INITIALIZATION ---
@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   homepageView = document.getElementById('homepage-view');
   catalogView = document.getElementById('catalog-view');
+  contactView = document.getElementById('contact-view');
   
   adminProductOverlay = document.getElementById('admin-product-overlay');
   adminProductForm = document.getElementById('admin-product-form');
@@ -564,11 +565,8 @@ function setupEventListeners() {
   if (navAboutContact) {
     navAboutContact.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-azoma');
-      const target = document.getElementById('lien-he');
-      if (target) {
-        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-      }
+      navigateTo('/lien-he');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -576,10 +574,7 @@ function setupEventListeners() {
     navContact.addEventListener('click', (e) => {
       e.preventDefault();
       navigateTo('/lien-he');
-      const target = document.getElementById('lien-he');
-      if (target) {
-        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -1068,6 +1063,7 @@ function showToast(message, type = 'success') {
 export function switchView(viewName) {
   const homepageView = document.getElementById('homepage-view');
   const catalogView = document.getElementById('catalog-view');
+  const contactView = document.getElementById('contact-view');
   const navHome = document.getElementById('nav-home');
   const navCatalog = document.getElementById('nav-catalog');
   const adminAddBtn = document.getElementById('admin-add-product-btn');
@@ -1078,6 +1074,7 @@ export function switchView(viewName) {
   if (viewName === 'home') {
     homepageView.style.display = 'block';
     catalogView.style.display = 'none';
+    if (contactView) contactView.style.display = 'none';
     catalogView.classList.remove('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'none';
     if (mainTitle) mainTitle.textContent = 'Nón Bảo Hiểm';
@@ -1088,6 +1085,7 @@ export function switchView(viewName) {
   } else if (viewName === 'catalog') {
     homepageView.style.display = 'none';
     catalogView.style.display = 'block';
+    if (contactView) contactView.style.display = 'none';
     catalogView.classList.remove('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'none';
     if (mainTitle) mainTitle.textContent = 'Nón Bảo Hiểm';
@@ -1100,6 +1098,7 @@ export function switchView(viewName) {
   } else if (viewName === 'admin') {
     homepageView.style.display = 'none';
     catalogView.style.display = 'block';
+    if (contactView) contactView.style.display = 'none';
     catalogView.classList.add('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'inline-flex';
     if (mainTitle) mainTitle.textContent = 'QUẢN LÝ SẢN PHẨM';
@@ -1109,6 +1108,15 @@ export function switchView(viewName) {
     if (navCatalog) navCatalog.classList.remove('active-nav-pill');
 
     renderProducts();
+  } else if (viewName === 'contact') {
+    homepageView.style.display = 'none';
+    catalogView.style.display = 'none';
+    if (contactView) contactView.style.display = 'block';
+    if (adminAddBtn) adminAddBtn.style.display = 'none';
+
+    // Xoá active navigation pill
+    if (navHome) navHome.classList.remove('active-nav-pill');
+    if (navCatalog) navCatalog.classList.remove('active-nav-pill');
   }
 }
 
@@ -1328,13 +1336,8 @@ function handleUrlRouting() {
       }, 300);
     }
   } else if (hash.includes('lien-he')) {
-    switchView('home');
-    const target = document.getElementById('lien-he');
-    if (target) {
-      setTimeout(() => {
-        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-      }, 300);
-    }
+    switchView('contact');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
     // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: #/trang-chu hoặc rỗng)
     switchView('home');

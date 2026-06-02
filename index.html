@@ -392,6 +392,45 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <!-- ==========================================
+       GIAO DIỆN LIÊN HỆ (CONTACT VIEW)
+       ========================================== -->
+  <div id="contact-view" style="display: none;">
+    <!-- Contact details exactly matching the reference screenshot -->
+    <section style="background-color: var(--surface-color); padding: 7rem 1.5rem 8rem; min-height: calc(100vh - 64px - 380px); display: flex; align-items: center; transition: background-color var(--transition-normal);">
+      <div class="container" style="display: flex; justify-content: flex-end; align-items: center; width: 100%;">
+        
+        <!-- Khối thông tin liên hệ nằm bên phải giống hình mẫu -->
+        <div style="max-width: 550px; width: 100%; text-align: right; display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <h1 style="font-family: var(--font-title); font-size: 2.75rem; font-weight: 800; color: var(--accent); margin: 0; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.1;">
+            LIÊN HỆ CHÚNG TÔI
+          </h1>
+          
+          <p style="font-size: 1.05rem; color: var(--text-primary); font-weight: 600; margin: 0; line-height: 1.5; letter-spacing: 0.02em;">
+            Mọi thắc mắc và yêu cầu cần hỗ trợ vui lòng liên hệ AZOMA Helmet
+          </p>
+          
+          <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: 0.5rem;">
+            <a href="tel:0866629139" style="font-family: var(--font-title); font-size: 1.35rem; font-weight: 700; color: var(--text-primary); transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-primary)'">
+              0866629139
+            </a>
+            <a href="mailto:azomahelmets@gmail.com" style="font-size: 1.1rem; font-weight: 500; color: var(--text-secondary); transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='var(--text-secondary)'">
+              azomahelmets@gmail.com
+            </a>
+          </div>
+          
+          <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; max-width: 480px; margin: 0; align-self: flex-end;">
+            50A Dương Đức Hiền, Phường Tây Thạnh, Quận Tân Phú, Thành phố Hồ Chí Minh, Việt Nam
+          </p>
+          
+        </div>
+        
+      </div>
+    </section>
+  </div>
   </main>
 
   <!-- ==========================================
@@ -401,59 +440,69 @@
     <!-- Hình nền nón bảo hiểm chìm phía sau -->
     <img src="helmet_bg_footer.png" alt="" class="footer-bg-graphic">
 
-    <div class="container footer-top">
+    <div class="container footer-top" style="display: grid; grid-template-columns: 2fr 1fr 1fr 1.8fr; gap: 2.5rem; margin-bottom: 3rem;">
       <!-- Cột 1: Thông tin thương hiệu -->
-      <div class="footer-info-col">
-        <h2 class="footer-title">CÔNG TY TNHH QUỐC TẾ AZOMA VIỆT NAM</h2>
-        <p class="footer-desc">
-          AZOMA tự hào là đơn vị tiên phong thiết kế và phân phối các dòng mũ bảo hiểm phong cách hiện đại, tối giản. Sản phẩm được nghiên cứu khí động học tinh tế và đạt chứng nhận kiểm định an toàn quốc tế, bảo vệ trọn vẹn mỗi chuyến hành trình của bạn.
+      <div class="footer-info-col" style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <h2 class="footer-title" style="font-family: var(--font-title); font-size: 1.3rem; font-weight: 800; color: #fff; text-transform: uppercase; margin: 0; line-height: 1.2; letter-spacing: 0.02em;">CÔNG TY TNHH QUỐC TẾ AZOMA VIỆT NAM</h2>
+        <p class="footer-desc" style="font-size: 0.88rem; color: #718096; margin: 0; line-height: 1.5;">
+          Thương hiệu Việt dẫn đầu về chất lượng, an toàn và phong cách.
         </p>
-        <div class="footer-social-row">
-          <a href="#" class="social-btn" aria-label="Theo dõi AZOMA trên Facebook"><i class="ri-facebook-fill"></i></a>
-          <a href="#" class="social-btn" aria-label="Theo dõi AZOMA trên Youtube"><i class="ri-youtube-fill"></i></a>
-          <a href="#" class="social-btn" aria-label="Theo dõi AZOMA trên TikTok"><i class="ri-tiktok-fill"></i></a>
-          <a href="#" class="social-btn" aria-label="Theo dõi AZOMA trên Instagram"><i class="ri-instagram-fill"></i></a>
-        </div>
       </div>
 
-      <!-- Cột 2: Các Liên Kết nhanh -->
-      <div class="footer-info-col">
-        <h3 class="footer-link-title">Danh Mục</h3>
-        <div class="footer-links-grid">
-          <a href="#san-pham" class="footer-link" data-action="go-to-catalog" data-cat="urban">Nón bảo hiểm Đô thị</a>
-          <a href="#san-pham" class="footer-link" data-action="go-to-catalog" data-cat="sport">Nón bảo hiểm Thể thao</a>
-          <a href="#" class="footer-link">Về AZOMA Helmet</a>
-          <a href="#" class="footer-link">Chính sách Bảo hành</a>
-          <a href="#" class="footer-link">Tin tức doanh nghiệp</a>
-        </div>
+      <!-- Cột 2: Nhóm link 1 -->
+      <div class="footer-info-col" style="display: flex; flex-direction: column; gap: 0.75rem; justify-content: flex-start;">
+        <a href="#san-pham" class="footer-link" data-action="go-to-catalog" style="font-weight: 600; color: #fff; font-size: 0.95rem; transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">Nón Bảo Hiểm</a>
+        <a href="#ve-azoma" class="footer-link" style="font-weight: 600; color: #fff; font-size: 0.95rem; transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">Về AZOMA</a>
       </div>
 
-      <!-- Cột 3: Form Đăng Ký Nhận Bản Tin -->
-      <div class="footer-form-col">
-        <h3 class="footer-form-title">ĐĂNG KÝ BẢN TIN</h3>
-        <p class="footer-desc">Nhận ngay thông tin các dòng mũ bảo hiểm mới nhất và ưu đãi đặc quyền từ AZOMA.</p>
-        <form class="footer-form" id="newsletter-form">
-          <div class="footer-input-row">
-            <input type="email" id="newsletter-email" class="footer-input" placeholder="Email của bạn..." required autocomplete="email" aria-label="Nhập địa chỉ email đăng ký">
-            <button type="submit" class="footer-submit-btn" aria-label="Gửi đăng ký bản tin">ĐĂNG&nbsp;KÝ</button>
+      <!-- Cột 3: Nhóm link 2 -->
+      <div class="footer-info-col" style="display: flex; flex-direction: column; gap: 0.75rem; justify-content: flex-start;">
+        <a href="#san-pham" class="footer-link" data-action="go-to-catalog" style="font-weight: 600; color: #fff; font-size: 0.95rem; transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">Tin tức</a>
+        <a href="#ve-azoma" class="footer-link" style="font-weight: 600; color: #fff; font-size: 0.95rem; transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">Chính sách</a>
+      </div>
+
+      <!-- Cột 4: Form Đăng ký & Social ở bên phải -->
+      <div class="footer-form-col" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; gap: 1rem; flex-wrap: wrap;">
+          <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+            <h3 class="footer-form-title" style="color: #fff; font-size: 1.05rem; font-weight: 800; text-transform: uppercase; margin: 0; letter-spacing: 0.05em;">ĐĂNG KÝ</h3>
+            <p class="footer-desc" style="font-size: 0.8rem; color: #718096; margin: 0;">Để nhận thông tin từ AZOMA Helmet</p>
           </div>
-          <label class="checkbox-label" for="agreement-checkbox">
-            <input type="checkbox" id="agreement-checkbox" required>
-            <span>Đồng ý chính sách và điều khoản của AZOMA Helmet.</span>
+          <div class="footer-social-row" style="display: flex; gap: 0.5rem; margin: 0; align-items: center;">
+            <a href="#" class="social-btn" aria-label="Theo dõi AZOMA trên Facebook" style="width: 32px; height: 32px; font-size: 0.9rem; margin: 0; background-color: #1a202c;"><i class="ri-facebook-fill"></i></a>
+            <a href="#" class="social-btn" aria-label="Theo dõi AZOMA trên Youtube" style="width: 32px; height: 32px; font-size: 0.9rem; margin: 0; background-color: #1a202c;"><i class="ri-youtube-fill"></i></a>
+            <a href="#" class="social-btn" aria-label="Theo dõi AZOMA trên TikTok" style="width: 32px; height: 32px; font-size: 0.9rem; margin: 0; background-color: #1a202c;"><i class="ri-tiktok-fill"></i></a>
+            <a href="#" class="social-btn" aria-label="Theo dõi AZOMA trên Instagram" style="width: 32px; height: 32px; font-size: 0.9rem; margin: 0; background-color: #1a202c;"><i class="ri-instagram-fill"></i></a>
+          </div>
+        </div>
+        
+        <form class="footer-form" id="newsletter-form" style="display: flex; flex-direction: column; gap: 0.75rem; width: 100%;">
+          <div class="footer-input-row" style="display: flex; width: 100%;">
+            <input type="email" id="newsletter-email" class="footer-input" placeholder="Email của bạn..." required autocomplete="email" aria-label="Nhập địa chỉ email đăng ký" style="background-color: #000; border: 1px solid #333; border-right: none; color: #fff; padding: 0.6rem 1rem; font-size: 0.85rem; flex-grow: 1; border-radius: var(--radius-sm) 0 0 var(--radius-sm); outline: none;">
+            <button type="submit" class="footer-submit-btn" aria-label="Gửi đăng ký bản tin" style="background-color: var(--accent); color: #000; font-weight: 700; font-size: 0.85rem; width: 110px; flex: 0 0 110px; padding: 0.6rem 0; border: none; cursor: pointer; transition: background-color var(--transition-fast); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; height: 100%;">ĐĂNG KÝ</button>
+          </div>
+          <label class="checkbox-label" for="agreement-checkbox" style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: #718096; cursor: pointer;">
+            <input type="checkbox" id="agreement-checkbox" required style="margin: 0; width: 14px; height: 14px; cursor: pointer;">
+            <span>Đồng ý <a href="#" style="text-decoration: underline; color: inherit;">chính sách và điều khoản</a> của AZOMA Helmet.</span>
           </label>
         </form>
       </div>
     </div>
 
+
     <!-- Chân cùng Footer -->
-    <div class="container footer-bottom">
-      <div class="footer-lang">
-        <span class="lang-option active">VI</span>
-        <span>|</span>
-        <span class="lang-option">EN</span>
+    <div class="container footer-bottom" style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1a202c; padding-top: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+      <div class="footer-lang" style="display: flex; align-items: center; gap: 1rem; font-size: 0.8rem; color: #718096;">
+        <span>Ngôn ngữ</span>
+        <span class="lang-option active" style="display: flex; align-items: center; gap: 0.25rem; font-weight: 700; color: #fff; cursor: pointer;">
+          <i class="ri-global-line" style="font-size: 0.95rem;"></i> VI
+        </span>
+        <span class="lang-option" style="display: flex; align-items: center; gap: 0.25rem; cursor: pointer; color: #718096;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#718096'">
+          <i class="ri-global-line" style="font-size: 0.95rem;"></i> EN
+        </span>
       </div>
       <div>
-        <p class="footer-desc">AZOMA HELMET COPYRIGHT © 2026. ALL RIGHTS RESERVED.</p>
+        <p class="footer-desc" style="font-size: 0.8rem; color: #718096; margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">AZOMA HELMET COPYRIGHT © 2026. ALL RIGHTS RESERVED.</p>
       </div>
     </div>
   </footer>
