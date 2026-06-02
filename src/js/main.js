@@ -12,6 +12,23 @@ const productsPerPage = 6;
 let selectedColor = 'Matte Black';
 let selectedSize = 'M';
 
+// Cấu hình đường dẫn gốc tự động (Hỗ trợ localhost và thư mục con như /nbh/ trên GitHub Pages)
+const getAppBasePath = () => {
+  const pathname = window.location.pathname;
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return '/';
+  }
+  const segments = pathname.split('/');
+  if (segments.length > 1 && segments[1] !== '') {
+    const virtualPaths = ['trang-chu', 'san-pham', 've-poc', 'lien-he'];
+    if (!virtualPaths.includes(segments[1])) {
+      return `/${segments[1]}/`;
+    }
+  }
+  return '/';
+};
+const BASE_PATH = getAppBasePath();
+
 // --- DOM ELEMENTS ---
 let productsContainer, paginationContainer, activeFiltersContainer;
 let drawerOverlay, mobileDrawer, searchModal;
@@ -54,8 +71,13 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   updateFilterTags();
 
-  // Hiển thị giao diện Trang Chủ mặc định ban đầu
-  switchView('home');
+  // Lắng nghe sự kiện di chuyển lịch sử trang (Back/Forward)
+  window.addEventListener('popstate', () => {
+    handleUrlRouting();
+  });
+
+  // Tự động phân tích URL hiện tại để hiển thị Chế độ xem thích hợp lúc tải trang
+  handleUrlRouting();
 });
 
 // --- HELPER FOR SOFT SWATCH BG COLORS (UX DECORATION) ---
@@ -96,7 +118,8 @@ function syncCategoryFilters(category) {
     mobileChecks.forEach(chk => chk.checked = (chk.value === category));
   }
 
-  // Chuyển đổi sang chế độ xem Catalog
+  // Chuyển đổi sang chế độ xem Catalog và cập nhật URL
+  window.history.pushState({ view: 'catalog', cat: category }, '', BASE_PATH + 'san-pham');
   switchView('catalog');
 
   renderProducts();
@@ -367,15 +390,18 @@ function setupEventListeners() {
     });
   }
 
-  // View Switchers click events
+  // View Switchers click events using Client-side SPA Router
   const navHome = document.getElementById('nav-home');
   const mobNavHome = document.getElementById('mob-nav-home');
   const brandLogo = document.getElementById('nbh-brand-logo');
   const navCatalog = document.getElementById('nav-catalog');
+  const navAbout = document.getElementById('nav-about');
+  const navContact = document.getElementById('nav-contact');
 
   if (navHome) {
     navHome.addEventListener('click', (e) => {
       e.preventDefault();
+      window.history.pushState({ view: 'home' }, '', BASE_PATH + 'trang-chu');
       switchView('home');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -384,6 +410,7 @@ function setupEventListeners() {
     mobNavHome.addEventListener('click', (e) => {
       e.preventDefault();
       closeMobileDrawer();
+      window.history.pushState({ view: 'home' }, '', BASE_PATH + 'trang-chu');
       switchView('home');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -391,6 +418,7 @@ function setupEventListeners() {
   if (brandLogo) {
     brandLogo.addEventListener('click', (e) => {
       e.preventDefault();
+      window.history.pushState({ view: 'home' }, '', BASE_PATH + 'trang-chu');
       switchView('home');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -398,8 +426,31 @@ function setupEventListeners() {
   if (navCatalog) {
     navCatalog.addEventListener('click', (e) => {
       e.preventDefault();
+      window.history.pushState({ view: 'catalog' }, '', BASE_PATH + 'san-pham');
       switchView('catalog');
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (navAbout) {
+    navAbout.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.history.pushState({ view: 'home', scroll: 'about' }, '', BASE_PATH + 've-poc');
+      switchView('home');
+      const target = document.getElementById('lien-he');
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      }
+    });
+  }
+  if (navContact) {
+    navContact.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.history.pushState({ view: 'home', scroll: 'contact' }, '', BASE_PATH + 'lien-he');
+      switchView('home');
+      const target = document.getElementById('lien-he');
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      }
     });
   }
 
@@ -1042,4 +1093,32 @@ function renderHomeCategoryProducts(category) {
     card.appendChild(info);
     container.appendChild(card);
   });
+}
+
+// --- CLIENT-SIDE ROUTER HANDLE URL ROUTING ---
+function handleUrlRouting() {
+  const pathname = window.location.pathname;
+
+  if (pathname.includes('san-pham')) {
+    switchView('catalog');
+  } else if (pathname.includes('ve-poc')) {
+    switchView('home');
+    const target = document.getElementById('lien-he');
+    if (target) {
+      setTimeout(() => {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      }, 300);
+    }
+  } else if (pathname.includes('lien-he')) {
+    switchView('home');
+    const target = document.getElementById('lien-he');
+    if (target) {
+      setTimeout(() => {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      }, 300);
+    }
+  } else {
+    // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: /trang-chu hoặc /)
+    switchView('home');
+  }
 }
