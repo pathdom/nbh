@@ -17,6 +17,7 @@ let productsContainer, paginationContainer, activeFiltersContainer;
 let drawerOverlay, mobileDrawer, searchModal;
 let quickviewOverlay, quickviewModal;
 let toastContainer;
+let homepageView, catalogView;
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -33,6 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
   quickviewModal = document.getElementById('quickview-modal');
   toastContainer = document.getElementById('toast-container');
 
+  homepageView = document.getElementById('homepage-view');
+  catalogView = document.getElementById('catalog-view');
+
   // Khởi tạo theme
   initTheme();
   
@@ -43,9 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
   
   setupEventListeners();
 
-  // Render sản phẩm ban đầu
+  // Khởi tạo logic và dữ liệu cho Trang Chủ
+  initHomepage();
+
+  // Render sản phẩm ban đầu cho Catalog
   renderProducts();
   updateFilterTags();
+
+  // Hiển thị giao diện Trang Chủ mặc định ban đầu
+  switchView('home');
 });
 
 // --- HELPER FOR SOFT SWATCH BG COLORS (UX DECORATION) ---
@@ -85,6 +95,9 @@ function syncCategoryFilters(category) {
     desktopChecks.forEach(chk => chk.checked = (chk.value === category));
     mobileChecks.forEach(chk => chk.checked = (chk.value === category));
   }
+
+  // Chuyển đổi sang chế độ xem Catalog
+  switchView('catalog');
 
   renderProducts();
   updateFilterTags();
@@ -350,7 +363,43 @@ function setupEventListeners() {
   const infoBtn = document.getElementById('info-btn');
   if (infoBtn) {
     infoBtn.addEventListener('click', () => {
-      showToast("NBH Helmet - Thương hiệu nón dẫn đầu về chất lượng và an toàn!", "success");
+      showToast("POC Helmet - Thương hiệu nón dẫn đầu về chất lượng và an toàn!", "success");
+    });
+  }
+
+  // View Switchers click events
+  const navHome = document.getElementById('nav-home');
+  const mobNavHome = document.getElementById('mob-nav-home');
+  const brandLogo = document.getElementById('nbh-brand-logo');
+  const navCatalog = document.getElementById('nav-catalog');
+
+  if (navHome) {
+    navHome.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (mobNavHome) {
+    mobNavHome.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeMobileDrawer();
+      switchView('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (brandLogo) {
+    brandLogo.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (navCatalog) {
+    navCatalog.addEventListener('click', (e) => {
+      e.preventDefault();
+      switchView('catalog');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -775,4 +824,222 @@ function showToast(message, type = 'success') {
       toastContainer.removeChild(toast);
     }, 300);
   }, 4000);
+}
+
+// --- GLOBAL VIEW SWITCHER ---
+export function switchView(viewName) {
+  const homepageView = document.getElementById('homepage-view');
+  const catalogView = document.getElementById('catalog-view');
+  const navHome = document.getElementById('nav-home');
+  const navCatalog = document.getElementById('nav-catalog');
+
+  if (!homepageView || !catalogView) return;
+
+  if (viewName === 'home') {
+    homepageView.style.display = 'block';
+    catalogView.style.display = 'none';
+
+    // Đánh dấu active navigation pill
+    if (navHome) navHome.classList.add('active-nav-pill');
+    if (navCatalog) navCatalog.classList.remove('active-nav-pill');
+  } else if (viewName === 'catalog') {
+    homepageView.style.display = 'none';
+    catalogView.style.display = 'block';
+
+    // Đánh dấu active navigation pill
+    if (navHome) navHome.classList.remove('active-nav-pill');
+    if (navCatalog) navCatalog.classList.add('active-nav-pill');
+  }
+}
+
+// --- HOMEPAGE LOGIC & CAROUSELS ---
+function initHomepage() {
+  // 1. HERO SLIDER CAROUSEL LOGIC
+  const slides = document.querySelectorAll('.carousel-slide');
+  const indicators = document.querySelectorAll('.carousel-indicators-bar .indicator');
+  let currentHeroSlideIndex = 0;
+  let heroAutoplayTimer = null;
+
+  function showHeroSlide(index) {
+    if (slides.length === 0) return;
+    
+    // Đảm bảo chỉ số nằm trong giới hạn
+    if (index >= slides.length) index = 0;
+    if (index < 0) index = slides.length - 1;
+    
+    currentHeroSlideIndex = index;
+
+    // Reset classes
+    slides.forEach(slide => slide.classList.remove('active'));
+    indicators.forEach(ind => ind.classList.remove('active'));
+
+    // Kích hoạt slide hiện tại
+    slides[currentHeroSlideIndex].classList.add('active');
+    if (indicators[currentHeroSlideIndex]) {
+      indicators[currentHeroSlideIndex].classList.add('active');
+    }
+  }
+
+  function startHeroAutoplay() {
+    stopHeroAutoplay();
+    heroAutoplayTimer = setInterval(() => {
+      showHeroSlide(currentHeroSlideIndex + 1);
+    }, 5000); // Tự động trượt mỗi 5 giây
+  }
+
+  function stopHeroAutoplay() {
+    if (heroAutoplayTimer) {
+      clearInterval(heroAutoplayTimer);
+    }
+  }
+
+  // Đăng ký sự kiện Click cho Indicators của Hero
+  indicators.forEach((ind, idx) => {
+    ind.addEventListener('click', () => {
+      stopHeroAutoplay();
+      showHeroSlide(idx);
+      startHeroAutoplay();
+    });
+  });
+
+  // Khởi động trượt tự động
+  startHeroAutoplay();
+
+  // 2. FEATURED PRODUCTS QUICK VIEW BINDINGS
+  const featuredCards = document.querySelectorAll('.featured-product-card');
+  featuredCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const id = card.getAttribute('data-id');
+      const product = products.find(p => p.id === id);
+      if (product) {
+        openQuickView(product);
+      }
+    });
+  });
+
+  // Featured indicators click interaction
+  const featIndicators = document.querySelectorAll('.feat-indicator');
+  featIndicators.forEach((ind, idx) => {
+    ind.addEventListener('click', () => {
+      featIndicators.forEach(i => i.classList.remove('active'));
+      ind.classList.add('active');
+      showToast(`Đang hiển thị nhóm sản phẩm nổi bật bộ sưu tập ${idx + 1}!`, 'success');
+      
+      // Hiệu ứng dịch chuyển nhẹ lưới sản phẩm tạo cảm giác trượt thật
+      const grid = document.getElementById('featured-products-grid');
+      if (grid) {
+        grid.style.transform = `translateX(${(idx * -5) % 15}px)`;
+        setTimeout(() => {
+          grid.style.transform = 'translateX(0)';
+        }, 300);
+      }
+    });
+  });
+
+  // 3. CATEGORY TABS LOGIC (NỀN TỐI)
+  const categoryTabs = document.querySelectorAll('.cat-tab-btn');
+  categoryTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const category = tab.getAttribute('data-category');
+      
+      // Cập nhật class active
+      categoryTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+
+      // Render các sản phẩm thuộc danh mục
+      renderHomeCategoryProducts(category);
+    });
+  });
+
+  // Tải danh mục mặc định ban đầu là 'urban' trên Trang Chủ
+  renderHomeCategoryProducts('urban');
+
+  // 4. CROSS-PAGE INTER-NAVIGATION
+  const catalogNavButtons = document.querySelectorAll('[data-action="go-to-catalog"]');
+  catalogNavButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetCat = btn.getAttribute('data-cat');
+      
+      if (targetCat) {
+        syncCategoryFilters(targetCat);
+      } else {
+        switchView('catalog');
+      }
+
+      // Cuộn lên vị trí danh sách sản phẩm
+      const targetSection = document.getElementById('san-pham');
+      if (targetSection) {
+        window.scrollTo({
+          top: targetSection.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+}
+
+// --- RENDER PRODUCTS GRID IN DARK CATEGORY TAB ---
+function renderHomeCategoryProducts(category) {
+  const container = document.getElementById('home-categories-products');
+  if (!container) return;
+
+  // Xóa nội dung cũ an toàn (XSS Safe)
+  container.replaceChildren();
+
+  // Lọc sản phẩm thuộc danh mục được chọn, lấy tối đa 3 sản phẩm để hiển thị lưới 3 cột
+  const filteredProducts = products.filter(p => p.category === category).slice(0, 3);
+
+  if (filteredProducts.length === 0) {
+    const noMsg = document.createElement('div');
+    noMsg.style.gridColumn = '1 / -1';
+    noMsg.style.textAlign = 'center';
+    noMsg.style.padding = '3rem';
+    noMsg.style.color = 'rgba(255, 255, 255, 0.4)';
+    noMsg.textContent = 'Hiện chưa có sản phẩm nào thuộc nhóm danh mục này.';
+    container.appendChild(noMsg);
+    return;
+  }
+
+  // Khởi tạo thẻ sản phẩm động bằng createElement (XSS Safe)
+  filteredProducts.forEach(product => {
+    const card = document.createElement('article');
+    card.className = 'featured-product-card';
+    card.addEventListener('click', () => openQuickView(product));
+
+    // Khối hình ảnh
+    const imgWrapper = document.createElement('div');
+    imgWrapper.className = 'featured-img-wrapper';
+
+    const img = document.createElement('img');
+    img.src = product.image;
+    img.alt = product.name;
+    img.className = 'featured-img';
+    img.loading = 'lazy';
+    imgWrapper.appendChild(img);
+
+    card.appendChild(imgWrapper);
+
+    // Khối thông tin
+    const info = document.createElement('div');
+    info.className = 'featured-product-info';
+
+    const catLbl = document.createElement('span');
+    catLbl.className = 'featured-product-cat';
+    catLbl.textContent = product.categoryLabel;
+    info.appendChild(catLbl);
+
+    const title = document.createElement('h3');
+    title.className = 'featured-product-title';
+    title.textContent = product.name;
+    info.appendChild(title);
+
+    const price = document.createElement('span');
+    price.className = 'featured-product-price';
+    price.textContent = product.priceStr;
+    info.appendChild(price);
+
+    card.appendChild(info);
+    container.appendChild(card);
+  });
 }

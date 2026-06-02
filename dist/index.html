@@ -17,8 +17,8 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <script type="module" crossorigin src="./assets/index-CLyJzwQB.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-FpkcB_bR.css">
+  <script type="module" crossorigin src="./assets/index-DJiNpZSB.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DMrsTsyC.css">
 </head>
 <body>
 
@@ -32,25 +32,25 @@
         <i class="ri-menu-line" aria-hidden="true"></i>
       </button>
 
-      <!-- Logo NBH -->
-      <a href="/" class="logo" id="nbh-brand-logo">
-        <span>NBH</span><span class="logo-accent">.</span>
+      <!-- Logo POC -->
+      <a href="#" class="logo" id="nbh-brand-logo">
+        <span>POC</span><span class="logo-accent">.</span>
       </a>
 
       <!-- Menu điều hướng Desktop (Chỉ hiển thị trên máy tính) -->
       <nav class="desktop-nav" aria-label="Danh mục điều hướng chính">
         <ul class="nav-menu">
-          <li class="nav-item"><a href="#" class="nav-link">Trang Chủ</a></li>
+          <li class="nav-item"><a href="#" class="nav-link" id="nav-home">Trang Chủ</a></li>
           <li class="nav-item has-dropdown">
-            <a href="#san-pham" class="nav-link">Sản Phẩm <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
+            <a href="#san-pham" class="nav-link" id="nav-catalog">Sản Phẩm <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
             <ul class="dropdown-menu">
               <li><a href="#san-pham" class="dropdown-item" data-filter="all">Tất cả sản phẩm</a></li>
               <li><a href="#san-pham" class="dropdown-item" data-filter="urban">Nón bảo hiểm Đô thị</a></li>
               <li><a href="#san-pham" class="dropdown-item" data-filter="sport">Nón bảo hiểm Thể thao</a></li>
             </ul>
           </li>
-          <li class="nav-item"><a href="#lien-he" class="nav-link">Về NBH</a></li>
-          <li class="nav-item"><a href="#lien-he" class="nav-link">Liên Hệ</a></li>
+          <li class="nav-item"><a href="#lien-he" class="nav-link" id="nav-about">Về POC</a></li>
+          <li class="nav-item"><a href="#lien-he" class="nav-link" id="nav-contact">Liên Hệ</a></li>
         </ul>
       </nav>
 
@@ -70,13 +70,176 @@
        MAIN CONTENT
        ========================================== -->
   <main>
-    <!-- 1. Hero Banner Section -->
-    <section class="hero-section" aria-label="Banner quảng bá thương hiệu">
-      <img src="hero_banner.png" alt="Gia đình đi xe đạp đội mũ bảo hiểm NBH thời thượng dưới ánh nắng ấm" class="hero-banner" id="hero-banner-img">
-    </section>
+    <!-- ==========================================
+         GIAO DIỆN TRANG CHỦ POC HELMET PREMIUM
+         ========================================== -->
+    <div id="homepage-view">
+      <!-- 1. Hero Banner Slider Section -->
+      <section class="hero-carousel-section" aria-label="Banner quảng bá trượt">
+        <div class="carousel-container">
+          <div class="carousel-track" id="hero-carousel-track">
+            <!-- Slide 1 -->
+            <div class="carousel-slide active" style="background-image: linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0.7), rgba(255,255,255,0.2)), url('smart_design_bg.png');">
+              <div class="container slide-inner">
+                <div class="slide-content">
+                  <span class="slide-tag">THIẾT KẾ THÔNG MINH</span>
+                  <h2 class="slide-title">Hệ thống thông gió khí động học</h2>
+                  <p class="slide-desc">Bố trí một cách khoa học giúp tối ưu hóa lượng khí lưu thông, giúp người dùng luôn giữ được trạng thái tốt nhất khi vận động.</p>
+                  <a href="#san-pham" class="btn btn-accent btn-slide-more" data-action="go-to-catalog">Xem thêm</a>
+                </div>
+              </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="carousel-slide" style="background-image: linear-gradient(to right, rgba(255,255,255,0.95), rgba(255,255,255,0.7), rgba(255,255,255,0.2)), url('safety_quality_bg.png');">
+              <div class="container slide-inner">
+                <div class="slide-content">
+                  <span class="slide-tag">ĐỘT PHÁ CÔNG NGHỆ</span>
+                  <h2 class="slide-title">An toàn vượt trội chuẩn châu Âu</h2>
+                  <p class="slide-desc">Chế tác từ chất liệu carbon và lõi xốp EPS nén áp suất cao, hấp thụ xung lực tuyệt hảo bảo vệ hành trình của bạn.</p>
+                  <a href="#san-pham" class="btn btn-accent btn-slide-more" data-action="go-to-catalog">Xem thêm</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Slider page indicator ở góc trên cùng của khối nội dung (như hình mẫu) -->
+          <div class="carousel-indicators-bar">
+            <span class="indicator active" data-slide="0"></span>
+            <span class="indicator" data-slide="1"></span>
+          </div>
+        </div>
+      </section>
 
-    <!-- 2. Catalog Section -->
-    <section class="catalog-section" id="san-pham">
+      <!-- 2. Featured Products Section (SẢN PHẨM NỔI BẬT) -->
+      <section class="featured-products-section">
+        <div class="container">
+          <h2 class="section-heading">SẢN PHẨM NỔI BẬT</h2>
+          
+          <div class="featured-carousel-container">
+            <div class="featured-products-grid" id="featured-products-grid">
+              <!-- Sản phẩm 1 -->
+              <article class="featured-product-card" data-id="nbh-p08">
+                <div class="featured-img-wrapper">
+                  <img src="helmet_sport_black.png" alt="Nón bảo hiểm 1/2 POC P01" class="featured-img">
+                </div>
+                <div class="featured-product-info">
+                  <span class="featured-product-cat">Nón bảo hiểm 1/2</span>
+                  <h3 class="featured-product-title">POC P01</h3>
+                  <span class="featured-product-price">890,000 VNĐ</span>
+                </div>
+              </article>
+              
+              <!-- Sản phẩm 2 -->
+              <article class="featured-product-card" data-id="nbh-p05">
+                <div class="featured-img-wrapper">
+                  <img src="helmet_sport_black.png" alt="Nón bảo hiểm 1/2 POC P05" class="featured-img">
+                </div>
+                <div class="featured-product-info">
+                  <span class="featured-product-cat">Nón bảo hiểm 1/2</span>
+                  <h3 class="featured-product-title">POC P05</h3>
+                  <span class="featured-product-price">790,000 VNĐ</span>
+                </div>
+              </article>
+              
+              <!-- Sản phẩm 3 -->
+              <article class="featured-product-card" data-id="nbh-pk03s">
+                <div class="featured-img-wrapper">
+                  <img src="helmet_urban_black.png" alt="Nón bảo hiểm 1/2 POC PK02" class="featured-img">
+                </div>
+                <div class="featured-product-info">
+                  <span class="featured-product-cat">Nón bảo hiểm 1/2</span>
+                  <h3 class="featured-product-title">POC PK02</h3>
+                  <span class="featured-product-price">780,000 VNĐ</span>
+                </div>
+              </article>
+            </div>
+
+            <!-- Nút di chuyển slide cho sản phẩm nổi bật (indicators giống hình mẫu) -->
+            <div class="featured-slider-indicators">
+              <span class="feat-indicator active" data-index="0"></span>
+              <span class="feat-indicator" data-index="1"></span>
+              <span class="feat-indicator" data-index="2"></span>
+              <span class="feat-indicator" data-index="3"></span>
+              <span class="feat-indicator" data-index="4"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Smart Design Section (THIẾT KẾ THÔNG MINH - BANNER RỘNG) -->
+      <section class="home-smart-banner" style="background-image: linear-gradient(to right, rgba(0,0,0,0.6), rgba(0,0,0,0.3)), url('smart_design_bg.png');">
+        <div class="container smart-banner-container">
+          <div class="smart-banner-content">
+            <h2 class="smart-banner-title">THIẾT KẾ THÔNG MINH</h2>
+            <p class="smart-banner-desc">Hệ thống thông gió của nón bảo hiểm được bố trí một cách khoa học, giúp người dùng luôn giữ được trạng thái tốt nhất khi vận động.</p>
+            <a href="#san-pham" class="btn btn-accent btn-smart-more" data-action="go-to-catalog">Xem thêm</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Product Categories Section (DANH MỤC SẢN PHẨM - NỀN TỐI) -->
+      <section class="home-categories-section">
+        <div class="container">
+          <h2 class="home-categories-title">DANH MỤC SẢN PHẨM</h2>
+          
+          <div class="home-categories-tabs">
+            <button class="cat-tab-btn" data-category="sport">NÓN THỂ THAO</button>
+            <button class="cat-tab-btn active" data-category="urban">NÓN XE MÁY</button>
+            <button class="cat-tab-btn" data-category="kids">NÓN TRẺ EM</button>
+          </div>
+
+          <!-- Lưới sản phẩm danh mục xem nhanh -->
+          <div class="home-categories-products" id="home-categories-products">
+            <!-- Render động từ JS -->
+          </div>
+          
+          <div class="home-categories-footer">
+            <a href="#san-pham" class="btn btn-secondary btn-view-all-cats" data-action="go-to-catalog">Xem tất cả sản phẩm</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Safety, Trust & Quality Section (AN TOÀN, NIỀM TIN & CHẤT LƯỢNG) -->
+      <section class="home-safety-banner" style="background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('safety_quality_bg.png');">
+        <div class="container safety-banner-container">
+          <h2 class="safety-banner-title">AN TOÀN, NIỀM TIN & CHẤT LƯỢNG</h2>
+          <a href="#san-pham" class="btn btn-accent btn-safety-more" data-action="go-to-catalog">Xem thêm</a>
+        </div>
+      </section>
+
+      <!-- 6. Intro Cards Section (Giới thiệu chung / Quá trình phát triển) -->
+      <section class="home-intro-section">
+        <div class="container home-intro-grid">
+          <!-- Cột 1: Giới thiệu chung -->
+          <div class="intro-card-item" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('intro_about.png');">
+            <div class="intro-card-overlay">
+              <h3 class="intro-card-title">Giới thiệu chung</h3>
+              <a href="#lien-he" class="btn btn-accent btn-intro-more">Xem thêm</a>
+            </div>
+          </div>
+          
+          <!-- Cột 2: Quá trình phát triển -->
+          <div class="intro-card-item" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('intro_history.png');">
+            <div class="intro-card-overlay">
+              <h3 class="intro-card-title">Quá trình phát triển</h3>
+              <a href="#lien-he" class="btn btn-accent btn-intro-more">Xem thêm</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==========================================
+         GIAO DIỆN BỘ LỌC CỬA HÀNG (CATALOG SHOP)
+         ========================================== -->
+    <div id="catalog-view" style="display: none;">
+      <!-- 1. Hero Banner Section -->
+      <section class="hero-section" aria-label="Banner quảng bá thương hiệu">
+        <img src="hero_banner.png" alt="Gia đình đi xe đạp đội mũ bảo hiểm NBH thời thượng dưới ánh nắng ấm" class="hero-banner" id="hero-banner-img">
+      </section>
+
+      <!-- 2. Catalog Section -->
+      <section class="catalog-section" id="san-pham">
       <div class="container catalog-container">
         <!-- Sidebar Bộ Lọc trên Desktop -->
         <aside class="desktop-sidebar" id="desktop-sidebar">
@@ -208,15 +371,15 @@
     <div class="container footer-top">
       <!-- Cột 1: Thông tin thương hiệu -->
       <div class="footer-info-col">
-        <h2 class="footer-title">CÔNG TY TNHH QUỐC TẾ NBH VIỆT NAM</h2>
+        <h2 class="footer-title">CÔNG TY TNHH QUỐC TẾ POC VIỆT NAM</h2>
         <p class="footer-desc">
-          NBH tự hào là đơn vị tiên phong thiết kế và phân phối các dòng mũ bảo hiểm phong cách hiện đại, tối giản. Sản phẩm được nghiên cứu khí động học tinh tế và đạt chứng nhận kiểm định an toàn quốc tế, bảo vệ trọn vẹn mỗi chuyến hành trình của bạn.
+          POC tự hào là đơn vị tiên phong thiết kế và phân phối các dòng mũ bảo hiểm phong cách hiện đại, tối giản. Sản phẩm được nghiên cứu khí động học tinh tế và đạt chứng nhận kiểm định an toàn quốc tế, bảo vệ trọn vẹn mỗi chuyến hành trình của bạn.
         </p>
         <div class="footer-social-row">
-          <a href="#" class="social-btn" aria-label="Theo dõi NBH trên Facebook"><i class="ri-facebook-fill"></i></a>
-          <a href="#" class="social-btn" aria-label="Theo dõi NBH trên Youtube"><i class="ri-youtube-fill"></i></a>
-          <a href="#" class="social-btn" aria-label="Theo dõi NBH trên TikTok"><i class="ri-tiktok-fill"></i></a>
-          <a href="#" class="social-btn" aria-label="Theo dõi NBH trên Instagram"><i class="ri-instagram-fill"></i></a>
+          <a href="#" class="social-btn" aria-label="Theo dõi POC trên Facebook"><i class="ri-facebook-fill"></i></a>
+          <a href="#" class="social-btn" aria-label="Theo dõi POC trên Youtube"><i class="ri-youtube-fill"></i></a>
+          <a href="#" class="social-btn" aria-label="Theo dõi POC trên TikTok"><i class="ri-tiktok-fill"></i></a>
+          <a href="#" class="social-btn" aria-label="Theo dõi POC trên Instagram"><i class="ri-instagram-fill"></i></a>
         </div>
       </div>
 
@@ -224,9 +387,9 @@
       <div class="footer-info-col">
         <h3 class="footer-link-title">Danh Mục</h3>
         <div class="footer-links-grid">
-          <a href="#san-pham" class="footer-link">Nón bảo hiểm Đô thị</a>
-          <a href="#san-pham" class="footer-link">Nón bảo hiểm Thể thao</a>
-          <a href="#" class="footer-link">Về NBH Helmet</a>
+          <a href="#san-pham" class="footer-link" data-action="go-to-catalog" data-cat="urban">Nón bảo hiểm Đô thị</a>
+          <a href="#san-pham" class="footer-link" data-action="go-to-catalog" data-cat="sport">Nón bảo hiểm Thể thao</a>
+          <a href="#" class="footer-link">Về POC Helmet</a>
           <a href="#" class="footer-link">Chính sách Bảo hành</a>
           <a href="#" class="footer-link">Tin tức doanh nghiệp</a>
         </div>
@@ -235,7 +398,7 @@
       <!-- Cột 3: Form Đăng Ký Nhận Bản Tin -->
       <div class="footer-form-col">
         <h3 class="footer-form-title">ĐĂNG KÝ BẢN TIN</h3>
-        <p class="footer-desc">Nhận ngay thông tin các dòng mũ bảo hiểm mới nhất và ưu đãi đặc quyền từ NBH.</p>
+        <p class="footer-desc">Nhận ngay thông tin các dòng mũ bảo hiểm mới nhất và ưu đãi đặc quyền từ POC.</p>
         <form class="footer-form" id="newsletter-form">
           <div class="footer-input-row">
             <input type="email" id="newsletter-email" class="footer-input" placeholder="Email của bạn..." required autocomplete="email" aria-label="Nhập địa chỉ email đăng ký">
@@ -243,7 +406,7 @@
           </div>
           <label class="checkbox-label" for="agreement-checkbox">
             <input type="checkbox" id="agreement-checkbox" required>
-            <span>Đồng ý chính sách và điều khoản của NBH Helmet.</span>
+            <span>Đồng ý chính sách và điều khoản của POC Helmet.</span>
           </label>
         </form>
       </div>
@@ -257,7 +420,7 @@
         <span class="lang-option">EN</span>
       </div>
       <div>
-        <p class="footer-desc">NBH HELMET COPYRIGHT © 2026. ALL RIGHTS RESERVED.</p>
+        <p class="footer-desc">POC HELMET COPYRIGHT © 2026. ALL RIGHTS RESERVED.</p>
       </div>
     </div>
   </footer>
@@ -272,15 +435,16 @@
   <!-- Mobile Menu Drawer (Slide-in Trái) -->
   <nav class="drawer" id="mobile-drawer" aria-label="Danh mục điều hướng trên thiết bị di động">
     <div class="drawer-header">
-      <span class="drawer-title">NBH Menu</span>
+      <span class="drawer-title">POC Menu</span>
       <button class="nav-btn" id="drawer-close-btn" aria-label="Đóng menu">
         <i class="ri-close-line"></i>
       </button>
     </div>
     <div class="drawer-body">
-      <a href="#san-pham" class="drawer-link">Nón Đô Thị</a>
-      <a href="#san-pham" class="drawer-link">Nón Thể Thao</a>
-      <a href="#lien-he" class="drawer-link">Về NBH</a>
+      <a href="#" class="drawer-link" id="mob-nav-home">Trang Chủ</a>
+      <a href="#san-pham" class="drawer-link" data-action="go-to-catalog" data-cat="urban">Nón Đô Thị</a>
+      <a href="#san-pham" class="drawer-link" data-action="go-to-catalog" data-cat="sport">Nón Thể Thao</a>
+      <a href="#lien-he" class="drawer-link">Về POC</a>
       <a href="#lien-he" class="drawer-link">Liên Hệ</a>
     </div>
     <div class="drawer-footer">
