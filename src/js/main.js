@@ -74,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   updateFilterTags();
 
-  // Lắng nghe sự kiện thay đổi Hash trên trình duyệt (SPA Hash Routing)
-  window.addEventListener('hashchange', () => {
+  // Lắng nghe sự kiện di chuyển Back/Forward của trình duyệt (popstate)
+  window.addEventListener('popstate', () => {
     handleUrlRouting();
   });
 
@@ -121,9 +121,8 @@ function syncCategoryFilters(category) {
     mobileChecks.forEach(chk => chk.checked = (chk.value === category));
   }
 
-  // Cập nhật Hash chuyển sang giao diện cửa hàng và kích hoạt view Catalog
-  window.location.hash = '/san-pham';
-  switchView('catalog');
+  // Cập nhật URL chuyển sang giao diện cửa hàng và kích hoạt view Catalog
+  navigateTo('/san-pham');
 
   renderProducts();
   updateFilterTags();
@@ -404,7 +403,7 @@ function setupEventListeners() {
   if (navHome) {
     navHome.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = '/trang-chu';
+      navigateTo('/trang-chu');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
@@ -412,28 +411,28 @@ function setupEventListeners() {
     mobNavHome.addEventListener('click', (e) => {
       e.preventDefault();
       closeMobileDrawer();
-      window.location.hash = '/trang-chu';
+      navigateTo('/trang-chu');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
   if (brandLogo) {
     brandLogo.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = '/trang-chu';
+      navigateTo('/trang-chu');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
   if (navCatalog) {
     navCatalog.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = '/san-pham';
+      navigateTo('/san-pham');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
   if (navAbout) {
     navAbout.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = '/ve-poc';
+      navigateTo('/ve-poc');
       const target = document.getElementById('lien-he');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
@@ -443,7 +442,7 @@ function setupEventListeners() {
   if (navContact) {
     navContact.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.hash = '/lien-he';
+      navigateTo('/lien-he');
       const target = document.getElementById('lien-he');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
@@ -1028,7 +1027,7 @@ function initHomepage() {
       if (targetCat) {
         syncCategoryFilters(targetCat);
       } else {
-        window.location.hash = '/san-pham';
+        navigateTo('/san-pham');
       }
 
       // Cuộn lên vị trí danh sách sản phẩm
@@ -1108,15 +1107,23 @@ function renderHomeCategoryProducts(category) {
   });
 }
 
+// --- CLIENT-SIDE ROUTER HELPER ---
+function navigateTo(path) {
+  if (window.location.pathname !== path) {
+    window.history.pushState(null, '', path);
+    handleUrlRouting();
+  }
+}
+
 // --- CLIENT-SIDE ROUTER HANDLE URL ROUTING ---
 function handleUrlRouting() {
-  const hash = window.location.hash;
+  const path = window.location.pathname;
 
-  if (hash.includes('san-pham')) {
+  if (path.includes('san-pham')) {
     switchView('catalog');
-  } else if (hash.includes('admin')) {
+  } else if (path.includes('admin')) {
     switchView('admin');
-  } else if (hash.includes('ve-poc')) {
+  } else if (path.includes('ve-poc')) {
     switchView('home');
     const target = document.getElementById('lien-he');
     if (target) {
@@ -1124,7 +1131,7 @@ function handleUrlRouting() {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
       }, 300);
     }
-  } else if (hash.includes('lien-he')) {
+  } else if (path.includes('lien-he')) {
     switchView('home');
     const target = document.getElementById('lien-he');
     if (target) {
@@ -1133,7 +1140,7 @@ function handleUrlRouting() {
       }, 300);
     }
   } else {
-    // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: #/trang-chu hoặc rỗng)
+    // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: /trang-chu hoặc /)
     switchView('home');
   }
 }
