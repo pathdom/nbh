@@ -22,14 +22,115 @@ const productsPerPage = 6;
 let selectedColor = 'Matte Black';
 let selectedSize = 'M';
 
+// --- NEWS DATABASE ---
+const newsArticles = [
+  {
+    id: "news-1",
+    title: "[Top 20+] mũ bảo hiểm đẹp đúng chất",
+    category: "info",
+    categoryLabel: "Thông tin nón bảo hiểm",
+    date: "02/06/2026",
+    image: "news_top20_beautiful.png",
+    description: "Khám phá danh sách hơn 20 mẫu mũ bảo hiểm thời trang siêu đẹp, đúng chất dân chơi xe thứ thiệt đang làm mưa làm gió trên thị trường hiện nay.",
+    fullContent: `
+      <p><strong>Chọn một chiếc mũ bảo hiểm vừa an toàn vừa hợp thời trang là điều mà bất kỳ biker hay người đi xe máy nào cũng mong muốn.</strong> Mũ bảo hiểm ngày nay không chỉ đơn thuần là vật dụng bảo vệ phần đầu mà còn là một món phụ kiện thể hiện cá tính riêng, gu thẩm mỹ thời thượng của người đội trên mọi hành trình.</p>
+      <p>Trong bài viết này, AZOMA Helmet xin chia sẻ bộ sưu tập hơn 20 mẫu mũ bảo hiểm siêu đẹp, siêu ngầu, đúng chất "bụi bặm" và phong cách cho cả nam và nữ đang cực kỳ được ưa chuộng hiện nay:</p>
+      <h3>1. Dòng mũ bảo hiểm 1/2 cổ điển (Classic Half Helmet)</h3>
+      <p>Với phom tròn mềm mại, nước sơn mịn chống trầy xước và lớp lót êm ái, dòng nón 1/2 classic cực kỳ phù hợp cho những ai di chuyển trong đô thị, yêu thích phong cách tối giản thanh lịch nhưng vẫn vô cùng nổi bật.</p>
+      <h3>2. Mũ bảo hiểm thể thao khí động học</h3>
+      <p>Các thiết kế góc cạnh đột phá, nhiều lỗ thông gió thông minh và trọng lượng siêu nhẹ đem đến cảm giác thoải mái tối đa cho những người đam mê thể thao hay đạp xe đường dài. Thiết kế này vừa cá tính, khỏe khoắn vừa tăng tối đa tính năng bảo vệ an toàn.</p>
+      <blockquote>"Một chiếc mũ bảo hiểm chất lượng không chỉ bảo vệ bạn khỏi các va chạm vật lý mà còn là tấm lá chắn tinh thần, đem lại sự tự tin bứt phá trên mọi nẻo đường."</blockquote>
+      <h3>3. Cách phối đồ cực chất cùng mũ bảo hiểm</h3>
+      <ul>
+        <li><strong>Tone-sur-tone:</strong> Phối màu mũ trùng với màu xe hoặc trang phục chính để tạo sự đồng bộ thanh lịch.</li>
+        <li><strong>Color block:</strong> Sử dụng chiếc mũ có gam màu neon nổi bật (cam, vàng, đỏ hồng) làm điểm nhấn độc đáo cho bộ đồ tối giản.</li>
+        <li><strong>Phong cách đường phố (Streetwear):</strong> Kết hợp nón màu đen nhám với áo khoác da, quần jeans và giày boots bụi bặm.</li>
+      </ul>
+      <p>Tất cả các dòng sản phẩm của AZOMA đều được kiểm định chất lượng nghiêm ngặt và đạt tiêu chuẩn an toàn quốc gia. Hãy đến ngay showroom gần nhất của chúng tôi để trải nghiệm thực tế và chọn cho mình chiếc nón bảo hiểm phù hợp nhất!</p>
+    `
+  },
+  {
+    id: "news-2",
+    title: "Top 5 nón bảo hiểm phù hợp đi phượt",
+    category: "info",
+    categoryLabel: "Thông tin nón bảo hiểm",
+    date: "28/05/2026",
+    image: "news_top5_phuot.png",
+    description: "Nếu bạn là một tín đồ của những cung đường dài, hãy xem ngay top 5 chiếc mũ bảo hiểm bền bỉ, thông gió cực tốt được thiết kế riêng cho dân phượt.",
+    fullContent: `
+      <p><strong>Những chuyến đi phượt xa bằng xe máy luôn tràn đầy hào hứng nhưng cũng tiềm ẩn nhiều thử thách trên đường đi.</strong> Để có một hành trình trọn vẹn và an toàn, việc trang bị một chiếc mũ bảo hiểm chất lượng cao, bền bỉ, ôm khít đầu và có khả năng chống ồn, chống gió bụi tuyệt vời là vô cùng cần thiết.</p>
+      <p>Dưới đây là 5 mẫu mũ bảo hiểm được các phượt thủ chuyên nghiệp đánh giá cao nhất về độ an toàn và sự thoải mái cho các hành trình dài:</p>
+      <h3>1. Mũ bảo hiểm thể thao có kính chắn gió</h3>
+      <p>Đặc trưng với phần kính chắn gió rộng, chống tia UV và chống lóa hiệu quả. Thiết kế này giúp bảo vệ mắt của bạn khỏi bụi bẩn, côn trùng và nước mưa chói thẳng vào mặt, đồng thời giúp giữ tầm nhìn luôn thông thoáng.</p>
+      <h3>2. Mũ bảo hiểm cào cào thể thao địa hình</h3>
+      <p>Thiết kế gai góc với lưỡi trai rộng phía trước để che nắng và đất cát bắn từ xe phía trước. Dòng mũ này thường siêu nhẹ, trang bị khe gió lớn thông thoáng, cực tốt cho những cung đường đồi núi hay trekking gồ ghề.</p>
+      <h3>3. Mũ bảo hiểm 3/4 ôm đầu</h3>
+      <p>Sự cân bằng hoàn hảo giữa bảo vệ tối đa vùng thái dương, sau gáy và sự thông thoáng tiện lợi. Lớp đệm má dày êm ái chống ồn hiệu quả từ tiếng gió rít khi di chuyển tốc độ cao.</p>
+      <h3>Tiêu chí chọn mũ đi phượt không thể bỏ qua:</h3>
+      <ul>
+        <li><strong>Trọng lượng:</strong> Nên chọn các nón có trọng lượng dưới 1.2kg để tránh mỏi cổ khi chạy xe liên tục từ 4-6 tiếng.</li>
+        <li><strong>Đệm lót kháng khuẩn:</strong> Khả năng thấm hút mồ hôi và tháo rời đệm lót để giặt giũ là yếu tố quyết định để tránh ẩm mốc, ngứa ngáy da đầu.</li>
+        <li><strong>Tiêu chuẩn an toàn:</strong> Mũ phải đạt tiêu chuẩn CR Việt Nam hoặc các chứng nhận quốc tế CE EN1078, DOT.</li>
+      </ul>
+      <p>Hy vọng qua bài viết này, bạn sẽ chọn được người bạn đồng hành tin cậy trên các cung đường phượt đầy cảm hứng sắp tới!</p>
+    `
+  },
+  {
+    id: "news-3",
+    title: "AZOMA Creation 1 – Nón bảo hiểm thời thượng",
+    category: "info",
+    categoryLabel: "Thông tin nón bảo hiểm",
+    date: "15/05/2026",
+    image: "news_creation1.png",
+    description: "Đánh giá chi tiết siêu phẩm AZOMA Creation 1: Ngôn ngữ thiết kế tối giản châu Âu, công nghệ khóa nam châm Fidlock Đức độc bản.",
+    fullContent: `
+      <p><strong>Siêu phẩm nón bảo hiểm đô thị AZOMA Creation 1 vừa ra mắt đã lập tức định hình một tiêu chuẩn mới cho phân khúc mũ bảo hiểm cao cấp tại thị trường Việt Nam.</strong> Sở hữu ngôn ngữ thiết kế tối giản đặc trưng của vùng Scandinavia và các tính năng công nghệ hàng đầu thế giới, đây là chiếc mũ bảo hiểm được săn đón nhất bởi giới thượng lưu và giới mộ điệu thời trang.</p>
+      <p>Cùng chúng tôi đi sâu vào đánh giá chi tiết các điểm đắt giá tạo nên danh tiếng cho AZOMA Creation 1:</p>
+      <h3>1. Thiết kế liền mạch không tì vết</h3>
+      <p>Vỏ nón Polycarbonate được liên kết nhiệt trực tiếp với lõi xốp hấp thụ lực EPS cao cấp nhờ công nghệ In-Mold liền khối. Không một đường ráp nối thô ráp, nón tạo nên một tổng thể bóng bẩy, thanh thoát hoàn mỹ đến từng chi tiết nhỏ nhất.</p>
+      <h3>2. Đột phá công nghệ khóa nam châm Fidlock từ Đức</h3>
+      <p>Thay vì các loại khóa bấm nhựa thông thường dễ kẹt và khó sử dụng, AZOMA Creation 1 trang bị khóa thông minh Fidlock của Đức. Cơ chế hút nam châm cực mạnh giúp bạn có thể đóng mở khóa chỉ bằng một tay trong vòng 0.5 giây vô cùng dễ dàng mà vẫn đảm bảo tải trọng kéo giật lên tới hàng trăm kg.</p>
+      <blockquote>"Sự tinh tế của một thiết kế nằm ở chỗ nó giải quyết những thao tác nhỏ nhặt nhất của người dùng một cách đơn giản và thanh lịch nhất."</blockquote>
+      <h3>3. Lớp sơn mờ độc bản chống bám bẩn</h3>
+      <p>Nước sơn mịn lì cao cấp ứng dụng công nghệ Nano chống trầy xước nhẹ, chống bám vân tay và bụi bẩn cực kỳ tốt. Mũ giữ được vẻ đẹp như mới dù sử dụng hàng ngày trong thời tiết mưa nắng thất thường tại đô thị.</p>
+      <p>Với mức giá hợp lý đi cùng chất lượng đỉnh cao, AZOMA Creation 1 xứng đáng là biểu tượng phong cách dẫn đầu xu hướng sống hiện đại, năng động và an toàn của bạn!</p>
+    `
+  },
+  {
+    id: "news-4",
+    title: "Trẻ em dưới 2 tuổi có nên đội mũ bảo hiểm?",
+    category: "event",
+    categoryLabel: "Thông tin sự kiện",
+    date: "05/05/2026",
+    image: "news_kids_safety.png",
+    description: "Các bác sĩ chấn thương chỉnh hình chia sẻ lời khuyên y học quý báu về việc sử dụng mũ bảo hiểm bảo vệ an toàn cho trẻ em khi ngồi xe máy.",
+    fullContent: `
+      <p><strong>Nhiều bậc phụ huynh khi chở con nhỏ trên xe máy thường băn khoăn không biết có nên cho con đội mũ bảo hiểm hay không, và độ tuổi nào là an toàn nhất để bắt đầu đội.</strong> Theo các khuyến cáo y khoa và quy định pháp luật hiện hành, an toàn của trẻ em cần phải được đặt lên hàng đầu nhưng cần thực hiện một cách khoa học.</p>
+      <p>Các chuyên gia chấn thương chỉnh hình và nhi khoa đã đưa ra những lời khuyên y học vô cùng quan trọng như sau:</p>
+      <h3>1. Đối với trẻ em dưới 2 tuổi</h3>
+      <p><strong>Cảnh báo y tế quan trọng:</strong> Trẻ em dưới 2 tuổi KHÔNG nên đội các loại mũ bảo hiểm thông thường. Lý do là vì ở độ tuổi này, các đốt sống cổ của bé còn rất non nớt và cơ cổ chưa đủ khỏe để đỡ thêm trọng lượng của chiếc nón bảo hiểm. Việc đội mũ quá nặng có thể gây chấn thương đốt sống cổ của bé khi xe đi qua những chỗ xóc nảy.</p>
+      <p>Thay vào đó, phụ huynh nên che chắn cho bé bằng mũ vải mềm bảo vệ đầu nhẹ nhàng, sử dụng đai xe máy chắc chắn và di chuyển với tốc độ rất chậm dưới 30km/h để đảm bảo an toàn tối đa.</p>
+      <h3>2. Đối với trẻ em từ 2 tuổi đến 6 tuổi</h3>
+      <p>Ở độ tuổi này, hệ xương cổ của trẻ đã tương đối ổn định. Phụ huynh nên bắt đầu tập cho bé thói quen đội mũ bảo hiểm siêu nhẹ chuyên dụng cho trẻ em khi tham gia giao thông cùng cha mẹ. Việc này vừa bảo vệ bé khỏi các chấn thương nguy hiểm vừa xây dựng ý thức chấp hành luật giao thông từ sớm.</p>
+      <h3>Các nguyên tắc vàng khi chọn mũ bảo hiểm cho trẻ em:</h3>
+      <ul>
+        <li><strong>Trọng lượng siêu nhẹ:</strong> Mũ cho trẻ em bắt buộc phải có trọng lượng dưới 300g (mũ của AZOMA Kids chỉ nặng 220g) để không gây áp lực lên cổ của bé.</li>
+        <li><strong>Độ ôm khít vừa vặn:</strong> Nón không được quá rộng hoặc quá chật, quai nón vừa vặn ôm dưới cằm trẻ (đút vừa 2 ngón tay).</li>
+        <li><strong>Chất liệu an toàn:</strong> Lõi EPS mềm hấp thụ chấn động và vỏ nón không chứa các hóa chất độc hại gây dị ứng cho da đầu mỏng manh của trẻ.</li>
+      </ul>
+      <p>Hãy là những bậc cha mẹ thông thái, bảo vệ con yêu một cách an toàn và khoa học nhất trên mọi nẻo đường đời!</p>
+    `
+  }
+];
 
 // --- DOM ELEMENTS ---
 let productsContainer, paginationContainer, activeFiltersContainer;
 let drawerOverlay, mobileDrawer, searchModal;
 let quickviewOverlay, quickviewModal;
 let toastContainer;
-let homepageView, catalogView, contactView;
+let homepageView, catalogView, contactView, newsView;
 let adminProductOverlay, adminProductForm;
+let newsGridContainer, newsDetailOverlay;
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,6 +150,9 @@ document.addEventListener('DOMContentLoaded', () => {
   homepageView = document.getElementById('homepage-view');
   catalogView = document.getElementById('catalog-view');
   contactView = document.getElementById('contact-view');
+  newsView = document.getElementById('news-view');
+  newsGridContainer = document.getElementById('news-grid-container');
+  newsDetailOverlay = document.getElementById('news-detail-overlay');
   
   adminProductOverlay = document.getElementById('admin-product-overlay');
   adminProductForm = document.getElementById('admin-product-form');
@@ -578,6 +682,167 @@ function setupEventListeners() {
     });
   }
 
+  // --- MEGA DROPDOWN NÓN BẢO HIỂM CLICK HANDLERS ---
+  const navCatalogCatBtns = document.querySelectorAll('.nav-catalog-cat-btn');
+  navCatalogCatBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const cat = btn.getAttribute('data-cat');
+      syncCategoryFilters(cat);
+      const targetSection = document.getElementById('san-pham');
+      if (targetSection) {
+        window.scrollTo({
+          top: targetSection.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  const navProductCards = document.querySelectorAll('.nav-product-card');
+  navProductCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = card.getAttribute('data-id');
+      const product = products.find(p => p.id === id);
+      if (product) {
+        openQuickView(product);
+      }
+    });
+  });
+
+  // --- MEGA DROPDOWN TIN TỨC CLICK HANDLERS ---
+  const navNewsCatBtns = document.querySelectorAll('.nav-news-cat-btn');
+  navNewsCatBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const category = btn.getAttribute('data-category');
+      navigateTo('/tin-tuc');
+      setTimeout(() => {
+        renderNews(category);
+        // Highlight active sidebar item
+        const sidebarBtns = document.querySelectorAll('.news-filter-btn');
+        sidebarBtns.forEach(sb => {
+          if (sb.getAttribute('data-category') === category) {
+            sb.classList.add('active');
+            sb.style.color = 'var(--accent)';
+            sb.style.fontWeight = '700';
+          } else {
+            sb.classList.remove('active');
+            sb.style.color = 'var(--text-secondary)';
+            sb.style.fontWeight = '500';
+          }
+        });
+      }, 100);
+    });
+  });
+
+  const navNewsCards = document.querySelectorAll('.nav-news-card');
+  navNewsCards.forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      const idx = parseInt(card.getAttribute('data-idx'));
+      const article = newsArticles[idx];
+      if (article) {
+        navigateTo('/tin-tuc');
+        setTimeout(() => {
+          openNewsDetail(article);
+        }, 150);
+      }
+    });
+  });
+
+  // --- SIDEBAR TIN TỨC FILTER BUTTONS ---
+  const newsFilterBtns = document.querySelectorAll('.news-filter-btn');
+  newsFilterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.getAttribute('data-category');
+      renderNews(category);
+      
+      newsFilterBtns.forEach(b => {
+        b.classList.remove('active');
+        b.style.color = 'var(--text-secondary)';
+        b.style.fontWeight = '500';
+      });
+      btn.classList.add('active');
+      btn.style.color = 'var(--accent)';
+      btn.style.fontWeight = '700';
+    });
+  });
+
+  // --- ARTICLE CLICK OPEN DETAIL MODAL ---
+  if (newsGridContainer) {
+    newsGridContainer.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-id]');
+      if (card) {
+        const id = card.getAttribute('data-id');
+        const article = newsArticles.find(a => a.id === id);
+        if (article) {
+          openNewsDetail(article);
+        }
+      }
+    });
+  }
+
+  const newsRelatedGrid = document.getElementById('news-related-grid');
+  if (newsRelatedGrid) {
+    newsRelatedGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('[data-id]');
+      if (card) {
+        const id = card.getAttribute('data-id');
+        const article = newsArticles.find(a => a.id === id);
+        if (article) {
+          openNewsDetail(article);
+        }
+      }
+    });
+  }
+
+  // --- CLOSE NEWS DETAIL MODAL ---
+  const newsDetailCloseBtn = document.getElementById('news-detail-close-btn');
+  if (newsDetailCloseBtn) {
+    newsDetailCloseBtn.addEventListener('click', closeNewsDetail);
+  }
+  if (newsDetailOverlay) {
+    newsDetailOverlay.addEventListener('click', (e) => {
+      if (e.target === newsDetailOverlay) {
+        closeNewsDetail();
+      }
+    });
+  }
+
+  // --- MOBILE DRAWER NEWS LINKS ---
+  const mobNavNews = document.getElementById('mob-nav-news');
+  if (mobNavNews) {
+    mobNavNews.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeMobileDrawer();
+      navigateTo('/tin-tuc');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  const mobNavAbout = document.getElementById('mob-nav-about');
+  if (mobNavAbout) {
+    mobNavAbout.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeMobileDrawer();
+      navigateTo('/ve-azoma');
+      const target = document.getElementById('lien-he');
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      }
+    });
+  }
+  const mobNavContact = document.getElementById('mob-nav-contact');
+  if (mobNavContact) {
+    mobNavContact.addEventListener('click', (e) => {
+      e.preventDefault();
+      closeMobileDrawer();
+      navigateTo('/lien-he');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // Newsletter Signup Form
   const newsletterForm = document.getElementById('newsletter-form');
   if (newsletterForm) {
@@ -1064,8 +1329,10 @@ export function switchView(viewName) {
   const homepageView = document.getElementById('homepage-view');
   const catalogView = document.getElementById('catalog-view');
   const contactView = document.getElementById('contact-view');
+  const newsView = document.getElementById('news-view');
   const navHome = document.getElementById('nav-home');
-  const navCatalog = document.getElementById('nav-catalog');
+  const navCatalog = document.getElementById('nav-catalog-main');
+  const navNews = document.getElementById('nav-news-main');
   const adminAddBtn = document.getElementById('admin-add-product-btn');
   const mainTitle = document.getElementById('catalog-main-title');
 
@@ -1075,6 +1342,7 @@ export function switchView(viewName) {
     homepageView.style.display = 'block';
     catalogView.style.display = 'none';
     if (contactView) contactView.style.display = 'none';
+    if (newsView) newsView.style.display = 'none';
     catalogView.classList.remove('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'none';
     if (mainTitle) mainTitle.textContent = 'Nón Bảo Hiểm';
@@ -1082,10 +1350,12 @@ export function switchView(viewName) {
     // Đánh dấu active navigation pill
     if (navHome) navHome.classList.add('active-nav-pill');
     if (navCatalog) navCatalog.classList.remove('active-nav-pill');
+    if (navNews) navNews.classList.remove('active-nav-pill');
   } else if (viewName === 'catalog') {
     homepageView.style.display = 'none';
     catalogView.style.display = 'block';
     if (contactView) contactView.style.display = 'none';
+    if (newsView) newsView.style.display = 'none';
     catalogView.classList.remove('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'none';
     if (mainTitle) mainTitle.textContent = 'Nón Bảo Hiểm';
@@ -1093,12 +1363,14 @@ export function switchView(viewName) {
     // Đánh dấu active navigation pill
     if (navHome) navHome.classList.remove('active-nav-pill');
     if (navCatalog) navCatalog.classList.add('active-nav-pill');
+    if (navNews) navNews.classList.remove('active-nav-pill');
     
     renderProducts();
   } else if (viewName === 'admin') {
     homepageView.style.display = 'none';
     catalogView.style.display = 'block';
     if (contactView) contactView.style.display = 'none';
+    if (newsView) newsView.style.display = 'none';
     catalogView.classList.add('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'inline-flex';
     if (mainTitle) mainTitle.textContent = 'QUẢN LÝ SẢN PHẨM';
@@ -1106,17 +1378,33 @@ export function switchView(viewName) {
     // Xoá active navigation pill vì đây là chế độ admin quản trị riêng
     if (navHome) navHome.classList.remove('active-nav-pill');
     if (navCatalog) navCatalog.classList.remove('active-nav-pill');
+    if (navNews) navNews.classList.remove('active-nav-pill');
 
     renderProducts();
   } else if (viewName === 'contact') {
     homepageView.style.display = 'none';
     catalogView.style.display = 'none';
     if (contactView) contactView.style.display = 'block';
+    if (newsView) newsView.style.display = 'none';
     if (adminAddBtn) adminAddBtn.style.display = 'none';
 
     // Xoá active navigation pill
     if (navHome) navHome.classList.remove('active-nav-pill');
     if (navCatalog) navCatalog.classList.remove('active-nav-pill');
+    if (navNews) navNews.classList.remove('active-nav-pill');
+  } else if (viewName === 'news') {
+    homepageView.style.display = 'none';
+    catalogView.style.display = 'none';
+    if (contactView) contactView.style.display = 'none';
+    if (newsView) newsView.style.display = 'block';
+    if (adminAddBtn) adminAddBtn.style.display = 'none';
+
+    // Đánh dấu active navigation pill
+    if (navHome) navHome.classList.remove('active-nav-pill');
+    if (navCatalog) navCatalog.classList.remove('active-nav-pill');
+    if (navNews) navNews.classList.add('active-nav-pill');
+
+    renderNews('all');
   }
 }
 
@@ -1338,6 +1626,9 @@ function handleUrlRouting() {
   } else if (hash.includes('lien-he')) {
     switchView('contact');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (hash.includes('tin-tuc')) {
+    switchView('news');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
     // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: #/trang-chu hoặc rỗng)
     switchView('home');
@@ -1441,4 +1732,234 @@ function initAdminForm() {
       }
     });
   }
+}
+
+// --- NEWS VIEW RENDERERS & DETAIL CONTROLLERS ---
+function renderNews(category) {
+  const container = document.getElementById('news-grid-container');
+  if (!container) return;
+
+  container.replaceChildren();
+
+  let filtered = newsArticles;
+  if (category !== 'all') {
+    filtered = newsArticles.filter(a => a.category === category);
+  }
+
+  // Cập nhật nhãn đếm và tiêu đề chính
+  const mainTitle = document.getElementById('news-main-title');
+  const countLbl = document.getElementById('news-count-lbl');
+  
+  if (mainTitle) {
+    mainTitle.textContent = category === 'all' ? 'Tất cả bài viết' : (category === 'info' ? 'Thông tin nón bảo hiểm' : 'Thông tin sự kiện');
+  }
+  if (countLbl) {
+    countLbl.textContent = `${filtered.length} bài viết`;
+  }
+
+  if (filtered.length === 0) {
+    const emptyMsg = document.createElement('div');
+    emptyMsg.style.gridColumn = '1 / -1';
+    emptyMsg.style.textAlign = 'center';
+    emptyMsg.style.padding = '3rem';
+    emptyMsg.style.color = 'var(--text-secondary)';
+    emptyMsg.textContent = 'Hiện chưa có bài viết nào thuộc danh mục này.';
+    container.appendChild(emptyMsg);
+    return;
+  }
+
+  filtered.forEach(article => {
+    const card = document.createElement('article');
+    card.className = 'news-list-card';
+    card.setAttribute('data-id', article.id);
+    card.style.display = 'flex';
+    card.style.flexDirection = 'column';
+    card.style.gap = '1rem';
+    card.style.cursor = 'pointer';
+    card.style.transition = 'transform var(--transition-normal)';
+
+    // Image block
+    const imgWrapper = document.createElement('div');
+    imgWrapper.className = 'news-card-img-wrapper';
+    imgWrapper.style.aspectRatio = '1.6/1';
+    imgWrapper.style.borderRadius = 'var(--radius-md)';
+    imgWrapper.style.overflow = 'hidden';
+    imgWrapper.style.backgroundColor = 'var(--surface-hover)';
+    imgWrapper.style.border = '1px solid var(--border-color)';
+    imgWrapper.style.position = 'relative';
+
+    const img = document.createElement('img');
+    img.src = article.image;
+    img.alt = article.title;
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'cover';
+    img.style.transition = 'transform var(--transition-fast)';
+    img.className = 'news-card-img';
+    imgWrapper.appendChild(img);
+
+    const catBadge = document.createElement('span');
+    catBadge.style.position = 'absolute';
+    catBadge.style.top = '1rem';
+    catBadge.style.left = '1rem';
+    catBadge.style.backgroundColor = 'var(--accent)';
+    catBadge.style.color = 'black';
+    catBadge.style.fontSize = '0.75rem';
+    catBadge.style.fontWeight = '700';
+    catBadge.style.padding = '0.3rem 0.75rem';
+    catBadge.style.borderRadius = 'var(--radius-sm)';
+    catBadge.style.letterSpacing = '0.05em';
+    catBadge.style.textTransform = 'uppercase';
+    catBadge.textContent = article.categoryLabel;
+    imgWrapper.appendChild(catBadge);
+
+    card.appendChild(imgWrapper);
+
+    // Info block
+    const info = document.createElement('div');
+    info.style.display = 'flex';
+    info.style.flexDirection = 'column';
+    info.style.gap = '0.5rem';
+
+    const dateRow = document.createElement('div');
+    dateRow.style.fontSize = '0.8rem';
+    dateRow.style.color = 'var(--text-secondary)';
+    dateRow.style.fontWeight = '600';
+    dateRow.style.display = 'flex';
+    dateRow.style.alignItems = 'center';
+    dateRow.style.gap = '0.4rem';
+    dateRow.innerHTML = `<i class="ri-calendar-line"></i> ${article.date}`;
+    info.appendChild(dateRow);
+
+    const title = document.createElement('h3');
+    title.className = 'news-card-title';
+    title.style.fontSize = '1.25rem';
+    title.style.fontWeight = '800';
+    title.style.color = 'var(--text-primary)';
+    title.style.margin = '0';
+    title.style.lineHeight = '1.3';
+    title.style.transition = 'color var(--transition-fast)';
+    title.textContent = article.title;
+    info.appendChild(title);
+
+    const desc = document.createElement('p');
+    desc.style.fontSize = '0.9rem';
+    desc.style.color = 'var(--text-secondary)';
+    desc.style.lineHeight = '1.6';
+    desc.style.margin = '0';
+    desc.style.display = '-webkit-box';
+    desc.style.webkitLineClamp = '2';
+    desc.style.webkitBoxOrient = 'vertical';
+    desc.style.overflow = 'hidden';
+    desc.style.textOverflow = 'ellipsis';
+    desc.style.height = '3.2em';
+    desc.textContent = article.description;
+    info.appendChild(desc);
+
+    const readBtn = document.createElement('button');
+    readBtn.className = 'btn-read-more';
+    readBtn.style.alignSelf = 'flex-start';
+    readBtn.style.background = 'none';
+    readBtn.style.border = 'none';
+    readBtn.style.color = 'var(--accent)';
+    readBtn.style.fontWeight = '700';
+    readBtn.style.fontSize = '0.88rem';
+    readBtn.style.display = 'flex';
+    readBtn.style.alignItems = 'center';
+    readBtn.style.gap = '0.25rem';
+    readBtn.style.cursor = 'pointer';
+    readBtn.style.padding = '0';
+    readBtn.style.marginTop = '0.5rem';
+    readBtn.style.transition = 'color var(--transition-fast)';
+    readBtn.innerHTML = `Đọc tiếp <i class="ri-arrow-right-line"></i>`;
+    info.appendChild(readBtn);
+
+    card.appendChild(info);
+    container.appendChild(card);
+  });
+}
+
+function openNewsDetail(article) {
+  const detailCat = document.getElementById('news-detail-cat');
+  const detailTitle = document.getElementById('news-detail-title');
+  const detailDate = document.getElementById('news-detail-date');
+  const detailImg = document.getElementById('news-detail-img');
+  const detailContent = document.getElementById('news-detail-content');
+
+  if (detailCat) detailCat.textContent = article.categoryLabel;
+  if (detailTitle) detailTitle.textContent = article.title;
+  if (detailDate) detailDate.textContent = article.date;
+  if (detailImg) {
+    detailImg.src = article.image;
+    detailImg.alt = article.title;
+  }
+  if (detailContent) {
+    detailContent.innerHTML = article.fullContent;
+  }
+
+  // Render bài viết liên quan
+  renderRelatedNews(article.id);
+
+  if (newsDetailOverlay) {
+    newsDetailOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeNewsDetail() {
+  if (newsDetailOverlay) {
+    newsDetailOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+}
+
+function renderRelatedNews(currentId) {
+  const relatedGrid = document.getElementById('news-related-grid');
+  if (!relatedGrid) return;
+
+  relatedGrid.replaceChildren();
+
+  // Lọc lấy 3 bài viết khác làm bài viết liên quan
+  const related = newsArticles.filter(a => a.id !== currentId).slice(0, 3);
+
+  related.forEach(article => {
+    const card = document.createElement('div');
+    card.className = 'related-news-card';
+    card.setAttribute('data-id', article.id);
+    card.style.display = 'flex';
+    card.style.flexDirection = 'column';
+    card.style.gap = '0.5rem';
+    card.style.cursor = 'pointer';
+
+    const imgWrapper = document.createElement('div');
+    imgWrapper.style.aspectRatio = '1.6/1';
+    imgWrapper.style.borderRadius = 'var(--radius-sm)';
+    imgWrapper.style.overflow = 'hidden';
+    imgWrapper.style.border = '1px solid var(--border-color)';
+
+    const img = document.createElement('img');
+    img.src = article.image;
+    img.alt = article.title;
+    img.style.width = '100%';
+    img.style.height = '100%';
+    img.style.objectFit = 'cover';
+    imgWrapper.appendChild(img);
+    card.appendChild(imgWrapper);
+
+    const title = document.createElement('h4');
+    title.style.fontSize = '0.85rem';
+    title.style.fontWeight = '700';
+    title.style.color = 'var(--text-primary)';
+    title.style.margin = '0';
+    title.style.display = '-webkit-box';
+    title.style.webkitLineClamp = '2';
+    title.style.webkitBoxOrient = 'vertical';
+    title.style.overflow = 'hidden';
+    title.style.lineHeight = '1.4';
+    title.style.height = '2.8em';
+    title.textContent = article.title;
+    card.appendChild(title);
+
+    relatedGrid.appendChild(card);
+  });
 }

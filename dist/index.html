@@ -17,8 +17,8 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <script type="module" crossorigin src="./assets/index--QaD5Rud.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-1_fr5XHw.css">
+  <script type="module" crossorigin src="./assets/index-CN1yEZ09.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CqbSIxoA.css">
 </head>
 <body>
 
@@ -39,17 +39,143 @@
       </a>
 
       <!-- Menu điều hướng Desktop (Chỉ hiển thị trên máy tính) -->
-      <nav class="desktop-nav" aria-label="Danh mục điều hướng chính">
-        <ul class="nav-menu">
+      <nav class="desktop-nav" aria-label="Danh mục điều hướng chính" style="height: 100%;">
+        <ul class="nav-menu" style="display: flex; align-items: center; height: 100%;">
           <li class="nav-item"><a href="#" class="nav-link" id="nav-home">Trang Chủ</a></li>
-          <li class="nav-item has-dropdown">
-            <a href="#san-pham" class="nav-link" id="nav-catalog">Sản Phẩm <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="#san-pham" class="dropdown-item" data-filter="all">Tất cả sản phẩm</a></li>
-              <li><a href="#san-pham" class="dropdown-item" data-filter="urban">Nón bảo hiểm Đô thị</a></li>
-              <li><a href="#san-pham" class="dropdown-item" data-filter="sport">Nón bảo hiểm Thể thao</a></li>
-            </ul>
+          
+          <!-- 1. NÓN BẢO HIỂM (MEGA DROPDOWN) -->
+          <li class="nav-item has-dropdown nav-item-catalog">
+            <a href="#san-pham" class="nav-link nav-link-catalog" id="nav-catalog-main" style="text-transform: uppercase;">Nón Bảo Hiểm <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
+            <div class="mega-dropdown-menu">
+              <!-- Left Sidebar Menu -->
+              <div style="display: flex; flex-direction: column; gap: 0.8rem; border-right: none;">
+                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="sport" style="color: var(--accent); font-weight: 700; display: flex; justify-content: space-between; align-items: center; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
+                  <span style="display: flex; align-items: center; gap: 0.5rem;"><i class="ri-flashlight-line"></i> NÓN THỂ THAO</span>
+                  <span style="font-weight: 700;">&gt;</span>
+                </a>
+                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="urban" style="color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
+                  <i class="ri-riding-line"></i> NÓN XE MÁY
+                </a>
+                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="kids" style="color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
+                  <i class="ri-emotion-happy-line"></i> NÓN TRẺ EM
+                </a>
+                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="accessories" style="color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
+                  <i class="ri-shield-keyhole-line"></i> PHỤ KIỆN
+                </a>
+              </div>
+
+              <!-- Vertical Divider -->
+              <div style="width: 1px; background-color: var(--border-color); height: 100%;"></div>
+
+              <!-- Right Products Grid (4 Columns) -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                <!-- Product 1 -->
+                <a href="#" class="nav-product-card" data-id="nbh-p08" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                    AZOMA P01
+                  </h4>
+                  <div style="aspect-ratio: 1.15/1; display: flex; align-items: center; justify-content: center; background-color: transparent;">
+                    <img src="helmet_sport_black.png" alt="AZOMA P01" style="max-height: 100px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1)); transition: transform var(--transition-fast);">
+                  </div>
+                </a>
+
+                <!-- Product 2 -->
+                <a href="#" class="nav-product-card" data-id="nbh-p02" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                    AZOMA P02
+                  </h4>
+                  <div style="aspect-ratio: 1.15/1; display: flex; align-items: center; justify-content: center; background-color: transparent;">
+                    <img src="helmet_sport_black.png" alt="AZOMA P02" style="max-height: 100px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1)); transition: transform var(--transition-fast);">
+                  </div>
+                </a>
+
+                <!-- Product 3 -->
+                <a href="#" class="nav-product-card" data-id="nbh-pk03s" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                    AZOMA P03
+                  </h4>
+                  <div style="aspect-ratio: 1.15/1; display: flex; align-items: center; justify-content: center; background-color: transparent;">
+                    <img src="helmet_urban_black.png" alt="AZOMA P03" style="max-height: 100px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1)); transition: transform var(--transition-fast);">
+                  </div>
+                </a>
+
+                <!-- Product 4 -->
+                <a href="#" class="nav-product-card" data-id="nbh-p05" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
+                  <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin: 0; text-transform: uppercase;">
+                    AZOMA P04
+                  </h4>
+                  <div style="aspect-ratio: 1.15/1; display: flex; align-items: center; justify-content: center; background-color: transparent;">
+                    <img src="helmet_sport_black.png" alt="AZOMA P04" style="max-height: 100px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1)); transition: transform var(--transition-fast);">
+                  </div>
+                </a>
+              </div>
+            </div>
           </li>
+
+          <!-- 2. TIN TỨC (MEGA DROPDOWN) -->
+          <li class="nav-item has-dropdown nav-item-news">
+            <a href="#tin-tuc" class="nav-link nav-link-news" id="nav-news-main" style="text-transform: uppercase;">Tin Tức <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
+            <div class="mega-dropdown-menu">
+              <!-- Left Sidebar Menu -->
+              <div style="display: flex; flex-direction: column; gap: 0.8rem; border-right: none;">
+                <a href="#tin-tuc" class="dropdown-item nav-news-cat-btn" data-category="info" style="color: var(--accent); font-weight: 700; display: flex; justify-content: space-between; align-items: center; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
+                  <span style="display: flex; align-items: center; gap: 0.5rem;"><i class="ri-information-line"></i> Thông tin nón bảo hiểm</span>
+                  <span style="font-weight: 700;">&gt;</span>
+                </a>
+                <a href="#tin-tuc" class="dropdown-item nav-news-cat-btn" data-category="event" style="color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
+                  <i class="ri-calendar-event-line"></i> Thông tin sự kiện
+                </a>
+              </div>
+
+              <!-- Vertical Divider -->
+              <div style="width: 1px; background-color: var(--border-color); height: 100%;"></div>
+
+              <!-- Right Cards Grid (4 Columns) -->
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+                <!-- Card 1 -->
+                <a href="#tin-tuc" class="news-card nav-news-card" data-idx="0" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
+                  <h4 style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 2.8em;">
+                    [Top 20+] mũ bảo hiểm đẹp đúng chất
+                  </h4>
+                  <div style="aspect-ratio: 1/1; border-radius: var(--radius-sm); overflow: hidden; background-color: var(--surface-hover); border: 1px solid var(--border-color);">
+                    <img src="news_top20_beautiful.png" alt="[Top 20+] mũ bảo hiểm đẹp đúng chất" style="width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-fast);">
+                  </div>
+                </a>
+
+                <!-- Card 2 -->
+                <a href="#tin-tuc" class="news-card nav-news-card" data-idx="1" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
+                  <h4 style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 2.8em;">
+                    Top 5 nón bảo hiểm phù hợp đi phượt
+                  </h4>
+                  <div style="aspect-ratio: 1/1; border-radius: var(--radius-sm); overflow: hidden; background-color: var(--surface-hover); border: 1px solid var(--border-color);">
+                    <img src="news_top5_phuot.png" alt="Top 5 nón bảo hiểm phù hợp đi phượt" style="width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-fast);">
+                  </div>
+                </a>
+
+                <!-- Card 3 -->
+                <a href="#tin-tuc" class="news-card nav-news-card" data-idx="2" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
+                  <h4 style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 2.8em;">
+                    AZOMA Creation 1 – Nón bảo hiểm thời thượng
+                  </h4>
+                  <div style="aspect-ratio: 1/1; border-radius: var(--radius-sm); overflow: hidden; background-color: var(--surface-hover); border: 1px solid var(--border-color);">
+                    <img src="news_creation1.png" alt="AZOMA Creation 1 – Nón bảo hiểm thời thượng" style="width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-fast);">
+                  </div>
+                </a>
+
+                <!-- Card 4 -->
+                <a href="#tin-tuc" class="news-card nav-news-card" data-idx="3" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
+                  <h4 style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary); margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; height: 2.8em;">
+                    Trẻ em dưới 2 tuổi có nên đội mũ bảo hiểm?
+                  </h4>
+                  <div style="aspect-ratio: 1/1; border-radius: var(--radius-sm); overflow: hidden; background-color: var(--surface-hover); border: 1px solid var(--border-color);">
+                    <img src="news_kids_safety.png" alt="Trẻ em dưới 2 tuổi có nên đội mũ bảo hiểm?" style="width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-fast);">
+                  </div>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <!-- 3. VỀ AZOMA -->
           <li class="nav-item has-dropdown">
             <a href="#lien-he" class="nav-link" id="nav-about">Về AZOMA <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
             <ul class="dropdown-menu">
@@ -74,6 +200,17 @@
                   <i class="ri-phone-line" style="font-size: 1rem; opacity: 0.7;"></i> Liên hệ
                 </a>
               </li>
+            </ul>
+          </li>
+
+          <!-- 4. CHÍNH SÁCH -->
+          <li class="nav-item has-dropdown">
+            <a href="#" class="nav-link" id="nav-policy" style="text-transform: uppercase;">Chính Sách <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="#" class="dropdown-item" style="display: flex; align-items: center; gap: 0.6rem;"><i class="ri-shield-check-line" style="font-size: 1rem; opacity: 0.7;"></i> Chính sách Bảo hành</a></li>
+              <li><a href="#" class="dropdown-item" style="display: flex; align-items: center; gap: 0.6rem;"><i class="ri-lock-line" style="font-size: 1rem; opacity: 0.7;"></i> Chính sách Bảo mật</a></li>
+              <li><a href="#" class="dropdown-item" style="display: flex; align-items: center; gap: 0.6rem;"><i class="ri-truck-line" style="font-size: 1rem; opacity: 0.7;"></i> Chính sách Vận chuyển</a></li>
+              <li><a href="#" class="dropdown-item" style="display: flex; align-items: center; gap: 0.6rem;"><i class="ri-refresh-line" style="font-size: 1rem; opacity: 0.7;"></i> Chính sách Đổi trả</a></li>
             </ul>
           </li>
         </ul>
@@ -428,6 +565,64 @@
           
         </div>
         
+    </section>
+  </div>
+
+  <!-- ==========================================
+       GIAO DIỆN TIN TỨC (NEWS VIEW)
+       ========================================== -->
+  <div id="news-view" style="display: none;">
+    <!-- Banner Tin Tức ở đầu cực kỳ sang trọng -->
+    <section class="hero-section" aria-label="Banner tin tức" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.3)), url('safety_quality_bg.png'); background-size: cover; background-position: center; padding: 6rem 1.5rem; text-align: center;">
+      <div class="container">
+        <h1 style="font-family: var(--font-title); font-size: 2.75rem; font-weight: 800; color: white; margin: 0; letter-spacing: 0.05em; text-transform: uppercase;">
+          TIN TỨC &amp; SỰ KIỆN
+        </h1>
+        <p style="color: rgba(255,255,255,0.85); font-size: 1.05rem; font-weight: 500; margin: 0.75rem 0 0; font-family: var(--font-title); letter-spacing: 0.02em;">
+          Khám phá những xu hướng mũ bảo hiểm, hướng dẫn an toàn và tin tức sự kiện từ AZOMA Helmet.
+        </p>
+      </div>
+    </section>
+
+    <!-- Layout 2 cột chính -->
+    <section class="catalog-section" style="padding: 4rem 1.5rem;">
+      <div class="container catalog-container" style="display: grid; grid-template-columns: 260px 1px 1fr; gap: 2.5rem; align-items: start;">
+        <!-- Cột Trái: Sidebar lọc tin tức -->
+        <aside class="desktop-sidebar" style="position: sticky; top: 100px;">
+          <div class="filter-group">
+            <h3 class="sidebar-title" style="font-size: 0.95rem; font-weight: 800; letter-spacing: 0.05em; color: var(--text-primary); margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; text-transform: uppercase;">
+              DANH MỤC TIN TỨC
+            </h3>
+            <div class="filter-options" style="display: flex; flex-direction: column; gap: 0.6rem;">
+              <button class="news-filter-btn active" data-category="all" style="text-align: left; background: none; border: none; font-size: 0.9rem; font-weight: 700; color: var(--accent); cursor: pointer; transition: all var(--transition-fast); padding: 0.4rem 0.8rem; border-radius: var(--radius-sm); width: 100%; display: flex; justify-content: space-between; align-items: center; cursor: pointer;">
+                <span>Tất cả bài viết</span>
+                <span style="font-weight: 700;">&gt;</span>
+              </button>
+              <button class="news-filter-btn" data-category="info" style="text-align: left; background: none; border: none; font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all var(--transition-fast); padding: 0.4rem 0.8rem; border-radius: var(--radius-sm); width: 100%; cursor: pointer;">
+                Thông tin nón bảo hiểm
+              </button>
+              <button class="news-filter-btn" data-category="event" style="text-align: left; background: none; border: none; font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); cursor: pointer; transition: all var(--transition-fast); padding: 0.4rem 0.8rem; border-radius: var(--radius-sm); width: 100%; cursor: pointer;">
+                Thông tin sự kiện
+              </button>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Divider line -->
+        <div style="width: 1px; background-color: var(--border-color); height: 100%; min-height: 500px;"></div>
+
+        <!-- Cột Phải: Lưới tin tức -->
+        <div class="catalog-content">
+          <div class="catalog-header" style="margin-bottom: 2rem; border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="catalog-title" id="news-main-title" style="font-size: 1.5rem; font-weight: 800; text-transform: uppercase;">Tất cả bài viết</h2>
+            <span style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 600;" id="news-count-lbl">4 bài viết</span>
+          </div>
+
+          <!-- Lưới bài viết tin tức (Sẽ được quản lý động qua JS) -->
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem;" id="news-grid-container">
+            <!-- Render động bài viết -->
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -526,8 +721,9 @@
       <a href="#" class="drawer-link" id="mob-nav-home">Trang Chủ</a>
       <a href="#san-pham" class="drawer-link" data-action="go-to-catalog" data-cat="urban">Nón Đô Thị</a>
       <a href="#san-pham" class="drawer-link" data-action="go-to-catalog" data-cat="sport">Nón Thể Thao</a>
-      <a href="#lien-he" class="drawer-link">Về AZOMA</a>
-      <a href="#lien-he" class="drawer-link">Liên Hệ</a>
+      <a href="#ve-azoma" class="drawer-link" id="mob-nav-about">Về AZOMA</a>
+      <a href="#tin-tuc" class="drawer-link" id="mob-nav-news">Tin Tức</a>
+      <a href="#lien-he" class="drawer-link" id="mob-nav-contact">Liên Hệ</a>
     </div>
     <div class="drawer-footer">
       <p class="footer-desc" style="font-size: 0.8rem; text-align: center;">Chất lượng & An toàn vượt trội</p>
@@ -862,6 +1058,45 @@
         <!-- Nút lưu -->
         <button type="submit" class="btn btn-accent btn-full" style="border-radius: 0; font-weight: 700; padding: 0.85rem 2rem; margin-top: 0.5rem;">LƯU SẢN PHẨM</button>
       </form>
+    </div>
+  </div>
+
+  <!-- Modal Đọc Tin Tức Chi Tiết -->
+  <div class="modal-overlay" id="news-detail-overlay" role="dialog" aria-modal="true" aria-label="Chi tiết bài viết tin tức">
+    <div class="product-modal" style="max-width: 800px; padding: 2.5rem; border-radius: var(--radius-md); background-color: var(--surface-color); display: block; overflow-y: auto; max-height: 85vh; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg);">
+      <button class="modal-close" id="news-detail-close-btn" aria-label="Đóng cửa sổ" style="cursor: pointer;">
+        <i class="ri-close-line"></i>
+      </button>
+
+      <!-- Nội dung chi tiết tin tức -->
+      <article style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <div>
+          <span style="font-family: var(--font-title); font-size: 0.8rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;" id="news-detail-cat">Thông tin nón bảo hiểm</span>
+          <h2 style="font-family: var(--font-title); font-size: 2.1rem; font-weight: 900; color: var(--text-primary); line-height: 1.2; margin-top: 0.4rem;" id="news-detail-title">Tiêu đề bài viết</h2>
+          <div style="display: flex; gap: 1rem; align-items: center; margin-top: 0.6rem; font-size: 0.8rem; color: var(--text-secondary); font-weight: 500;">
+            <span style="display: flex; align-items: center; gap: 0.3rem;"><i class="ri-calendar-line"></i> <span id="news-detail-date">02/06/2026</span></span>
+            <span style="display: flex; align-items: center; gap: 0.3rem;"><i class="ri-user-line"></i> Biên tập bởi AZOMA</span>
+            <span style="display: flex; align-items: center; gap: 0.3rem;"><i class="ri-time-line"></i> 5 phút đọc</span>
+          </div>
+        </div>
+
+        <div style="aspect-ratio: 1.8/1; border-radius: var(--radius-sm); overflow: hidden; background-color: var(--surface-hover); border: 1px solid var(--border-color);">
+          <img src="" alt="" id="news-detail-img" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+
+        <!-- Khối văn bản phong phú viết bằng tiếng Việt -->
+        <div class="news-body-content" id="news-detail-content" style="font-size: 1rem; line-height: 1.8; color: var(--text-primary); display: flex; flex-direction: column; gap: 1.2rem; text-align: justify;">
+          <!-- Render động từ JS -->
+        </div>
+
+        <!-- Khối bài viết liên quan -->
+        <div style="border-top: 1px solid var(--border-color); padding-top: 2rem; margin-top: 1rem;">
+          <h3 style="font-family: var(--font-title); font-size: 1.15rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.05em; border-left: 3px solid var(--accent); padding-left: 0.5rem;">BÀI VIẾT LIÊN QUAN</h3>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;" id="news-related-grid">
+            <!-- Bài viết liên quan render động -->
+          </div>
+        </div>
+      </article>
     </div>
   </div>
 
