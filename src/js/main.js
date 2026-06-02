@@ -3,11 +3,13 @@ import { initTheme, toggleTheme } from './theme.js';
 
 // --- STATE MANAGEMENT ---
 // Khởi tạo dữ liệu sản phẩm động từ localStorage hoặc dữ liệu tĩnh ban đầu
-let products = JSON.parse(localStorage.getItem('poc_products')) || [...initialProducts];
+let products = JSON.parse(localStorage.getItem('azoma_products')) || 
+               JSON.parse(localStorage.getItem('poc_products')) || 
+               [...initialProducts];
 
 // Hàm đồng bộ lưu trữ sản phẩm vào LocalStorage
 function saveProductsToStorage() {
-  localStorage.setItem('poc_products', JSON.stringify(products));
+  localStorage.setItem('azoma_products', JSON.stringify(products));
 }
 
 let selectedCategories = []; // Danh mục lọc được chọn (sport, urban, kids, accessories)
@@ -384,7 +386,7 @@ function setupEventListeners() {
   const infoBtn = document.getElementById('info-btn');
   if (infoBtn) {
     infoBtn.addEventListener('click', () => {
-      showToast("POC Helmet - Thương hiệu nón dẫn đầu về chất lượng và an toàn!", "success");
+      showToast("AZOMA Helmet - Thương hiệu nón dẫn đầu về chất lượng và an toàn!", "success");
     });
   }
 
@@ -428,7 +430,7 @@ function setupEventListeners() {
   if (navAbout) {
     navAbout.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-poc');
+      navigateTo('/ve-azoma');
       const target = document.getElementById('lien-he');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
@@ -436,7 +438,7 @@ function setupEventListeners() {
     });
   }
 
-  // Trình bắt sự kiện click cho các mục con trong danh mục sổ xuống "Về POC"
+  // Trình bắt sự kiện click cho các mục con trong danh mục sổ xuống "Về AZOMA"
   const navAboutDino = document.getElementById('nav-about-dino');
   const navAboutGeneral = document.getElementById('nav-about-general');
   const navAboutHistory = document.getElementById('nav-about-history');
@@ -445,7 +447,7 @@ function setupEventListeners() {
   if (navAboutDino) {
     navAboutDino.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-poc');
+      navigateTo('/ve-azoma');
       const target = document.getElementById('lien-he');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
@@ -489,7 +491,7 @@ function setupEventListeners() {
   if (navAboutGeneral) {
     navAboutGeneral.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-poc');
+      navigateTo('/ve-azoma');
       const target = document.getElementById('home-intro-about');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
@@ -502,7 +504,7 @@ function setupEventListeners() {
   if (navAboutHistory) {
     navAboutHistory.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-poc');
+      navigateTo('/ve-azoma');
       const target = document.getElementById('home-intro-history');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
@@ -512,7 +514,7 @@ function setupEventListeners() {
   if (navAboutContact) {
     navAboutContact.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-poc');
+      navigateTo('/ve-azoma');
       const target = document.getElementById('lien-he');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
@@ -1267,7 +1269,7 @@ function handleUrlRouting() {
     switchView('catalog');
   } else if (hash.includes('admin')) {
     switchView('admin');
-  } else if (hash.includes('ve-poc')) {
+  } else if (hash.includes('ve-poc') || hash.includes('ve-azoma')) {
     switchView('home');
     const target = document.getElementById('lien-he');
     if (target) {
@@ -1361,7 +1363,7 @@ function initAdminForm() {
       } else {
         // CHẾ ĐỘ THÊM MỚI (ADD MODE)
         const newProduct = {
-          id: 'poc-prod-' + Date.now(),
+          id: 'azoma-prod-' + Date.now(),
           name: nameVal,
           category: catVal,
           categoryLabel: catLabels[catVal] || catVal,
