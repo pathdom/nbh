@@ -435,6 +435,54 @@ function setupEventListeners() {
       }
     });
   }
+
+  // Trình bắt sự kiện click cho các mục con trong danh mục sổ xuống "Về POC"
+  const navAboutDino = document.getElementById('nav-about-dino');
+  const navAboutGeneral = document.getElementById('nav-about-general');
+  const navAboutHistory = document.getElementById('nav-about-history');
+  const navAboutContact = document.getElementById('nav-about-contact');
+
+  if (navAboutDino) {
+    navAboutDino.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/ve-poc');
+      const target = document.getElementById('lien-he');
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      }
+    });
+  }
+  if (navAboutGeneral) {
+    navAboutGeneral.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/ve-poc');
+      const target = document.getElementById('home-intro-about');
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
+      }
+    });
+  }
+  if (navAboutHistory) {
+    navAboutHistory.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/ve-poc');
+      const target = document.getElementById('home-intro-history');
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
+      }
+    });
+  }
+  if (navAboutContact) {
+    navAboutContact.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/ve-poc');
+      const target = document.getElementById('lien-he');
+      if (target) {
+        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+      }
+    });
+  }
+
   if (navContact) {
     navContact.addEventListener('click', (e) => {
       e.preventDefault();
