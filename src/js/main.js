@@ -20,22 +20,6 @@ const productsPerPage = 6;
 let selectedColor = 'Matte Black';
 let selectedSize = 'M';
 
-// Cấu hình đường dẫn gốc tự động (Hỗ trợ localhost và thư mục con như /nbh/ trên GitHub Pages)
-const getAppBasePath = () => {
-  const pathname = window.location.pathname;
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    return '/';
-  }
-  const segments = pathname.split('/');
-  if (segments.length > 1 && segments[1] !== '') {
-    const virtualPaths = ['trang-chu', 'san-pham', 've-poc', 'lien-he', 'admin'];
-    if (!virtualPaths.includes(segments[1])) {
-      return `/${segments[1]}/`;
-    }
-  }
-  return '/';
-};
-const BASE_PATH = getAppBasePath();
 
 // --- DOM ELEMENTS ---
 let productsContainer, paginationContainer, activeFiltersContainer;
@@ -90,8 +74,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   updateFilterTags();
 
-  // Lắng nghe sự kiện di chuyển lịch sử trang (Back/Forward)
-  window.addEventListener('popstate', () => {
+  // Lắng nghe sự kiện thay đổi Hash trên trình duyệt (SPA Hash Routing)
+  window.addEventListener('hashchange', () => {
     handleUrlRouting();
   });
 
@@ -137,8 +121,8 @@ function syncCategoryFilters(category) {
     mobileChecks.forEach(chk => chk.checked = (chk.value === category));
   }
 
-  // Chuyển đổi sang chế độ xem Catalog và cập nhật URL
-  window.history.pushState({ view: 'catalog', cat: category }, '', BASE_PATH + 'san-pham');
+  // Cập nhật Hash chuyển sang giao diện cửa hàng và kích hoạt view Catalog
+  window.location.hash = '/san-pham';
   switchView('catalog');
 
   renderProducts();
@@ -420,8 +404,7 @@ function setupEventListeners() {
   if (navHome) {
     navHome.addEventListener('click', (e) => {
       e.preventDefault();
-      window.history.pushState({ view: 'home' }, '', BASE_PATH + 'trang-chu');
-      switchView('home');
+      window.location.hash = '/trang-chu';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
@@ -429,32 +412,28 @@ function setupEventListeners() {
     mobNavHome.addEventListener('click', (e) => {
       e.preventDefault();
       closeMobileDrawer();
-      window.history.pushState({ view: 'home' }, '', BASE_PATH + 'trang-chu');
-      switchView('home');
+      window.location.hash = '/trang-chu';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
   if (brandLogo) {
     brandLogo.addEventListener('click', (e) => {
       e.preventDefault();
-      window.history.pushState({ view: 'home' }, '', BASE_PATH + 'trang-chu');
-      switchView('home');
+      window.location.hash = '/trang-chu';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
   if (navCatalog) {
     navCatalog.addEventListener('click', (e) => {
       e.preventDefault();
-      window.history.pushState({ view: 'catalog' }, '', BASE_PATH + 'san-pham');
-      switchView('catalog');
+      window.location.hash = '/san-pham';
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
   if (navAbout) {
     navAbout.addEventListener('click', (e) => {
       e.preventDefault();
-      window.history.pushState({ view: 'home', scroll: 'about' }, '', BASE_PATH + 've-poc');
-      switchView('home');
+      window.location.hash = '/ve-poc';
       const target = document.getElementById('lien-he');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
@@ -464,8 +443,7 @@ function setupEventListeners() {
   if (navContact) {
     navContact.addEventListener('click', (e) => {
       e.preventDefault();
-      window.history.pushState({ view: 'home', scroll: 'contact' }, '', BASE_PATH + 'lien-he');
-      switchView('home');
+      window.location.hash = '/lien-he';
       const target = document.getElementById('lien-he');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
@@ -1050,7 +1028,7 @@ function initHomepage() {
       if (targetCat) {
         syncCategoryFilters(targetCat);
       } else {
-        switchView('catalog');
+        window.location.hash = '/san-pham';
       }
 
       // Cuộn lên vị trí danh sách sản phẩm
@@ -1132,13 +1110,13 @@ function renderHomeCategoryProducts(category) {
 
 // --- CLIENT-SIDE ROUTER HANDLE URL ROUTING ---
 function handleUrlRouting() {
-  const pathname = window.location.pathname;
+  const hash = window.location.hash;
 
-  if (pathname.includes('san-pham')) {
+  if (hash.includes('san-pham')) {
     switchView('catalog');
-  } else if (pathname.includes('admin')) {
+  } else if (hash.includes('admin')) {
     switchView('admin');
-  } else if (pathname.includes('ve-poc')) {
+  } else if (hash.includes('ve-poc')) {
     switchView('home');
     const target = document.getElementById('lien-he');
     if (target) {
@@ -1146,7 +1124,7 @@ function handleUrlRouting() {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
       }, 300);
     }
-  } else if (pathname.includes('lien-he')) {
+  } else if (hash.includes('lien-he')) {
     switchView('home');
     const target = document.getElementById('lien-he');
     if (target) {
@@ -1155,7 +1133,7 @@ function handleUrlRouting() {
       }, 300);
     }
   } else {
-    // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: /trang-chu hoặc /)
+    // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: #/trang-chu hoặc rỗng)
     switchView('home');
   }
 }
