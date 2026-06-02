@@ -444,14 +444,64 @@ function setupEventListeners() {
   const navAboutHistory = document.getElementById('nav-about-history');
   const navAboutContact = document.getElementById('nav-about-contact');
 
+  const dinoDetailOverlay = document.getElementById('dino-detail-overlay');
+  const dinoDetailCloseBtn = document.getElementById('dino-detail-close-btn');
+
+  const openDinoModal = () => {
+    if (dinoDetailOverlay) {
+      dinoDetailOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  if (dinoDetailCloseBtn) {
+    dinoDetailCloseBtn.addEventListener('click', () => {
+      dinoDetailOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+
+  if (dinoDetailOverlay) {
+    dinoDetailOverlay.addEventListener('click', (e) => {
+      if (e.target === dinoDetailOverlay) {
+        dinoDetailOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  const dinoQuickForm = document.getElementById('dino-quick-form');
+  if (dinoQuickForm) {
+    dinoQuickForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nameInput = document.getElementById('dino-form-name');
+      const telInput = document.getElementById('dino-form-tel');
+      const nameVal = nameInput ? nameInput.value.trim() : '';
+      const telVal = telInput ? telInput.value.trim() : '';
+
+      if (!nameVal || nameVal.length < 2) {
+        showToast("Vui lòng nhập tên hợp lệ!", "error");
+        return;
+      }
+      if (!telVal || !/^(03|05|07|08|09|01[2|6|8|9])+([0-9]{8})$/.test(telVal)) {
+        showToast("Số điện thoại không đúng định dạng (VD: 0987654321)!", "error");
+        return;
+      }
+
+      showToast(`Cảm ơn anh/chị ${nameVal}! Yêu cầu nhận Catalogue & báo giá in logo đại lý đã được gửi thành công!`, "success");
+      if (dinoDetailOverlay) {
+        dinoDetailOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+      dinoQuickForm.reset();
+    });
+  }
+
   if (navAboutDino) {
     navAboutDino.addEventListener('click', (e) => {
       e.preventDefault();
       navigateTo('/ve-azoma');
-      const target = document.getElementById('lien-he');
-      if (target) {
-        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-      }
+      openDinoModal();
     });
   }
   const aboutDetailOverlay = document.getElementById('about-detail-overlay');
