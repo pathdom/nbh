@@ -2193,4 +2193,90 @@
   color: #ffc700 !important;
 }
 
+/* --- ADMIN VIEW & ACTION OVERLAYS --- */
+#admin-view {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+}
+
+.admin-hero-banner {
+  background-color: #1a1a1a;
+  color: white;
+  transition: background-color var(--transition-normal);
+}
+
+[data-theme="dark"] .admin-hero-banner {
+  background-color: #0d0e12;
+}
+
+.admin-actions-bar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+/* Hiển thị thanh thao tác khi hover hoặc trên thiết bị di động hiển thị trực tiếp để dễ chạm */
+.product-card:hover .admin-actions-bar {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .admin-actions-bar {
+    opacity: 1;
+    transform: translateY(0);
+    top: 5px;
+    right: 5px;
+    gap: 0.35rem;
+  }
+  
+  .admin-act-btn {
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 0.95rem !important;
+  }
+}
+
+.admin-act-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  transition: transform var(--transition-fast), background-color var(--transition-fast);
+}
+
+.admin-act-btn:hover {
+  transform: scale(1.1);
+}
+
+.admin-act-btn.edit-btn {
+  background-color: #ffc700;
+  color: #1a1a1a;
+}
+
+.admin-act-btn.edit-btn:hover {
+  background-color: #e5b300;
+}
+
+.admin-act-btn.delete-btn {
+  background-color: var(--danger);
+  color: white;
+}
+
+.admin-act-btn.delete-btn:hover {
+  background-color: hsl(0, 85%, 42%);
+}
+
 

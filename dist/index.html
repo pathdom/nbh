@@ -17,8 +17,8 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <script type="module" crossorigin src="./assets/index-ut1lyMgz.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-DMrsTsyC.css">
+  <script type="module" crossorigin src="./assets/index-BxScHTD5.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-2AbhrvSO.css">
 </head>
 <body>
 
@@ -226,6 +226,88 @@
             </div>
           </div>
         </div>
+      </section>
+    </div>
+
+    <!-- ==========================================
+         GIAO DIỆN QUẢN TRỊ SẢN PHẨM (ADMIN CONTROL)
+         ========================================== -->
+    <div id="admin-view" style="display: none;">
+      <!-- 1. Hero Title Banner Section (nhìn giống catalog nhưng là trang admin) -->
+      <section class="hero-section" aria-label="Banner quảng trị">
+        <div class="admin-hero-banner" style="background-color: #1a1a1a; color: white; padding: 2.5rem 1.5rem; text-align: center; border-bottom: 3px solid var(--accent);">
+          <h1 style="color: white; font-family: var(--font-title); font-size: 1.8rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase;">BẢNG ĐIỀU KHIỂN QUẢN TRỊ</h1>
+          <p style="color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-top: 0.5rem;">Thêm, sửa, xóa sản phẩm và tự động đồng bộ hóa LocalStorage trong thời gian thực</p>
+        </div>
+      </section>
+
+      <!-- 2. Admin Catalog Section -->
+      <section class="catalog-section">
+      <div class="container catalog-container">
+        <!-- Sidebar Bộ Lọc trên Desktop cho Admin -->
+        <aside class="desktop-sidebar" id="admin-desktop-sidebar">
+          <div class="sidebar-sticky">
+            <!-- 1. GIÁ TIỀN -->
+            <div class="filter-group">
+              <h3 class="sidebar-title">GIÁ TIỀN</h3>
+              <div class="price-slider-container">
+                <div class="slider-track-wrap">
+                  <div class="slider-track" id="admin-desktop-slider-track"></div>
+                  <input type="range" min="0" max="10000000" value="0" id="admin-desktop-price-min" class="price-range-input" aria-label="Giá tối thiểu">
+                  <input type="range" min="0" max="10000000" value="10000000" id="admin-desktop-price-max" class="price-range-input" aria-label="Giá tối đa">
+                </div>
+                <div class="price-labels">
+                  <span id="admin-desktop-price-min-lbl">0đ</span>
+                  <span id="admin-desktop-price-max-lbl">10.000.000đ</span>
+                </div>
+              </div>
+            </div>
+
+            <hr class="filter-divider">
+
+            <!-- 2. DANH MỤC SẢN PHẨM -->
+            <div class="filter-group">
+              <h3 class="sidebar-title">DANH MỤC SẢN PHẨM</h3>
+              <div class="filter-options">
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" name="admin-desktop-cat-filter" value="sport">
+                  <span>NÓN THỂ THAO</span>
+                </label>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" name="admin-desktop-cat-filter" value="urban">
+                  <span>NÓN XE MÁY</span>
+                </label>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" name="admin-desktop-cat-filter" value="kids">
+                  <span>NÓN TRẺ EM</span>
+                </label>
+                <label class="filter-option checkbox-option">
+                  <input type="checkbox" class="custom-checkbox" name="admin-desktop-cat-filter" value="accessories">
+                  <span>PHỤ KIỆN</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Khối bên phải chứa tiêu đề admin, lưới sản phẩm quản trị, nút thêm sản phẩm -->
+        <div class="catalog-content">
+          <!-- Khối Tiêu Đề Mục Admin -->
+          <div class="catalog-header" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border-color); padding-bottom: 1rem; margin-bottom: 2rem;">
+            <h2 class="catalog-title" style="font-size: 1.5rem; font-weight: 800; text-transform: uppercase; margin: 0;">QUẢN LÝ SẢN PHẨM</h2>
+            <button class="btn btn-accent" id="admin-add-product-btn" style="border-radius: 0; font-weight: 700; padding: 0.6rem 1.25rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+              <i class="ri-add-line" style="font-size: 1.2rem;"></i>
+              <span>THÊM SẢN PHẨM</span>
+            </button>
+          </div>
+
+          <!-- Lưới sản phẩm quản trị -->
+          <div class="products-grid" id="admin-products-grid"></div>
+
+          <!-- Phân trang quản trị -->
+          <div class="pagination" id="admin-pagination"></div>
+        </div>
+      </div>
       </section>
     </div>
 
@@ -624,6 +706,67 @@
           <button type="submit" class="btn btn-primary btn-full">NHẬN TƯ VẤN NGAY</button>
         </form>
       </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       MODAL THÊM/SỬA SẢN PHẨM ADMIN
+       ========================================== -->
+  <div class="modal-overlay" id="admin-product-overlay" role="dialog" aria-modal="true" aria-label="Biểu mẫu sản phẩm quản trị">
+    <div class="product-modal" style="max-width: 500px; padding: 2rem; border-radius: var(--radius-md); background-color: var(--surface-color); display: block; overflow: visible;">
+      <!-- Nút Đóng Modal -->
+      <button class="modal-close" id="admin-product-close-btn" aria-label="Đóng biểu mẫu">
+        <i class="ri-close-line"></i>
+      </button>
+
+      <h2 id="admin-modal-title" style="font-family: var(--font-title); font-size: 1.4rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; color: var(--text-primary);">THÊM SẢN PHẨM MỚI</h2>
+
+      <form id="admin-product-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+        <!-- Input ID ẩn khi sửa -->
+        <input type="hidden" id="admin-form-id">
+
+        <!-- Tên sản phẩm -->
+        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+          <label for="admin-form-name" style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary);">TÊN SẢN PHẨM *</label>
+          <input type="text" id="admin-form-name" class="form-input" style="width: 100%; border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: var(--radius-sm); background-color: var(--surface-color); color: var(--text-primary);" placeholder="Ví dụ: POC P05..." required>
+        </div>
+
+        <!-- Danh mục & Giá -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+          <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+            <label for="admin-form-category" style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary);">DANH MỤC *</label>
+            <select id="admin-form-category" style="width: 100%; border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: var(--radius-sm); background-color: var(--surface-color); color: var(--text-primary); cursor: pointer;" required>
+              <option value="sport">Nón Thể Thao</option>
+              <option value="urban">Nón Xe Máy / Đô Thị</option>
+              <option value="kids">Nón Trẻ Em</option>
+              <option value="accessories">Phụ Kiện</option>
+            </select>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+            <label for="admin-form-price" style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary);">ĐƠN GIÁ (VND) *</label>
+            <input type="number" id="admin-form-price" class="form-input" style="width: 100%; border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: var(--radius-sm); background-color: var(--surface-color); color: var(--text-primary);" placeholder="Ví dụ: 790000" min="0" required>
+          </div>
+        </div>
+
+        <!-- Hình ảnh -->
+        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+          <label for="admin-form-image" style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary);">TÊN FILE ẢNH *</label>
+          <select id="admin-form-image" style="width: 100%; border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: var(--radius-sm); background-color: var(--surface-color); color: var(--text-primary); cursor: pointer;" required>
+            <option value="helmet_sport_black.png">helmet_sport_black.png (Nón thể thao)</option>
+            <option value="helmet_urban_black.png">helmet_urban_black.png (Nón đô thị)</option>
+          </select>
+        </div>
+
+        <!-- Mô tả chi tiết -->
+        <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+          <label for="admin-form-desc" style="font-size: 0.8rem; font-weight: 700; color: var(--text-primary);">MÔ TẢ CHI TIẾT *</label>
+          <textarea id="admin-form-desc" style="width: 100%; height: 80px; border: 1px solid var(--border-color); padding: 0.75rem 1rem; border-radius: var(--radius-sm); background-color: var(--surface-color); color: var(--text-primary); resize: none; font-family: inherit;" placeholder="Nhập mô tả sản phẩm..." required></textarea>
+        </div>
+
+        <!-- Nút lưu -->
+        <button type="submit" class="btn btn-accent btn-full" style="border-radius: 0; font-weight: 700; padding: 0.85rem 2rem; margin-top: 0.5rem;">LƯU SẢN PHẨM</button>
+      </form>
     </div>
   </div>
 
