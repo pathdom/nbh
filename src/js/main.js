@@ -70,8 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProducts();
   updateFilterTags();
 
-  // Lắng nghe sự kiện di chuyển Back/Forward của trình duyệt (popstate)
-  window.addEventListener('popstate', () => {
+  // Lắng nghe sự kiện thay đổi Hash trên trình duyệt (SPA Hash Routing)
+  window.addEventListener('hashchange', () => {
     handleUrlRouting();
   });
 
@@ -559,7 +559,7 @@ function renderProducts() {
     imgWrapper.style.backgroundColor = getSelectedColorRGBA(selectedColorFilter);
 
     const img = document.createElement('img');
-    img.src = product.image.startsWith('http') || product.image.startsWith('/') ? product.image : '/' + product.image;
+    img.src = product.image;
     img.alt = product.name;
     img.className = 'product-image';
     img.loading = 'lazy';
@@ -782,8 +782,7 @@ function updateFilterTags() {
 // --- QUICK VIEW MODAL CONTROLLERS ---
 function openQuickView(product) {
   // Gán thông tin sản phẩm (XSS Safe)
-  const safeImgSrc = product.image.startsWith('http') || product.image.startsWith('/') ? product.image : '/' + product.image;
-  document.getElementById('modal-img').src = safeImgSrc;
+  document.getElementById('modal-img').src = product.image;
   document.getElementById('modal-img').alt = product.name;
   document.getElementById('modal-title').textContent = product.name;
   document.getElementById('modal-category').textContent = product.categoryLabel;
@@ -1136,7 +1135,7 @@ function renderHomeCategoryProducts(category) {
     imgWrapper.className = 'featured-img-wrapper';
 
     const img = document.createElement('img');
-    img.src = product.image.startsWith('http') || product.image.startsWith('/') ? product.image : '/' + product.image;
+    img.src = product.image;
     img.alt = product.name;
     img.className = 'featured-img';
     img.loading = 'lazy';
@@ -1170,21 +1169,20 @@ function renderHomeCategoryProducts(category) {
 
 // --- CLIENT-SIDE ROUTER HELPER ---
 function navigateTo(path) {
-  if (window.location.pathname !== path) {
-    window.history.pushState(null, '', path);
-    handleUrlRouting();
+  if (window.location.hash !== '#' + path) {
+    window.location.hash = path;
   }
 }
 
 // --- CLIENT-SIDE ROUTER HANDLE URL ROUTING ---
 function handleUrlRouting() {
-  const path = window.location.pathname;
+  const hash = window.location.hash;
 
-  if (path.includes('san-pham')) {
+  if (hash.includes('san-pham')) {
     switchView('catalog');
-  } else if (path.includes('admin')) {
+  } else if (hash.includes('admin')) {
     switchView('admin');
-  } else if (path.includes('ve-poc')) {
+  } else if (hash.includes('ve-poc')) {
     switchView('home');
     const target = document.getElementById('lien-he');
     if (target) {
@@ -1192,7 +1190,7 @@ function handleUrlRouting() {
         window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
       }, 300);
     }
-  } else if (path.includes('lien-he')) {
+  } else if (hash.includes('lien-he')) {
     switchView('home');
     const target = document.getElementById('lien-he');
     if (target) {
@@ -1201,7 +1199,7 @@ function handleUrlRouting() {
       }, 300);
     }
   } else {
-    // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: /trang-chu hoặc /)
+    // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: #/trang-chu hoặc rỗng)
     switchView('home');
   }
 }
