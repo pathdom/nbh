@@ -452,6 +452,40 @@ function setupEventListeners() {
       }
     });
   }
+  const aboutDetailOverlay = document.getElementById('about-detail-overlay');
+  const aboutDetailCloseBtn = document.getElementById('about-detail-close-btn');
+  const homeIntroAbout = document.getElementById('home-intro-about');
+
+  const openAboutModal = () => {
+    if (aboutDetailOverlay) {
+      aboutDetailOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  if (aboutDetailCloseBtn) {
+    aboutDetailCloseBtn.addEventListener('click', () => {
+      aboutDetailOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+  }
+
+  if (aboutDetailOverlay) {
+    aboutDetailOverlay.addEventListener('click', (e) => {
+      if (e.target === aboutDetailOverlay) {
+        aboutDetailOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  if (homeIntroAbout) {
+    homeIntroAbout.addEventListener('click', (e) => {
+      e.preventDefault();
+      openAboutModal();
+    });
+  }
+
   if (navAboutGeneral) {
     navAboutGeneral.addEventListener('click', (e) => {
       e.preventDefault();
@@ -459,6 +493,9 @@ function setupEventListeners() {
       const target = document.getElementById('home-intro-about');
       if (target) {
         window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
+        setTimeout(() => {
+          openAboutModal();
+        }, 500); // Mở modal ngay sau khi cuộn hoàn tất mượt mà
       }
     });
   }
