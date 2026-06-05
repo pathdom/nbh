@@ -17,8 +17,8 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <script type="module" crossorigin src="./assets/index-D5UCnQAh.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-Bi2DoDMw.css">
+  <script type="module" crossorigin src="./assets/index-BP_qg1HD.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-Znd9MZcV.css">
 </head>
 <body>
 
@@ -221,11 +221,12 @@
 
       <!-- Tiện ích bên phải (Màu sắc & Tìm kiếm) -->
       <div class="nav-right">
+        <div class="search-box-header">
+          <input type="text" id="search-input-header" placeholder="Tìm kiếm mũ..." class="search-input-header" aria-label="Tìm kiếm mũ bảo hiểm">
+          <i class="ri-search-line" style="position: absolute; right: 0.8rem; color: var(--text-secondary); pointer-events: none; font-size: 0.95rem;" aria-hidden="true"></i>
+        </div>
         <button class="nav-btn" id="theme-toggle-btn" aria-label="Chuyển chế độ tối">
           <i class="ri-moon-line" aria-hidden="true"></i>
-        </button>
-        <button class="nav-btn" id="search-btn" aria-label="Tìm kiếm sản phẩm">
-          <i class="ri-search-line" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -878,17 +879,7 @@
     </div>
   </aside>
 
-  <!-- Search Fullscreen Overlay -->
-  <div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="Tìm kiếm sản phẩm trên website">
-    <button class="nav-btn search-close-btn" id="search-close-btn" aria-label="Đóng tìm kiếm">
-      <i class="ri-close-line"></i>
-    </button>
-    <div class="search-container">
-      <label for="search-input" class="sr-only">Nhập tên hoặc tính năng mũ bảo hiểm</label>
-      <input type="text" id="search-input" class="search-input" placeholder="Tìm tên nón bảo hiểm (VD: PK03S, P02)..." autocomplete="off">
-      <i class="ri-search-line search-icon-inside" aria-hidden="true"></i>
-    </div>
-  </div>
+
 
   <!-- Quick View / Product Detail Modal (XSS Safe) -->
   <div class="modal-overlay" id="quickview-overlay" role="dialog" aria-modal="true" aria-label="Chi tiết sản phẩm xem nhanh">

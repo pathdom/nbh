@@ -131,7 +131,7 @@ const newsArticles = [
 
 // --- DOM ELEMENTS ---
 let productsContainer, paginationContainer, activeFiltersContainer;
-let drawerOverlay, mobileDrawer, searchModal;
+let drawerOverlay, mobileDrawer;
 let quickviewOverlay, quickviewModal;
 let toastContainer;
 let homepageView, catalogView, contactView, newsView;
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
   
   drawerOverlay = document.getElementById('drawer-overlay');
   mobileDrawer = document.getElementById('mobile-drawer');
-  searchModal = document.getElementById('search-modal');
+  
   
   quickviewOverlay = document.getElementById('quickview-overlay');
   quickviewModal = document.getElementById('quickview-modal');
@@ -432,20 +432,19 @@ function setupEventListeners() {
     });
   });
 
-  // Search Modal
-  const searchBtn = document.getElementById('search-btn');
-  const searchCloseBtn = document.getElementById('search-close-btn');
-  const searchInput = document.getElementById('search-input');
-  if (searchBtn) {
-    searchBtn.addEventListener('click', openSearchModal);
-  }
-  if (searchCloseBtn) {
-    searchCloseBtn.addEventListener('click', closeSearchModal);
-  }
-  if (searchInput) {
-    searchInput.addEventListener('input', (e) => {
+  // Header Inline Search
+  const headerSearchInput = document.getElementById('search-input-header');
+  if (headerSearchInput) {
+    headerSearchInput.addEventListener('input', (e) => {
       searchQuery = e.target.value.trim();
       currentPage = 1;
+
+      // Nếu đang không ở trang sản phẩm hoặc quản trị, tự động chuyển hướng về trang Catalog để hiển thị kết quả lọc
+      const hash = window.location.hash;
+      if (!hash.includes('san-pham') && !hash.includes('admin')) {
+        navigateTo('/san-pham');
+      }
+
       renderProducts();
     });
   }
@@ -948,18 +947,7 @@ function closeFilterDrawer() {
   document.body.style.overflow = '';
 }
 
-// --- SEARCH CONTROLLERS ---
-function openSearchModal() {
-  searchModal.classList.add('active');
-  document.getElementById('search-input').focus();
-  document.body.style.overflow = 'hidden';
-}
 
-// Keep existing search modal close clean
-function closeSearchModal() {
-  searchModal.classList.remove('active');
-  document.body.style.overflow = '';
-}
 
 // --- RENDER PRODUCTS GRID ---
 function renderProducts() {

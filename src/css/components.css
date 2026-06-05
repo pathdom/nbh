@@ -2564,5 +2564,53 @@
   list-style-type: disc;
 }
 
+/* --- HEADER SEARCH BOX STYLES --- */
+.search-box-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-input-header {
+  padding: 0.45rem 2.2rem 0.45rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  background-color: var(--surface-hover);
+  color: var(--text-primary);
+  outline: none;
+  transition: all var(--transition-fast);
+  width: 180px;
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+.search-input-header:focus {
+  border-color: var(--accent);
+  background-color: var(--surface-color);
+  box-shadow: 0 0 0 2px rgba(255, 199, 0, 0.15);
+  width: 220px;
+}
+
+@media (max-width: 991px) {
+  .search-input-header {
+    width: 130px;
+  }
+  .search-input-header:focus {
+    width: 150px;
+  }
+}
+
+@media (max-width: 576px) {
+  .search-input-header {
+    width: 100px;
+    padding: 0.4rem 1.8rem 0.4rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  .search-input-header:focus {
+    width: 120px;
+  }
+}
+
 
 
