@@ -7,8 +7,8 @@ let products = JSON.parse(localStorage.getItem('azoma_products')) ||
                JSON.parse(localStorage.getItem('poc_products')) || 
                [...initialProducts];
 
-// Tự động dọn dẹp và đồng bộ nếu đang lưu trữ cấu trúc dữ liệu cũ (NBH Pxx)
-if (products.some(p => p.name && p.name.startsWith('NBH '))) {
+// Tự động dọn dẹp và đồng bộ nếu đang lưu trữ cấu trúc dữ liệu cũ (NBH Pxx) hoặc ảnh placeholder cũ
+if (products.some(p => p.name && p.name.startsWith('NBH ')) || (products.length > 0 && products[0].image === 'helmet_sport_black.png')) {
   products = [...initialProducts];
   localStorage.setItem('azoma_products', JSON.stringify(products));
 }
