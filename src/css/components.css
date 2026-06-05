@@ -2456,6 +2456,10 @@
   opacity: 1;
 }
 
+#admin-login-form input:focus {
+  border-color: var(--accent) !important;
+}
+
 /* --- NEWS PAGE VIEW --- */
 .news-list-card {
   background-color: var(--surface-color);

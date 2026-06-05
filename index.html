@@ -514,6 +514,10 @@
                 <i class="ri-add-line" style="font-size: 1.2rem;"></i>
                 <span>THÊM SẢN PHẨM</span>
               </button>
+              <button class="btn btn-secondary" id="admin-logout-btn" style="border-radius: 0; font-weight: 700; padding: 0.6rem 1.25rem; display: none; align-items: center; gap: 0.5rem; background-color: var(--surface-hover); border: 1px solid var(--border-color); color: var(--text-primary);">
+                <i class="ri-logout-box-r-line" style="font-size: 1.2rem;"></i>
+                <span>ĐĂNG XUẤT</span>
+              </button>
               <button class="filter-btn" id="filter-btn" aria-label="Mở bộ lọc danh mục sản phẩm">
                 <i class="ri-filter-3-line" aria-hidden="true"></i>
                 <span>Bộ lọc</span>
@@ -624,6 +628,45 @@
           <!-- Lưới bài viết tin tức (Sẽ được quản lý động qua JS) -->
           <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem;" id="news-grid-container">
             <!-- Render động bài viết -->
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- ==========================================
+       GIAO DIỆN ĐĂNG NHẬP ADMIN (ADMIN LOGIN VIEW)
+       ========================================== -->
+  <div id="admin-login-view" style="display: none;">
+    <section style="background-color: var(--surface-color); padding: 7rem 1.5rem 8rem; min-height: calc(100vh - 64px - 380px); display: flex; align-items: center; justify-content: center; transition: background-color var(--transition-normal);">
+      <div class="container" style="max-width: 450px; width: 100%;">
+        <div style="background-color: var(--surface-hover); border: 1px solid var(--border-color); padding: 2.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; flex-direction: column; gap: 1.5rem;">
+          <div style="text-align: center; display: flex; flex-direction: column; gap: 0.5rem;">
+            <h1 style="font-family: var(--font-title); font-size: 2rem; font-weight: 800; color: var(--accent); margin: 0; text-transform: uppercase;">
+              Đăng Nhập Admin
+            </h1>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+              Vui lòng đăng nhập để truy cập trang quản trị
+            </p>
+          </div>
+          
+          <form id="admin-login-form" style="display: flex; flex-direction: column; gap: 1.25rem;">
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+              <label for="login-username" style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); text-align: left; display: block;">Tên đăng nhập</label>
+              <input type="text" id="login-username" placeholder="Tên đăng nhập" required autocomplete="username" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--surface-color); color: var(--text-primary); transition: border-color var(--transition-fast);">
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 0.4rem;">
+              <label for="login-password" style="font-size: 0.85rem; font-weight: 600; color: var(--text-primary); text-align: left; display: block;">Mật khẩu</label>
+              <input type="password" id="login-password" placeholder="Mật khẩu" required autocomplete="current-password" style="width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--border-color); border-radius: var(--radius-sm); background-color: var(--surface-color); color: var(--text-primary); transition: border-color var(--transition-fast);">
+            </div>
+
+            <button type="submit" class="btn btn-accent" style="width: 100%; padding: 0.75rem; font-weight: 700; text-transform: uppercase; border-radius: var(--radius-sm); margin-top: 0.5rem; justify-content: center;">
+              Đăng nhập
+            </button>
+          </form>
+          
+          <div style="font-size: 0.8rem; color: var(--text-secondary); text-align: center; border-top: 1px dashed var(--border-color); padding-top: 1rem; margin-top: 0.5rem;">
+            Tài khoản mặc định: <strong style="color: var(--text-primary);">admin</strong> / Mật khẩu: <strong style="color: var(--text-primary);">admin123</strong>
           </div>
         </div>
       </div>

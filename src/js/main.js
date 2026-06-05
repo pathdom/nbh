@@ -135,7 +135,7 @@ let drawerOverlay, mobileDrawer, searchModal;
 let quickviewOverlay, quickviewModal;
 let toastContainer;
 let homepageView, catalogView, contactView, newsView;
-let adminProductOverlay, adminProductForm;
+let adminProductOverlay, adminProductForm, adminLoginView, adminLoginForm, adminLogoutBtn;
 let newsGridContainer, newsDetailOverlay;
 
 // --- INITIALIZATION ---
@@ -162,6 +162,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   adminProductOverlay = document.getElementById('admin-product-overlay');
   adminProductForm = document.getElementById('admin-product-form');
+  adminLoginView = document.getElementById('admin-login-view');
+  adminLoginForm = document.getElementById('admin-login-form');
+  adminLogoutBtn = document.getElementById('admin-logout-btn');
 
   // Khởi tạo theme
   initTheme();
@@ -872,10 +875,49 @@ function setupEventListeners() {
     });
   }
 
-  // Newsletter Signup Form
   const newsletterForm = document.getElementById('newsletter-form');
   if (newsletterForm) {
     newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+  }
+
+  // --- ADMIN LOGIN FORM SUBMIT ---
+  if (adminLoginForm) {
+    adminLoginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const usernameInput = document.getElementById('login-username');
+      const passwordInput = document.getElementById('login-password');
+      const username = usernameInput ? usernameInput.value.trim() : '';
+      const password = passwordInput ? passwordInput.value : '';
+
+      if (username === 'admin' && password === 'admin123') {
+        sessionStorage.setItem('nbh_admin_logged_in', 'true');
+        showToast('Đăng nhập quản trị thành công!', 'success');
+        
+        // Clear form
+        adminLoginForm.reset();
+        
+        // Chuyển hướng sang giao diện admin
+        switchView('admin');
+      } else {
+        showToast('Tên đăng nhập hoặc mật khẩu không chính xác!', 'error');
+        if (passwordInput) {
+          passwordInput.value = '';
+          passwordInput.focus();
+        }
+      }
+    });
+  }
+
+  // --- ADMIN LOGOUT BUTTON CLICK ---
+  if (adminLogoutBtn) {
+    adminLogoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      sessionStorage.removeItem('nbh_admin_logged_in');
+      showToast('Đã đăng xuất tài khoản quản trị.', 'success');
+      
+      // Chuyển hướng về trang chủ
+      navigateTo('/trang-chu');
+    });
   }
 }
 
@@ -1359,10 +1401,12 @@ export function switchView(viewName) {
   const catalogView = document.getElementById('catalog-view');
   const contactView = document.getElementById('contact-view');
   const newsView = document.getElementById('news-view');
+  const adminLoginView = document.getElementById('admin-login-view');
   const navHome = document.getElementById('nav-home');
   const navCatalog = document.getElementById('nav-catalog-main');
   const navNews = document.getElementById('nav-news-main');
   const adminAddBtn = document.getElementById('admin-add-product-btn');
+  const adminLogoutBtn = document.getElementById('admin-logout-btn');
   const mainTitle = document.getElementById('catalog-main-title');
 
   if (!homepageView || !catalogView) return;
@@ -1372,8 +1416,10 @@ export function switchView(viewName) {
     catalogView.style.display = 'none';
     if (contactView) contactView.style.display = 'none';
     if (newsView) newsView.style.display = 'none';
+    if (adminLoginView) adminLoginView.style.display = 'none';
     catalogView.classList.remove('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'none';
+    if (adminLogoutBtn) adminLogoutBtn.style.display = 'none';
     if (mainTitle) mainTitle.textContent = 'Nón Bảo Hiểm';
 
     // Đánh dấu active navigation pill
@@ -1385,8 +1431,10 @@ export function switchView(viewName) {
     catalogView.style.display = 'block';
     if (contactView) contactView.style.display = 'none';
     if (newsView) newsView.style.display = 'none';
+    if (adminLoginView) adminLoginView.style.display = 'none';
     catalogView.classList.remove('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'none';
+    if (adminLogoutBtn) adminLogoutBtn.style.display = 'none';
     if (mainTitle) mainTitle.textContent = 'Nón Bảo Hiểm';
 
     // Đánh dấu active navigation pill
@@ -1400,8 +1448,10 @@ export function switchView(viewName) {
     catalogView.style.display = 'block';
     if (contactView) contactView.style.display = 'none';
     if (newsView) newsView.style.display = 'none';
+    if (adminLoginView) adminLoginView.style.display = 'none';
     catalogView.classList.add('admin-mode');
     if (adminAddBtn) adminAddBtn.style.display = 'inline-flex';
+    if (adminLogoutBtn) adminLogoutBtn.style.display = 'inline-flex';
     if (mainTitle) mainTitle.textContent = 'QUẢN LÝ SẢN PHẨM';
 
     // Xoá active navigation pill vì đây là chế độ admin quản trị riêng
@@ -1415,7 +1465,9 @@ export function switchView(viewName) {
     catalogView.style.display = 'none';
     if (contactView) contactView.style.display = 'block';
     if (newsView) newsView.style.display = 'none';
+    if (adminLoginView) adminLoginView.style.display = 'none';
     if (adminAddBtn) adminAddBtn.style.display = 'none';
+    if (adminLogoutBtn) adminLogoutBtn.style.display = 'none';
 
     // Xoá active navigation pill
     if (navHome) navHome.classList.remove('active-nav-pill');
@@ -1426,7 +1478,9 @@ export function switchView(viewName) {
     catalogView.style.display = 'none';
     if (contactView) contactView.style.display = 'none';
     if (newsView) newsView.style.display = 'block';
+    if (adminLoginView) adminLoginView.style.display = 'none';
     if (adminAddBtn) adminAddBtn.style.display = 'none';
+    if (adminLogoutBtn) adminLogoutBtn.style.display = 'none';
 
     // Đánh dấu active navigation pill
     if (navHome) navHome.classList.remove('active-nav-pill');
@@ -1434,6 +1488,19 @@ export function switchView(viewName) {
     if (navNews) navNews.classList.add('active-nav-pill');
 
     renderNews('all');
+  } else if (viewName === 'admin-login') {
+    homepageView.style.display = 'none';
+    catalogView.style.display = 'none';
+    if (contactView) contactView.style.display = 'none';
+    if (newsView) newsView.style.display = 'none';
+    if (adminLoginView) adminLoginView.style.display = 'block';
+    if (adminAddBtn) adminAddBtn.style.display = 'none';
+    if (adminLogoutBtn) adminLogoutBtn.style.display = 'none';
+
+    // Xoá active navigation pill
+    if (navHome) navHome.classList.remove('active-nav-pill');
+    if (navCatalog) navCatalog.classList.remove('active-nav-pill');
+    if (navNews) navNews.classList.remove('active-nav-pill');
   }
 }
 
@@ -1643,7 +1710,12 @@ function handleUrlRouting() {
   if (hash.includes('san-pham')) {
     switchView('catalog');
   } else if (hash.includes('admin')) {
-    switchView('admin');
+    const isLoggedIn = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+    if (isLoggedIn) {
+      switchView('admin');
+    } else {
+      switchView('admin-login');
+    }
   } else if (hash.includes('ve-poc') || hash.includes('ve-azoma')) {
     switchView('home');
     const target = document.getElementById('lien-he');
