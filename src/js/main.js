@@ -509,7 +509,7 @@ function setupEventListeners() {
   const navHome = document.getElementById('nav-home');
   const mobNavHome = document.getElementById('mob-nav-home');
   const brandLogo = document.getElementById('nbh-brand-logo');
-  const navCatalog = document.getElementById('nav-catalog');
+  const navCatalog = document.getElementById('nav-catalog-main');
   const navAbout = document.getElementById('nav-about');
   const navContact = document.getElementById('nav-contact');
 
@@ -1408,8 +1408,19 @@ export function switchView(viewName) {
   const adminAddBtn = document.getElementById('admin-add-product-btn');
   const adminLogoutBtn = document.getElementById('admin-logout-btn');
   const mainTitle = document.getElementById('catalog-main-title');
+  const header = document.querySelector('.header');
+  const footer = document.querySelector('.footer');
 
   if (!homepageView || !catalogView) return;
+
+  // Show or hide header/footer based on admin-login view
+  if (viewName === 'admin-login') {
+    if (header) header.style.display = 'none';
+    if (footer) footer.style.display = 'none';
+  } else {
+    if (header) header.style.display = '';
+    if (footer) footer.style.display = '';
+  }
 
   if (viewName === 'home') {
     homepageView.style.display = 'block';
