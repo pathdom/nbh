@@ -137,6 +137,71 @@ let toastContainer;
 let homepageView, catalogView, contactView, newsView;
 let adminProductOverlay, adminProductForm, adminLoginView, adminLoginForm, adminLogoutBtn;
 let newsGridContainer, newsDetailOverlay;
+let policyDetailOverlay, policyDetailCloseBtn, policyDetailTitle, policyDetailContent;
+
+const policiesData = {
+  'bao-hanh': {
+    title: 'Chính sách Bảo hành chính hãng AZOMA',
+    content: `
+      <p><strong>Thời gian bảo hành:</strong> Tất cả các sản phẩm mũ bảo hiểm AZOMA được bảo hành chính hãng trong vòng 12 tháng kể từ ngày mua hàng đối với các lỗi kỹ thuật từ nhà sản xuất.</p>
+      <p><strong>Phạm vi bảo hành:</strong> Bảo hành các lỗi bao gồm nứt vỡ vỏ nón khi không có va chạm mạnh, lỗi khóa Fidlock, bung keo các chi tiết ốp da, quai đeo hỏng hóc do lỗi sản xuất.</p>
+      <p><strong>Trường hợp không áp dụng bảo hành:</strong> Sản phẩm bị hư hỏng do va quẹt, tai nạn trong quá trình sử dụng; hư hỏng do tự ý sửa chữa hoặc thay thế linh kiện không chính hãng; hao mòn tự nhiên trong quá trình sử dụng.</p>
+      <p><strong>Quy trình bảo hành:</strong> Quý khách vui lòng mang theo hóa đơn hoặc cung cấp số điện thoại mua hàng khi đến showroom. AZOMA sẽ tiếp nhận và phản hồi xử lý trong vòng 3-5 ngày làm việc.</p>
+    `
+  },
+  'bao-mat': {
+    title: 'Chính sách Bảo mật thông tin khách hàng',
+    content: `
+      <p><strong>Thu thập thông tin:</strong> AZOMA thu thập các thông tin cá nhân cơ bản (họ tên, số điện thoại, email) khi quý khách đăng ký tư vấn hoặc tham gia nhận bản tin khuyến mãi.</p>
+      <p><strong>Mục đích sử dụng:</strong> Thông tin được sử dụng nhằm mục đích chăm sóc khách hàng, tư vấn kích cỡ mũ phù hợp, gửi các chương trình khuyến mãi và xác thực đơn hàng.</p>
+      <p><strong>Cam kết bảo mật:</strong> AZOMA cam kết bảo mật tuyệt đối thông tin khách hàng. Chúng tôi không chia sẻ, mua bán hay tiết lộ dữ liệu cá nhân của quý khách cho bất kỳ bên thứ ba nào khi chưa có sự đồng ý.</p>
+      <p><strong>Quyền lợi khách hàng:</strong> Quý khách có quyền yêu cầu chỉnh sửa, cập nhật hoặc xóa thông tin cá nhân của mình khỏi cơ sở dữ liệu của chúng tôi bất kỳ lúc nào bằng cách liên hệ hotline.</p>
+    `
+  },
+  'van-chuyen': {
+    title: 'Chính sách Vận chuyển & Giao nhận toàn quốc',
+    content: `
+      <p><strong>Phạm vi giao hàng:</strong> AZOMA hỗ trợ giao hàng tận nơi trên toàn quốc (tất cả 63 tỉnh thành).</p>
+      <p><strong>Thời gian giao hàng:</strong></p>
+      <ul>
+        <li><strong>Khu vực nội thành TP.HCM & Hà Nội:</strong> 1 - 2 ngày làm việc.</li>
+        <li><strong>Các khu vực tỉnh thành khác:</strong> 3 - 5 ngày làm việc tùy thuộc vào đơn vị vận chuyển.</li>
+      </ul>
+      <p><strong>Phí vận chuyển:</strong> Miễn phí vận chuyển (Freeship) toàn quốc đối với tất cả các đơn hàng mũ bảo hiểm nguyên chiếc thuộc dòng Premium Series hoặc đơn hàng có tổng trị giá trên 1.000.000 VNĐ. Đơn hàng dưới mức này áp dụng mức phí đồng giá 30.000 VNĐ.</p>
+      <p><strong>Kiểm tra hàng trước khi thanh toán:</strong> Quý khách được quyền mở hộp kiểm tra ngoại quan sản phẩm (đúng phối màu, kích cỡ, không trầy xước) trước khi thanh toán tiền cho nhân viên giao hàng (Ship COD).</p>
+    `
+  },
+  'doi-tra': {
+    title: 'Chính sách Đổi trả & Hoàn tiền trong 7 ngày',
+    content: `
+      <p><strong>Thời gian đổi trả:</strong> Quý khách được hỗ trợ đổi màu, đổi size hoặc trả hàng hoàn tiền trong vòng 7 ngày kể từ ngày nhận sản phẩm.</p>
+      <p><strong>Điều kiện sản phẩm đổi trả:</strong> Sản phẩm phải còn nguyên nhãn mác, chưa qua sử dụng, không bị trầy xước hay dơ bẩn; còn đầy đủ vỏ hộp và quà tặng đi kèm (nếu có).</p>
+      <p><strong>Quy định đổi hàng:</strong> Đối với trường hợp đổi size hoặc đổi sang phối màu khác, AZOMA sẽ hỗ trợ phí ship 1 chiều cho khách hàng. Nếu sản phẩm muốn đổi hết hàng, quý khách có thể đổi sang dòng sản phẩm khác có giá trị tương đương hoặc cao hơn.</p>
+      <p><strong>Quy trình hoàn tiền:</strong> Sau khi nhận lại hàng và kiểm tra đủ điều kiện, AZOMA sẽ tiến hành hoàn tiền qua số tài khoản ngân hàng của quý khách trong vòng 24 - 48 giờ làm việc.</p>
+    `
+  }
+};
+
+function openPolicyModal(policyType) {
+  const policy = policiesData[policyType];
+  if (policy && policyDetailOverlay && policyDetailTitle && policyDetailContent) {
+    policyDetailTitle.textContent = policy.title;
+    policyDetailContent.innerHTML = policy.content;
+    policyDetailOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closePolicyModal() {
+  if (policyDetailOverlay) {
+    policyDetailOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    // Khi đóng modal chính sách, cập nhật URL hash về trang chủ hoặc trang quản trị tương ứng
+    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+    navigateTo(isAdmin ? '/admin/trang-chu' : '/trang-chu');
+  }
+}
 
 // --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -165,6 +230,11 @@ document.addEventListener('DOMContentLoaded', () => {
   adminLoginView = document.getElementById('admin-login-view');
   adminLoginForm = document.getElementById('admin-login-form');
   adminLogoutBtn = document.getElementById('admin-logout-btn');
+
+  policyDetailOverlay = document.getElementById('policy-detail-overlay');
+  policyDetailCloseBtn = document.getElementById('policy-detail-close-btn');
+  policyDetailTitle = document.getElementById('policy-detail-title');
+  policyDetailContent = document.getElementById('policy-detail-content');
 
   // Khởi tạo theme
   initTheme();
@@ -568,18 +638,23 @@ function setupEventListeners() {
     }
   };
 
-  if (dinoDetailCloseBtn) {
-    dinoDetailCloseBtn.addEventListener('click', () => {
+  const closeDinoModal = () => {
+    if (dinoDetailOverlay) {
       dinoDetailOverlay.classList.remove('active');
       document.body.style.overflow = '';
-    });
+      const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+      navigateTo(isAdmin ? '/admin/trang-chu' : '/trang-chu');
+    }
+  };
+
+  if (dinoDetailCloseBtn) {
+    dinoDetailCloseBtn.addEventListener('click', closeDinoModal);
   }
 
   if (dinoDetailOverlay) {
     dinoDetailOverlay.addEventListener('click', (e) => {
       if (e.target === dinoDetailOverlay) {
-        dinoDetailOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+        closeDinoModal();
       }
     });
   }
@@ -603,10 +678,7 @@ function setupEventListeners() {
       }
 
       showToast(`Cảm ơn anh/chị ${nameVal}! Yêu cầu nhận Catalogue & báo giá in logo đại lý đã được gửi thành công!`, "success");
-      if (dinoDetailOverlay) {
-        dinoDetailOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-      }
+      closeDinoModal();
       dinoQuickForm.reset();
     });
   }
@@ -614,8 +686,7 @@ function setupEventListeners() {
   if (navAboutDino) {
     navAboutDino.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-azoma');
-      openDinoModal();
+      navigateTo('/ve-azoma/dino');
     });
   }
   const aboutDetailOverlay = document.getElementById('about-detail-overlay');
@@ -629,18 +700,23 @@ function setupEventListeners() {
     }
   };
 
-  if (aboutDetailCloseBtn) {
-    aboutDetailCloseBtn.addEventListener('click', () => {
+  const closeAboutModal = () => {
+    if (aboutDetailOverlay) {
       aboutDetailOverlay.classList.remove('active');
       document.body.style.overflow = '';
-    });
+      const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+      navigateTo(isAdmin ? '/admin/trang-chu' : '/trang-chu');
+    }
+  };
+
+  if (aboutDetailCloseBtn) {
+    aboutDetailCloseBtn.addEventListener('click', closeAboutModal);
   }
 
   if (aboutDetailOverlay) {
     aboutDetailOverlay.addEventListener('click', (e) => {
       if (e.target === aboutDetailOverlay) {
-        aboutDetailOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+        closeAboutModal();
       }
     });
   }
@@ -648,38 +724,26 @@ function setupEventListeners() {
   if (homeIntroAbout) {
     homeIntroAbout.addEventListener('click', (e) => {
       e.preventDefault();
-      openAboutModal();
+      navigateTo('/ve-azoma/gioi-thieu');
     });
   }
 
   if (navAboutGeneral) {
     navAboutGeneral.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-azoma');
-      const target = document.getElementById('home-intro-about');
-      if (target) {
-        window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
-        setTimeout(() => {
-          openAboutModal();
-        }, 500); // Mở modal ngay sau khi cuộn hoàn tất mượt mà
-      }
+      navigateTo('/ve-azoma/gioi-thieu');
     });
   }
   if (navAboutHistory) {
     navAboutHistory.addEventListener('click', (e) => {
       e.preventDefault();
-      navigateTo('/ve-azoma');
-      const target = document.getElementById('home-intro-history');
-      if (target) {
-        window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
-      }
+      navigateTo('/ve-azoma/lich-su');
     });
   }
   if (navAboutContact) {
     navAboutContact.addEventListener('click', (e) => {
       e.preventDefault();
       navigateTo('/lien-he');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   }
 
@@ -687,7 +751,62 @@ function setupEventListeners() {
     navContact.addEventListener('click', (e) => {
       e.preventDefault();
       navigateTo('/lien-he');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // --- POLICY CLICK HANDLERS ---
+  const navPolicyWarranty = document.getElementById('nav-policy-warranty');
+  const navPolicyPrivacy = document.getElementById('nav-policy-privacy');
+  const navPolicyShipping = document.getElementById('nav-policy-shipping');
+  const navPolicyReturn = document.getElementById('nav-policy-return');
+  const footerNavPolicy = document.getElementById('footer-nav-policy');
+  const footerNavNews = document.getElementById('footer-nav-news');
+
+  if (navPolicyWarranty) {
+    navPolicyWarranty.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/chinh-sach/bao-hanh');
+    });
+  }
+  if (navPolicyPrivacy) {
+    navPolicyPrivacy.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/chinh-sach/bao-mat');
+    });
+  }
+  if (navPolicyShipping) {
+    navPolicyShipping.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/chinh-sach/van-chuyen');
+    });
+  }
+  if (navPolicyReturn) {
+    navPolicyReturn.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/chinh-sach/doi-tra');
+    });
+  }
+  if (footerNavPolicy) {
+    footerNavPolicy.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/chinh-sach/bao-hanh');
+    });
+  }
+  if (footerNavNews) {
+    footerNavNews.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/tin-tuc');
+    });
+  }
+
+  if (policyDetailCloseBtn) {
+    policyDetailCloseBtn.addEventListener('click', closePolicyModal);
+  }
+  if (policyDetailOverlay) {
+    policyDetailOverlay.addEventListener('click', (e) => {
+      if (e.target === policyDetailOverlay) {
+        closePolicyModal();
+      }
     });
   }
 
@@ -715,14 +834,7 @@ function setupEventListeners() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const cat = btn.getAttribute('data-cat');
-      syncCategoryFilters(cat);
-      const targetSection = document.getElementById('san-pham');
-      if (targetSection) {
-        window.scrollTo({
-          top: targetSection.offsetTop - 80,
-          behavior: 'smooth'
-        });
-      }
+      navigateTo('/san-pham/' + cat);
     });
   });
 
@@ -734,10 +846,7 @@ function setupEventListeners() {
       if (card) {
         e.preventDefault();
         const id = card.getAttribute('data-id');
-        const product = products.find(p => p.id === id);
-        if (product) {
-          openQuickView(product);
-        }
+        navigateTo('/san-pham/' + id);
       }
     });
   }
@@ -748,23 +857,7 @@ function setupEventListeners() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const category = btn.getAttribute('data-category');
-      navigateTo('/tin-tuc');
-      setTimeout(() => {
-        renderNews(category);
-        // Highlight active sidebar item
-        const sidebarBtns = document.querySelectorAll('.news-filter-btn');
-        sidebarBtns.forEach(sb => {
-          if (sb.getAttribute('data-category') === category) {
-            sb.classList.add('active');
-            sb.style.color = 'var(--accent)';
-            sb.style.fontWeight = '700';
-          } else {
-            sb.classList.remove('active');
-            sb.style.color = 'var(--text-secondary)';
-            sb.style.fontWeight = '500';
-          }
-        });
-      }, 100);
+      navigateTo('/tin-tuc/' + category);
     });
   });
 
@@ -775,10 +868,7 @@ function setupEventListeners() {
       const idx = parseInt(card.getAttribute('data-idx'));
       const article = newsArticles[idx];
       if (article) {
-        navigateTo('/tin-tuc');
-        setTimeout(() => {
-          openNewsDetail(article);
-        }, 150);
+        navigateTo('/tin-tuc/' + article.id);
       }
     });
   });
@@ -788,16 +878,7 @@ function setupEventListeners() {
   newsFilterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       const category = btn.getAttribute('data-category');
-      renderNews(category);
-      
-      newsFilterBtns.forEach(b => {
-        b.classList.remove('active');
-        b.style.color = 'var(--text-secondary)';
-        b.style.fontWeight = '500';
-      });
-      btn.classList.add('active');
-      btn.style.color = 'var(--accent)';
-      btn.style.fontWeight = '700';
+      navigateTo('/tin-tuc/' + category);
     });
   });
 
@@ -807,10 +888,7 @@ function setupEventListeners() {
       const card = e.target.closest('[data-id]');
       if (card) {
         const id = card.getAttribute('data-id');
-        const article = newsArticles.find(a => a.id === id);
-        if (article) {
-          openNewsDetail(article);
-        }
+        navigateTo('/tin-tuc/' + id);
       }
     });
   }
@@ -821,10 +899,7 @@ function setupEventListeners() {
       const card = e.target.closest('[data-id]');
       if (card) {
         const id = card.getAttribute('data-id');
-        const article = newsArticles.find(a => a.id === id);
-        if (article) {
-          openNewsDetail(article);
-        }
+        navigateTo('/tin-tuc/' + id);
       }
     });
   }
@@ -1003,7 +1078,8 @@ function renderProducts() {
     card.setAttribute('data-id', product.id);
     card.addEventListener('click', (e) => {
       if (!e.target.closest('.admin-act-btn')) {
-        openQuickView(product);
+        e.preventDefault();
+        navigateTo('/san-pham/' + product.id);
       }
     });
 
@@ -1269,8 +1345,12 @@ function openQuickView(product) {
 }
 
 function closeQuickView() {
-  quickviewOverlay.classList.remove('active');
-  document.body.style.overflow = '';
+  if (quickviewOverlay) {
+    quickviewOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+    navigateTo(isAdmin ? '/admin/san-pham' : '/san-pham');
+  }
 }
 
 function setupOptionSelectors() {
@@ -1559,12 +1639,10 @@ function initHomepage() {
   // 2. FEATURED PRODUCTS QUICK VIEW BINDINGS
   const featuredCards = document.querySelectorAll('.featured-product-card');
   featuredCards.forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
       const id = card.getAttribute('data-id');
-      const product = products.find(p => p.id === id);
-      if (product) {
-        openQuickView(product);
-      }
+      navigateTo('/san-pham/' + id);
     });
   });
 
@@ -1656,7 +1734,10 @@ function renderHomeCategoryProducts(category) {
   filteredProducts.forEach(product => {
     const card = document.createElement('article');
     card.className = 'featured-product-card';
-    card.addEventListener('click', () => openQuickView(product));
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      navigateTo('/san-pham/' + product.id);
+    });
 
     // Khối hình ảnh
     const imgWrapper = document.createElement('div');
@@ -1726,68 +1807,211 @@ function handleUrlRouting() {
   const hash = window.location.hash;
   const isLoggedIn = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
 
-  // Nếu đường dẫn chứa /admin hoặc bắt đầu bằng #/admin
-  if (hash.startsWith('#/admin') || hash.includes('/admin')) {
-    // 1. Kiểm tra quyền đăng nhập admin
-    if (!isLoggedIn) {
-      switchView('admin-login');
-      return;
-    }
+  // 1. Kiểm tra tiền tố admin
+  const isAdminPath = hash.startsWith('#/admin') || hash.includes('/admin');
+  if (isAdminPath && !isLoggedIn) {
+    switchView('admin-login');
+    return;
+  }
 
-    // 2. Nếu đã đăng nhập admin, phân tách các sub-route
-    const subRoute = hash.replace(/^#\/admin\/?/, '');
+  // 2. Trích xuất đường dẫn sạch (không có # và không có /admin)
+  let cleanPath = hash.substring(1); // bỏ dấu #
+  if (isAdminPath) {
+    cleanPath = cleanPath.replace(/^\/admin/, '');
+  }
+  if (cleanPath === '' || cleanPath === '/') {
+    cleanPath = '/trang-chu';
+  }
 
-    if (subRoute === '' || subRoute.includes('san-pham')) {
-      switchView('admin'); // Hiển thị Catalog ở chế độ admin-mode
-    } else if (subRoute.includes('trang-chu') || subRoute.includes('home')) {
-      switchView('home');
-    } else if (subRoute.includes('ve-poc') || subRoute.includes('ve-azoma')) {
-      switchView('home');
-      const target = document.getElementById('lien-he');
-      if (target) {
-        setTimeout(() => {
-          window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-        }, 300);
+  // 3. Đóng tất cả các modal mặc định trước khi định tuyến (để tránh xung đột trạng thái)
+  // Nhưng giữ nguyên các phần tử UI của view nền
+  const closeAllModalsExcept = (activeModalId) => {
+    const overlays = {
+      'quickview': quickviewOverlay,
+      'news': newsDetailOverlay,
+      'dino': document.getElementById('dino-detail-overlay'),
+      'about': document.getElementById('about-detail-overlay'),
+      'policy': policyDetailOverlay
+    };
+    for (const key in overlays) {
+      if (key !== activeModalId && overlays[key]) {
+        overlays[key].classList.remove('active');
       }
-    } else if (subRoute.includes('lien-he') || subRoute.includes('contact')) {
-      switchView('contact');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (subRoute.includes('tin-tuc') || subRoute.includes('news')) {
-      switchView('news');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      switchView('admin');
     }
-  } else {
-    // 3. Đường dẫn người dùng thông thường (không có tiền tố /admin)
-    if (hash.includes('admin-login')) {
-      if (isLoggedIn) {
-        navigateTo('/admin/trang-chu');
+    document.body.style.overflow = '';
+  };
+
+  // 4. Khớp các mẫu đường dẫn (Pattern matching)
+  
+  // --- 4.1. SẢN PHẨM & CỬA HÀNG ---
+  if (cleanPath.startsWith('/san-pham')) {
+    switchView(isAdminPath ? 'admin' : 'catalog');
+    
+    const sub = cleanPath.substring('/san-pham'.length); // Ví dụ: /sport hoặc /poc-p01
+    
+    if (sub === '' || sub === '/') {
+      // Hiển thị toàn bộ sản phẩm
+      closeAllModalsExcept(null);
+      syncCategoryFilters('all');
+    } else {
+      const param = sub.substring(1); // sport hoặc poc-p01
+      const categories = ['sport', 'urban', 'kids', 'accessories'];
+      
+      if (categories.includes(param)) {
+        closeAllModalsExcept(null);
+        
+        // Cập nhật bộ lọc danh mục tương ứng
+        currentPage = 1;
+        selectedCategories = [param];
+        const desktopChecks = document.querySelectorAll('input[name="desktop-cat-filter"]');
+        const mobileChecks = document.querySelectorAll('input[name="mobile-cat-filter"]');
+        desktopChecks.forEach(chk => chk.checked = (chk.value === param));
+        mobileChecks.forEach(chk => chk.checked = (chk.value === param));
+        
+        renderProducts();
+        updateFilterTags();
+        
+        // Cuộn tới phân hệ sản phẩm
+        const targetSection = document.getElementById('san-pham');
+        if (targetSection) {
+          window.scrollTo({
+            top: targetSection.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
       } else {
-        switchView('admin-login');
+        // Có thể là xem nhanh chi tiết sản phẩm cụ thể
+        const product = products.find(p => p.id === param);
+        if (product) {
+          closeAllModalsExcept('quickview');
+          openQuickView(product);
+        } else {
+          closeAllModalsExcept(null);
+        }
       }
-      return;
     }
-
-    if (hash.includes('san-pham')) {
-      switchView('catalog');
-    } else if (hash.includes('ve-poc') || hash.includes('ve-azoma')) {
-      switchView('home');
+  }
+  // --- 4.2. TIN TỨC ---
+  else if (cleanPath.startsWith('/tin-tuc')) {
+    switchView('news');
+    
+    const sub = cleanPath.substring('/tin-tuc'.length);
+    if (sub === '' || sub === '/') {
+      closeAllModalsExcept(null);
+      renderNews('all');
+    } else {
+      const param = sub.substring(1);
+      const categories = ['info', 'event'];
+      
+      if (categories.includes(param)) {
+        closeAllModalsExcept(null);
+        renderNews(param);
+        
+        // Cập nhật class active cho sidebar tin tức
+        const sidebarBtns = document.querySelectorAll('.news-filter-btn');
+        sidebarBtns.forEach(sb => {
+          if (sb.getAttribute('data-category') === param) {
+            sb.classList.add('active');
+            sb.style.color = 'var(--accent)';
+            sb.style.fontWeight = '700';
+          } else {
+            sb.classList.remove('active');
+            sb.style.color = 'var(--text-secondary)';
+            sb.style.fontWeight = '500';
+          }
+        });
+      } else {
+        // Xem chi tiết bài viết cụ thể
+        const article = newsArticles.find(a => a.id === param);
+        if (article) {
+          closeAllModalsExcept('news');
+          openNewsDetail(article);
+        } else {
+          closeAllModalsExcept(null);
+        }
+      }
+    }
+  }
+  // --- 4.3. VỀ AZOMA ---
+  else if (cleanPath.startsWith('/ve-azoma')) {
+    switchView('home');
+    
+    const sub = cleanPath.substring('/ve-azoma'.length);
+    if (sub === '' || sub === '/') {
+      closeAllModalsExcept(null);
       const target = document.getElementById('lien-he');
       if (target) {
         setTimeout(() => {
           window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
         }, 300);
       }
-    } else if (hash.includes('lien-he')) {
-      switchView('contact');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else if (hash.includes('tin-tuc')) {
-      switchView('news');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-      switchView('home');
+      const param = sub.substring(1); // dino, gioi-thieu, lich-su
+      if (param === 'dino') {
+        closeAllModalsExcept('dino');
+        const dinoDetailOverlay = document.getElementById('dino-detail-overlay');
+        if (dinoDetailOverlay) {
+          dinoDetailOverlay.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      } else if (param === 'gioi-thieu') {
+        closeAllModalsExcept('about');
+        const target = document.getElementById('home-intro-about');
+        if (target) {
+          window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
+          setTimeout(() => {
+            const aboutDetailOverlay = document.getElementById('about-detail-overlay');
+            if (aboutDetailOverlay) {
+              aboutDetailOverlay.classList.add('active');
+              document.body.style.overflow = 'hidden';
+            }
+          }, 500);
+        }
+      } else if (param === 'lich-su') {
+        closeAllModalsExcept(null);
+        const target = document.getElementById('home-intro-history');
+        if (target) {
+          window.scrollTo({ top: target.offsetTop - 120, behavior: 'smooth' });
+        }
+      }
     }
+  }
+  // --- 4.4. CHÍNH SÁCH ---
+  else if (cleanPath.startsWith('/chinh-sach')) {
+    switchView('home');
+    
+    const sub = cleanPath.substring('/chinh-sach'.length);
+    if (sub === '' || sub === '/') {
+      closeAllModalsExcept(null);
+    } else {
+      const param = sub.substring(1); // bao-hanh, bao-mat, van-chuyen, doi-tra
+      if (policiesData[param]) {
+        closeAllModalsExcept('policy');
+        openPolicyModal(param);
+      } else {
+        closeAllModalsExcept(null);
+      }
+    }
+  }
+  // --- 4.5. LIÊN HỆ ---
+  else if (cleanPath.startsWith('/lien-he')) {
+    switchView('contact');
+    closeAllModalsExcept(null);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  // --- 4.6. ĐĂNG NHẬP ADMIN ---
+  else if (cleanPath.startsWith('/admin-login')) {
+    if (isLoggedIn) {
+      navigateTo('/admin/trang-chu');
+    } else {
+      switchView('admin-login');
+      closeAllModalsExcept(null);
+    }
+  }
+  // --- 4.7. TRANG CHỦ MẶC ĐỊNH ---
+  else {
+    switchView('home');
+    closeAllModalsExcept(null);
   }
 }
 
@@ -2066,6 +2290,10 @@ function closeNewsDetail() {
   if (newsDetailOverlay) {
     newsDetailOverlay.classList.remove('active');
     document.body.style.overflow = '';
+    
+    // Cập nhật lại hash URL khi đóng modal tin tức
+    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+    navigateTo(isAdmin ? '/admin/tin-tuc' : '/tin-tuc');
   }
 }
 

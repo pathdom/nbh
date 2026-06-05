@@ -696,8 +696,8 @@
 
       <!-- Cột 3: Nhóm link 2 -->
       <div class="footer-info-col" style="display: flex; flex-direction: column; gap: 0.75rem; justify-content: flex-start;">
-        <a href="#san-pham" class="footer-link" data-action="go-to-catalog" style="font-weight: 600; color: #fff; font-size: 0.95rem; transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">Tin tức</a>
-        <a href="#ve-azoma" class="footer-link" style="font-weight: 600; color: #fff; font-size: 0.95rem; transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">Chính sách</a>
+        <a href="#tin-tuc" class="footer-link" id="footer-nav-news" style="font-weight: 600; color: #fff; font-size: 0.95rem; transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">Tin tức</a>
+        <a href="#" class="footer-link" id="footer-nav-policy" style="font-weight: 600; color: #fff; font-size: 0.95rem; transition: color var(--transition-fast);" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='#fff'">Chính sách Bảo hành</a>
       </div>
 
       <!-- Cột 4: Form Đăng ký & Social ở bên phải -->
@@ -1030,6 +1030,21 @@
           </div>
           <button type="submit" class="btn btn-accent btn-full" style="padding: 0.6rem; font-size: 0.85rem; font-weight: 700; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.05em; background-color: var(--accent); color: #000; cursor: pointer; transition: background-color var(--transition-fast);">NHẬN CATALOGUE & BÁO GIÁ CHIẾT KHẤU</button>
         </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Chi Tiết Chính Sách (Policy Detail Modal) -->
+  <div class="modal-overlay" id="policy-detail-overlay" role="dialog" aria-modal="true" aria-label="Chi tiết chính sách">
+    <div class="product-modal" style="max-width: 700px; padding: 2.5rem; border-radius: var(--radius-md); background-color: var(--surface-color); display: block; overflow-y: auto; max-height: 85vh; border: 1px solid var(--border-color); box-shadow: var(--shadow-lg);">
+      <button class="modal-close" id="policy-detail-close-btn" aria-label="Đóng cửa sổ">
+        <i class="ri-close-line"></i>
+      </button>
+      <h2 style="font-family: var(--font-title); font-size: 1.6rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; color: var(--text-primary); line-height: 1.4;" id="policy-detail-title">
+        Tiêu đề chính sách
+      </h2>
+      <div class="policy-modal-body" id="policy-detail-content" style="font-size: 0.95rem; line-height: 1.8; color: var(--text-primary); display: flex; flex-direction: column; gap: 1.2rem; text-align: justify;">
+        <!-- Render động từ JS -->
       </div>
     </div>
   </div>
