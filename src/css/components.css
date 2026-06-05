@@ -2422,6 +2422,40 @@
   transform: scale(1.05);
 }
 
+.nav-catalog-cat-btn {
+  color: var(--text-secondary);
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 1rem;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.nav-catalog-cat-btn .cat-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-catalog-cat-btn .cat-chevron {
+  font-weight: 700;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.nav-catalog-cat-btn:hover,
+.nav-catalog-cat-btn.active {
+  color: var(--accent) !important;
+  font-weight: 700 !important;
+}
+
+.nav-catalog-cat-btn.active .cat-chevron {
+  opacity: 1;
+}
+
 /* --- NEWS PAGE VIEW --- */
 .news-list-card {
   background-color: var(--surface-color);

@@ -7,6 +7,12 @@ let products = JSON.parse(localStorage.getItem('azoma_products')) ||
                JSON.parse(localStorage.getItem('poc_products')) || 
                [...initialProducts];
 
+// Tự động dọn dẹp và đồng bộ nếu đang lưu trữ cấu trúc dữ liệu cũ (NBH Pxx)
+if (products.some(p => p.name && p.name.startsWith('NBH '))) {
+  products = [...initialProducts];
+  localStorage.setItem('azoma_products', JSON.stringify(products));
+}
+
 // Hàm đồng bộ lưu trữ sản phẩm vào LocalStorage
 function saveProductsToStorage() {
   localStorage.setItem('azoma_products', JSON.stringify(products));
@@ -173,9 +179,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Khởi tạo biểu mẫu Quản Trị
   initAdminForm();
 
-  // Render sản phẩm ban đầu cho Catalog
+  // Render sản phẩm ban đầu cho Catalog và Mega Menu
   renderProducts();
   updateFilterTags();
+  renderMegaMenuProducts('sport');
 
   // Lắng nghe sự kiện thay đổi Hash trên trình duyệt (SPA Hash Routing)
   window.addEventListener('hashchange', () => {
@@ -682,9 +689,27 @@ function setupEventListeners() {
     });
   }
 
-  // --- MEGA DROPDOWN NÓN BẢO HIỂM CLICK HANDLERS ---
+  // --- MEGA DROPDOWN NÓN BẢO HIỂM DYNAMIC HOVER & CLICK HANDLERS ---
   const navCatalogCatBtns = document.querySelectorAll('.nav-catalog-cat-btn');
   navCatalogCatBtns.forEach(btn => {
+    // 1. Hover event: dynamically load products and switch active style in dropdown sidebar
+    btn.addEventListener('mouseenter', () => {
+      const cat = btn.getAttribute('data-cat');
+      
+      // Update active class on dropdown buttons
+      navCatalogCatBtns.forEach(b => {
+        if (b.getAttribute('data-cat') === cat) {
+          b.classList.add('active');
+        } else {
+          b.classList.remove('active');
+        }
+      });
+      
+      // Render products inside dropdown
+      renderMegaMenuProducts(cat);
+    });
+
+    // 2. Click event: redirect to store view /san-pham and apply category filter
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       const cat = btn.getAttribute('data-cat');
@@ -699,17 +724,21 @@ function setupEventListeners() {
     });
   });
 
-  const navProductCards = document.querySelectorAll('.nav-product-card');
-  navProductCards.forEach(card => {
-    card.addEventListener('click', (e) => {
-      e.preventDefault();
-      const id = card.getAttribute('data-id');
-      const product = products.find(p => p.id === id);
-      if (product) {
-        openQuickView(product);
+  // Use event delegation for product cards inside the mega-dropdown since they are rendered dynamically
+  const navProductsGrid = document.getElementById('nav-catalog-products-grid');
+  if (navProductsGrid) {
+    navProductsGrid.addEventListener('click', (e) => {
+      const card = e.target.closest('.nav-product-card');
+      if (card) {
+        e.preventDefault();
+        const id = card.getAttribute('data-id');
+        const product = products.find(p => p.id === id);
+        if (product) {
+          openQuickView(product);
+        }
       }
     });
-  });
+  }
 
   // --- MEGA DROPDOWN TIN TỨC CLICK HANDLERS ---
   const navNewsCatBtns = document.querySelectorAll('.nav-news-cat-btn');
@@ -1961,5 +1990,58 @@ function renderRelatedNews(currentId) {
     card.appendChild(title);
 
     relatedGrid.appendChild(card);
+  });
+}
+
+// --- RENDER PRODUCTS IN MEGA DROPDOWN MENU ---
+function renderMegaMenuProducts(category) {
+  const grid = document.getElementById('nav-catalog-products-grid');
+  if (!grid) return;
+
+  grid.replaceChildren();
+
+  // Lọc lấy các sản phẩm thuộc danh mục được chọn
+  const filtered = products.filter(p => p.category === category);
+  
+  // Hiển thị tối đa 4 sản phẩm khớp với 4 cột trên giao diện
+  const itemsToShow = filtered.slice(0, 4);
+
+  itemsToShow.forEach(product => {
+    const card = document.createElement('a');
+    card.href = '#';
+    card.className = 'nav-product-card';
+    card.setAttribute('data-id', product.id);
+    card.style.display = 'flex';
+    card.style.flexDirection = 'column';
+    card.style.gap = '0.5rem';
+    card.style.textDecoration = 'none';
+
+    const title = document.createElement('h4');
+    title.style.fontSize = '0.85rem';
+    title.style.fontWeight = '700';
+    title.style.color = 'var(--text-primary)';
+    title.style.margin = '0';
+    title.style.textTransform = 'uppercase';
+    title.textContent = product.name;
+
+    const imgWrapper = document.createElement('div');
+    imgWrapper.style.aspectRatio = '1.15/1';
+    imgWrapper.style.display = 'flex';
+    imgWrapper.style.alignItems = 'center';
+    imgWrapper.style.justifyContent = 'center';
+    imgWrapper.style.backgroundColor = 'transparent';
+
+    const img = document.createElement('img');
+    img.src = product.image;
+    img.alt = product.name;
+    img.style.maxHeight = '100px';
+    img.style.objectFit = 'contain';
+    img.style.filter = 'drop-shadow(0 8px 16px rgba(0,0,0,0.1))';
+    img.style.transition = 'transform var(--transition-fast)';
+
+    imgWrapper.appendChild(img);
+    card.appendChild(title);
+    card.appendChild(imgWrapper);
+    grid.appendChild(card);
   });
 }

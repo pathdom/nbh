@@ -17,8 +17,8 @@
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
   
   <!-- Stylesheets -->
-  <script type="module" crossorigin src="./assets/index-CN1yEZ09.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-CqbSIxoA.css">
+  <script type="module" crossorigin src="./assets/index-DzVSWdez.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DW9eEsXY.css">
 </head>
 <body>
 
@@ -48,19 +48,22 @@
             <a href="#san-pham" class="nav-link nav-link-catalog" id="nav-catalog-main" style="text-transform: uppercase;">Nón Bảo Hiểm <i class="ri-arrow-down-s-line dropdown-icon"></i></a>
             <div class="mega-dropdown-menu">
               <!-- Left Sidebar Menu -->
-              <div style="display: flex; flex-direction: column; gap: 0.8rem; border-right: none;">
-                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="sport" style="color: var(--accent); font-weight: 700; display: flex; justify-content: space-between; align-items: center; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
-                  <span style="display: flex; align-items: center; gap: 0.5rem;"><i class="ri-flashlight-line"></i> NÓN THỂ THAO</span>
-                  <span style="font-weight: 700;">&gt;</span>
+              <div class="mega-dropdown-sidebar" style="display: flex; flex-direction: column; gap: 0.8rem; border-right: none;">
+                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn active" data-cat="sport">
+                  <span class="cat-label"><i class="ri-flashlight-line"></i> NÓN THỂ THAO</span>
+                  <span class="cat-chevron">&gt;</span>
                 </a>
-                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="urban" style="color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
-                  <i class="ri-riding-line"></i> NÓN XE MÁY
+                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="urban">
+                  <span class="cat-label"><i class="ri-riding-line"></i> NÓN XE MÁY</span>
+                  <span class="cat-chevron">&gt;</span>
                 </a>
-                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="kids" style="color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
-                  <i class="ri-emotion-happy-line"></i> NÓN TRẺ EM
+                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="kids">
+                  <span class="cat-label"><i class="ri-emotion-happy-line"></i> NÓN TRẺ EM</span>
+                  <span class="cat-chevron">&gt;</span>
                 </a>
-                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="accessories" style="color: var(--text-secondary); font-weight: 500; display: flex; align-items: center; gap: 0.5rem; border-radius: var(--radius-sm); padding: 0.6rem 1rem;">
-                  <i class="ri-shield-keyhole-line"></i> PHỤ KIỆN
+                <a href="#san-pham" class="dropdown-item nav-catalog-cat-btn" data-cat="accessories">
+                  <span class="cat-label"><i class="ri-shield-keyhole-line"></i> PHỤ KIỆN</span>
+                  <span class="cat-chevron">&gt;</span>
                 </a>
               </div>
 
@@ -68,7 +71,7 @@
               <div style="width: 1px; background-color: var(--border-color); height: 100%;"></div>
 
               <!-- Right Products Grid (4 Columns) -->
-              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+              <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;" id="nav-catalog-products-grid">
                 <!-- Product 1 -->
                 <a href="#" class="nav-product-card" data-id="nbh-p08" style="display: flex; flex-direction: column; gap: 0.5rem; text-decoration: none;">
                   <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin: 0; text-transform: uppercase;">
@@ -108,6 +111,13 @@
                     <img src="helmet_sport_black.png" alt="AZOMA P04" style="max-height: 100px; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.1)); transition: transform var(--transition-fast);">
                   </div>
                 </a>
+              </div>
+
+              <!-- Bottom View More Band -->
+              <div style="grid-column: 1 / -1; margin: 1.5rem -1.5rem -1.5rem -1.5rem; padding: 1rem 1.5rem; background-color: #000; display: flex; align-items: center; border-radius: 0 0 var(--radius-md) var(--radius-md);">
+                <button class="nav-catalog-xem-them-btn" style="background-color: #ffc700; color: #000; font-family: var(--font-title); font-weight: 700; font-size: 0.85rem; border: none; padding: 0.6rem 2rem; cursor: pointer; text-transform: uppercase; transition: background-color var(--transition-fast);" onmouseover="this.style.background='#e5b300'" onmouseout="this.style.background='#ffc700'">
+                  Xem thêm
+                </button>
               </div>
             </div>
           </li>
