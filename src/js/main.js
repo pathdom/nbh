@@ -897,7 +897,7 @@ function setupEventListeners() {
         adminLoginForm.reset();
         
         // Chuyển hướng sang giao diện admin
-        switchView('admin');
+        navigateTo('/admin');
       } else {
         showToast('Tên đăng nhập hoặc mật khẩu không chính xác!', 'error');
         if (passwordInput) {
@@ -1698,41 +1698,94 @@ function renderHomeCategoryProducts(category) {
 
 // --- CLIENT-SIDE ROUTER HELPER ---
 function navigateTo(path) {
-  if (window.location.hash !== '#' + path) {
-    window.location.hash = path;
+  const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+  let targetPath = path;
+  
+  if (isAdmin) {
+    // Nếu là admin, đảm bảo đường dẫn luôn bắt đầu bằng /admin
+    if (!path.startsWith('/admin')) {
+      targetPath = '/admin' + (path === '/' ? '' : path);
+    }
+  } else {
+    // Nếu không phải admin, loại bỏ tiền tố /admin nếu có
+    if (path.startsWith('/admin')) {
+      targetPath = path.replace(/^\/admin/, '');
+      if (targetPath === '') targetPath = '/trang-chu';
+    }
+  }
+
+  if (window.location.hash !== '#' + targetPath) {
+    window.location.hash = targetPath;
   }
 }
 
 // --- CLIENT-SIDE ROUTER HANDLE URL ROUTING ---
 function handleUrlRouting() {
   const hash = window.location.hash;
+  const isLoggedIn = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
 
-  if (hash.includes('san-pham')) {
-    switchView('catalog');
-  } else if (hash.includes('admin')) {
-    const isLoggedIn = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
-    if (isLoggedIn) {
-      switchView('admin');
-    } else {
+  // Nếu đường dẫn chứa /admin hoặc bắt đầu bằng #/admin
+  if (hash.startsWith('#/admin') || hash.includes('/admin')) {
+    // 1. Kiểm tra quyền đăng nhập admin
+    if (!isLoggedIn) {
       switchView('admin-login');
+      return;
     }
-  } else if (hash.includes('ve-poc') || hash.includes('ve-azoma')) {
-    switchView('home');
-    const target = document.getElementById('lien-he');
-    if (target) {
-      setTimeout(() => {
-        window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
-      }, 300);
+
+    // 2. Nếu đã đăng nhập admin, phân tách các sub-route
+    const subRoute = hash.replace(/^#\/admin\/?/, '');
+
+    if (subRoute === '' || subRoute.includes('san-pham')) {
+      switchView('admin'); // Hiển thị Catalog ở chế độ admin-mode
+    } else if (subRoute.includes('trang-chu') || subRoute.includes('home')) {
+      switchView('home');
+    } else if (subRoute.includes('ve-poc') || subRoute.includes('ve-azoma')) {
+      switchView('home');
+      const target = document.getElementById('lien-he');
+      if (target) {
+        setTimeout(() => {
+          window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+        }, 300);
+      }
+    } else if (subRoute.includes('lien-he') || subRoute.includes('contact')) {
+      switchView('contact');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (subRoute.includes('tin-tuc') || subRoute.includes('news')) {
+      switchView('news');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      switchView('admin');
     }
-  } else if (hash.includes('lien-he')) {
-    switchView('contact');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  } else if (hash.includes('tin-tuc')) {
-    switchView('news');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   } else {
-    // Mặc định hiển thị Trang Chủ cho các đường dẫn khác (ví dụ: #/trang-chu hoặc rỗng)
-    switchView('home');
+    // 3. Đường dẫn người dùng thông thường (không có tiền tố /admin)
+    if (hash.includes('admin-login')) {
+      if (isLoggedIn) {
+        navigateTo('/admin');
+      } else {
+        switchView('admin-login');
+      }
+      return;
+    }
+
+    if (hash.includes('san-pham')) {
+      switchView('catalog');
+    } else if (hash.includes('ve-poc') || hash.includes('ve-azoma')) {
+      switchView('home');
+      const target = document.getElementById('lien-he');
+      if (target) {
+        setTimeout(() => {
+          window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
+        }, 300);
+      }
+    } else if (hash.includes('lien-he')) {
+      switchView('contact');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (hash.includes('tin-tuc')) {
+      switchView('news');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      switchView('home');
+    }
   }
 }
 
