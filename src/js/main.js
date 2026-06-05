@@ -1727,6 +1727,9 @@ function navigateTo(path) {
 
   if (window.location.hash !== '#' + targetPath) {
     window.location.hash = targetPath;
+  } else {
+    // Nếu hash trùng khớp nhưng cần cập nhật giao diện (ví dụ đăng nhập thành công từ /admin)
+    handleUrlRouting();
   }
 }
 
