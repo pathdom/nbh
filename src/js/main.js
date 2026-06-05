@@ -896,7 +896,7 @@ function setupEventListeners() {
         adminLoginForm.reset();
         
         // Chuyển hướng sang giao diện admin
-        navigateTo('/admin');
+        navigateTo('/admin/trang-chu');
       } else {
         showToast('Tên đăng nhập hoặc mật khẩu không chính xác!', 'error');
         if (passwordInput) {
@@ -1762,7 +1762,7 @@ function handleUrlRouting() {
     // 3. Đường dẫn người dùng thông thường (không có tiền tố /admin)
     if (hash.includes('admin-login')) {
       if (isLoggedIn) {
-        navigateTo('/admin');
+        navigateTo('/admin/trang-chu');
       } else {
         switchView('admin-login');
       }
