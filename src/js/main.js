@@ -198,7 +198,7 @@ function closePolicyModal() {
     document.body.style.overflow = '';
     
     // Khi đóng modal chính sách, cập nhật URL hash về trang chủ hoặc trang quản trị tương ứng
-    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true' && window.location.hash.startsWith('#/admin');
     navigateTo(isAdmin ? '/admin/trang-chu' : '/trang-chu');
   }
 }
@@ -642,7 +642,7 @@ function setupEventListeners() {
     if (dinoDetailOverlay) {
       dinoDetailOverlay.classList.remove('active');
       document.body.style.overflow = '';
-      const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+      const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true' && window.location.hash.startsWith('#/admin');
       navigateTo(isAdmin ? '/admin/trang-chu' : '/trang-chu');
     }
   };
@@ -704,7 +704,7 @@ function setupEventListeners() {
     if (aboutDetailOverlay) {
       aboutDetailOverlay.classList.remove('active');
       document.body.style.overflow = '';
-      const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+      const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true' && window.location.hash.startsWith('#/admin');
       navigateTo(isAdmin ? '/admin/trang-chu' : '/trang-chu');
     }
   };
@@ -1348,7 +1348,7 @@ function closeQuickView() {
   if (quickviewOverlay) {
     quickviewOverlay.classList.remove('active');
     document.body.style.overflow = '';
-    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true' && window.location.hash.startsWith('#/admin');
     navigateTo(isAdmin ? '/admin/san-pham' : '/san-pham');
   }
 }
@@ -1778,7 +1778,7 @@ function renderHomeCategoryProducts(category) {
 
 // --- CLIENT-SIDE ROUTER HELPER ---
 function navigateTo(path) {
-  const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+  const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true' && window.location.hash.startsWith('#/admin');
   let targetPath = path;
   
   if (isAdmin) {
@@ -1787,8 +1787,8 @@ function navigateTo(path) {
       targetPath = '/admin' + (path === '/' ? '' : path);
     }
   } else {
-    // Nếu không phải admin, loại bỏ tiền tố /admin nếu có
-    if (path.startsWith('/admin')) {
+    // Nếu không phải admin, loại bỏ tiền tố /admin nếu có (chỉ các đường dẫn /admin/...)
+    if (path.startsWith('/admin/') || path === '/admin') {
       targetPath = path.replace(/^\/admin/, '');
       if (targetPath === '') targetPath = '/trang-chu';
     }
@@ -2292,7 +2292,7 @@ function closeNewsDetail() {
     document.body.style.overflow = '';
     
     // Cập nhật lại hash URL khi đóng modal tin tức
-    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true';
+    const isAdmin = sessionStorage.getItem('nbh_admin_logged_in') === 'true' && window.location.hash.startsWith('#/admin');
     navigateTo(isAdmin ? '/admin/tin-tuc' : '/tin-tuc');
   }
 }
