@@ -2612,5 +2612,67 @@
   }
 }
 
+/* --- ADMIN FILE UPLOAD & PREVIEW COMPONENT --- */
+.admin-image-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background-color: var(--surface-hover);
+  padding: 0.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  margin-bottom: 0.5rem;
+}
 
+.admin-image-tab {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  text-align: center;
+}
 
+.admin-image-tab:hover {
+  color: var(--text-primary);
+}
+
+.admin-image-tab.active {
+  background-color: var(--accent);
+  color: black !important;
+}
+
+#admin-upload-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  background-color: var(--surface-color);
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+#admin-upload-zone:hover, #admin-upload-zone.dragover {
+  border-color: var(--accent);
+  background-color: var(--surface-hover);
+}
+
+#admin-image-preview-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background-color: var(--surface-hover);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  margin-top: 0.25rem;
+}

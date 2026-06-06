@@ -27,6 +27,8 @@ let currentPage = 1;
 const productsPerPage = 6;
 let selectedColor = 'Matte Black';
 let selectedSize = 'M';
+let uploadedImageDataUrl = '';
+let currentImageTab = 'template'; // 'template' hoặc 'upload'
 
 // --- NEWS DATABASE ---
 const newsArticles = [
@@ -1116,9 +1118,31 @@ function renderProducts() {
         document.getElementById('admin-form-name').value = product.name;
         document.getElementById('admin-form-category').value = product.category;
         document.getElementById('admin-form-price').value = product.price;
-        document.getElementById('admin-form-image').value = product.image;
         document.getElementById('admin-form-desc').value = product.description;
         document.getElementById('admin-modal-title').textContent = 'CẬP NHẬT SẢN PHẨM';
+        
+        // Cập nhật trạng thái tab và ảnh xem trước khi sửa
+        const isCustomImage = product.image && product.image.startsWith('data:image/');
+        if (isCustomImage) {
+          uploadedImageDataUrl = product.image;
+          switchImageTab('upload');
+        } else {
+          uploadedImageDataUrl = '';
+          const templateSelect = document.getElementById('admin-form-image');
+          let found = false;
+          for (let i = 0; i < templateSelect.options.length; i++) {
+            if (templateSelect.options[i].value === product.image) {
+              templateSelect.selectedIndex = i;
+              found = true;
+              break;
+            }
+          }
+          if (!found) {
+            templateSelect.selectedIndex = 0;
+          }
+          switchImageTab('template');
+        }
+        
         adminProductOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
       });
@@ -2015,16 +2039,189 @@ function handleUrlRouting() {
   }
 }
 
+// --- ADMIN FORM IMAGE TAB AND PREVIEW CONTROLLERS ---
+function switchImageTab(tabType) {
+  currentImageTab = tabType;
+  const tabTemplate = document.getElementById('admin-image-tab-template');
+  const tabUpload = document.getElementById('admin-image-tab-upload');
+  const containerTemplate = document.getElementById('admin-image-template-container');
+  const containerUpload = document.getElementById('admin-image-upload-container');
+
+  if (tabTemplate && tabUpload && containerTemplate && containerUpload) {
+    if (tabType === 'template') {
+      tabTemplate.classList.add('active');
+      tabUpload.classList.remove('active');
+      containerTemplate.style.display = 'block';
+      containerUpload.style.display = 'none';
+    } else {
+      tabTemplate.classList.remove('active');
+      tabUpload.classList.add('active');
+      containerTemplate.style.display = 'none';
+      containerUpload.style.display = 'block';
+    }
+  }
+  updateAdminImagePreview();
+}
+
+function updateAdminImagePreview() {
+  const previewImg = document.getElementById('admin-image-preview-img');
+  const previewName = document.getElementById('admin-image-preview-name');
+  const previewSize = document.getElementById('admin-image-preview-size');
+  const removeBtn = document.getElementById('admin-image-preview-remove');
+
+  if (!previewImg || !previewName || !previewSize || !removeBtn) return;
+
+  if (currentImageTab === 'template') {
+    const templateSelect = document.getElementById('admin-form-image');
+    if (templateSelect) {
+      const selectedVal = templateSelect.value;
+      previewImg.src = selectedVal;
+      previewImg.alt = selectedVal;
+      previewName.textContent = selectedVal;
+      previewSize.textContent = 'Mẫu có sẵn';
+      removeBtn.style.display = 'none';
+    }
+  } else {
+    if (uploadedImageDataUrl) {
+      previewImg.src = uploadedImageDataUrl;
+      previewImg.alt = 'Uploaded Custom Image';
+      
+      // Calculate approximate size of Base64 string
+      const base64Length = uploadedImageDataUrl.length - (uploadedImageDataUrl.indexOf(',') + 1);
+      const padding = (uploadedImageDataUrl.charAt(uploadedImageDataUrl.length - 2) === '=') ? 2 : ((uploadedImageDataUrl.charAt(uploadedImageDataUrl.length - 1) === '=') ? 1 : 0);
+      const sizeInBytes = (base64Length * 0.75) - padding;
+      const sizeInKb = (sizeInBytes / 1024).toFixed(1);
+
+      previewName.textContent = 'Ảnh tự tải lên.jpg';
+      previewSize.textContent = `${sizeInKb} KB (Đã tự động nén)`;
+      removeBtn.style.display = 'flex';
+    } else {
+      previewImg.src = 'helmet_sport_black.png'; // placeholder
+      previewImg.alt = 'Chưa có ảnh';
+      previewName.textContent = 'Chưa chọn file';
+      previewSize.textContent = 'Vui lòng kéo thả hoặc click chọn file';
+      removeBtn.style.display = 'none';
+    }
+  }
+}
+
+function handleImageFileUpload(file) {
+  if (!file) return;
+
+  if (!file.type.startsWith('image/')) {
+    showToast("Vui lòng chỉ tải lên các tệp hình ảnh!", "error");
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const img = new Image();
+    img.onload = () => {
+      // Create canvas to resize image (max dimension 400px to avoid LocalStorage quota issue)
+      const canvas = document.createElement('canvas');
+      const maxDim = 400;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > maxDim) {
+          height = Math.round((height * maxDim) / width);
+          width = maxDim;
+        }
+      } else {
+        if (height > maxDim) {
+          width = Math.round((width * maxDim) / height);
+          height = maxDim;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Convert to compressed Base64 JPEG
+      uploadedImageDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      
+      switchImageTab('upload');
+      showToast("Tải ảnh và nén dữ liệu thành công!", "success");
+    };
+    img.src = event.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
 // --- ADMIN PANEL CRUD FORM HANDLERS ---
 function initAdminForm() {
   const adminAddBtn = document.getElementById('admin-add-product-btn');
   const adminCloseBtn = document.getElementById('admin-product-close-btn');
+
+  // Khởi tạo sự kiện chuyển tab
+  const tabTemplate = document.getElementById('admin-image-tab-template');
+  const tabUpload = document.getElementById('admin-image-tab-upload');
+  if (tabTemplate) {
+    tabTemplate.addEventListener('click', () => switchImageTab('template'));
+  }
+  if (tabUpload) {
+    tabUpload.addEventListener('click', () => switchImageTab('upload'));
+  }
+
+  // Khởi tạo sự kiện thay đổi select của template
+  const templateSelect = document.getElementById('admin-form-image');
+  if (templateSelect) {
+    templateSelect.addEventListener('change', updateAdminImagePreview);
+  }
+
+  // Khởi tạo kéo thả và click chọn file
+  const uploadZone = document.getElementById('admin-upload-zone');
+  const fileInput = document.getElementById('admin-form-file-input');
+  if (uploadZone && fileInput) {
+    uploadZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleImageFileUpload(e.target.files[0]);
+      }
+    });
+
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('dragover');
+    });
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('dragover');
+    });
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length > 0) {
+        handleImageFileUpload(e.dataTransfer.files[0]);
+      }
+    });
+  }
+
+  // Nút xóa ảnh tự chọn
+  const removeBtn = document.getElementById('admin-image-preview-remove');
+  if (removeBtn) {
+    removeBtn.addEventListener('click', () => {
+      uploadedImageDataUrl = '';
+      if (fileInput) fileInput.value = '';
+      updateAdminImagePreview();
+      showToast("Đã gỡ ảnh tải lên", "success");
+    });
+  }
 
   if (adminAddBtn) {
     adminAddBtn.addEventListener('click', () => {
       adminProductForm.reset();
       document.getElementById('admin-form-id').value = '';
       document.getElementById('admin-modal-title').textContent = 'THÊM SẢN PHẨM MỚI';
+      
+      // Reset upload state
+      uploadedImageDataUrl = '';
+      if (fileInput) fileInput.value = '';
+      switchImageTab('template');
+      
       adminProductOverlay.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
@@ -2045,8 +2242,20 @@ function initAdminForm() {
       const nameVal = document.getElementById('admin-form-name').value.trim();
       const catVal = document.getElementById('admin-form-category').value;
       const priceVal = parseInt(document.getElementById('admin-form-price').value);
-      const imgVal = document.getElementById('admin-form-image').value;
       const descVal = document.getElementById('admin-form-desc').value.trim();
+
+      // Quyết định lưu ảnh mẫu hoặc ảnh upload
+      let imgVal = '';
+      if (currentImageTab === 'template') {
+        const selectEl = document.getElementById('admin-form-image');
+        imgVal = selectEl ? selectEl.value : '';
+      } else {
+        if (!uploadedImageDataUrl) {
+          showToast("Vui lòng tải ảnh lên từ máy hoặc chọn ảnh mẫu!", "error");
+          return;
+        }
+        imgVal = uploadedImageDataUrl;
+      }
 
       const catLabels = {
         'sport': 'Nón bảo hiểm thể thao',
