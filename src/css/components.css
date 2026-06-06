@@ -2676,3 +2676,29 @@
   border-radius: var(--radius-sm);
   margin-top: 0.25rem;
 }
+
+/* Premium scrollbar for product modals to prevent corner overlap */
+.product-modal {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) transparent;
+}
+
+.product-modal::-webkit-scrollbar {
+  width: 6px;
+}
+
+.product-modal::-webkit-scrollbar-track {
+  background: transparent;
+  margin-top: 1rem;   /* Safe offset from top rounded corner */
+  margin-bottom: 1rem;/* Safe offset from bottom rounded corner */
+}
+
+.product-modal::-webkit-scrollbar-thumb {
+  background-color: var(--border-color);
+  border-radius: var(--radius-full);
+}
+
+.product-modal::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-tertiary);
+}
+
