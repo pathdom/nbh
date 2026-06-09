@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
 /* Design Tokens & CSS Variables */
 :root {
@@ -42,7 +42,7 @@
   --radius-full: 9999px;
   
   /* Font Families */
-  --font-title: 'Outfit', 'Inter', sans-serif;
+  --font-title: 'Inter', sans-serif;
   --font-body: 'Inter', sans-serif;
   
   /* Transitions */

@@ -2702,3 +2702,9 @@
   background-color: var(--text-tertiary);
 }
 
+/* Global override to force Inter 700 font family and weight, keeping Remixicon, Playfair Display logo title, and Outfit logo subtitle intact */
+*:not(i):not([class^="ri-"]):not([class*=" ri-"]):not(.logo-title):not(.logo-subtitle) {
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+}
+
