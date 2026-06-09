@@ -546,13 +546,13 @@
        ========================================== -->
   <div id="contact-view" style="display: none;">
     <!-- Contact details exactly matching the reference screenshot -->
-    <section style="background-color: var(--surface-color); padding: 7rem 1.5rem 8rem; min-height: calc(100vh - 64px - 380px); display: flex; align-items: center; transition: background-color var(--transition-normal);">
+    <section style="background-color: var(--surface-color); padding: clamp(3rem, 10vw, 7rem) 1.5rem clamp(4rem, 12vw, 8rem); min-height: calc(100vh - 64px - 380px); display: flex; align-items: center; transition: background-color var(--transition-normal);">
       <div class="container" style="display: flex; justify-content: flex-end; align-items: center; width: 100%;">
         
         <!-- Khối thông tin liên hệ nằm bên phải giống hình mẫu -->
         <div style="max-width: 550px; width: 100%; text-align: right; display: flex; flex-direction: column; gap: 1.5rem;">
           
-          <h1 style="font-family: var(--font-title); font-size: 2.75rem; font-weight: 800; color: var(--accent); margin: 0; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.1;">
+          <h1 style="font-family: var(--font-title); font-size: clamp(1.8rem, 6vw, 2.75rem); font-weight: 800; color: var(--accent); margin: 0; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.1;">
             LIÊN HỆ CHÚNG TÔI
           </h1>
           
@@ -583,9 +583,9 @@
        ========================================== -->
   <div id="news-view" style="display: none;">
     <!-- Banner Tin Tức ở đầu cực kỳ sang trọng -->
-    <section class="hero-section" aria-label="Banner tin tức" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.3)), url('safety_quality_bg.png'); background-size: cover; background-position: center; padding: 6rem 1.5rem; text-align: center;">
+    <section class="hero-section" aria-label="Banner tin tức" style="background-image: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.3)), url('safety_quality_bg.png'); background-size: cover; background-position: center; padding: clamp(3.5rem, 8vw, 6rem) 1.5rem; text-align: center;">
       <div class="container">
-        <h1 style="font-family: var(--font-title); font-size: 2.75rem; font-weight: 800; color: white; margin: 0; letter-spacing: 0.05em; text-transform: uppercase;">
+        <h1 style="font-family: var(--font-title); font-size: clamp(1.8rem, 6vw, 2.75rem); font-weight: 800; color: white; margin: 0; letter-spacing: 0.05em; text-transform: uppercase;">
           TIN TỨC &amp; SỰ KIỆN
         </h1>
         <p style="color: rgba(255,255,255,0.85); font-size: 1.05rem; font-weight: 500; margin: 0.75rem 0 0; font-family: var(--font-title); letter-spacing: 0.02em;">
@@ -640,11 +640,11 @@
        GIAO DIỆN ĐĂNG NHẬP ADMIN (ADMIN LOGIN VIEW)
        ========================================== -->
   <div id="admin-login-view" style="display: none;">
-    <section style="background-color: var(--surface-color); padding: 7rem 1.5rem 8rem; min-height: calc(100vh - 64px - 380px); display: flex; align-items: center; justify-content: center; transition: background-color var(--transition-normal);">
+    <section style="background-color: var(--surface-color); padding: clamp(3rem, 10vw, 7rem) 1.5rem clamp(4rem, 12vw, 8rem); min-height: calc(100vh - 64px - 380px); display: flex; align-items: center; justify-content: center; transition: background-color var(--transition-normal);">
       <div class="container" style="max-width: 450px; width: 100%;">
         <div style="background-color: var(--surface-hover); border: 1px solid var(--border-color); padding: 2.5rem; border-radius: var(--radius-md); box-shadow: var(--shadow-md); display: flex; flex-direction: column; gap: 1.5rem;">
           <div style="text-align: center; display: flex; flex-direction: column; gap: 0.5rem;">
-            <h1 style="font-family: var(--font-title); font-size: 2rem; font-weight: 800; color: var(--accent); margin: 0; text-transform: uppercase;">
+            <h1 style="font-family: var(--font-title); font-size: clamp(1.5rem, 5vw, 2rem); font-weight: 800; color: var(--accent); margin: 0; text-transform: uppercase;">
               Đăng Nhập Admin
             </h1>
             <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
@@ -1000,7 +1000,7 @@
       <div class="modal-info-area" style="padding: 2.5rem; display: flex; flex-direction: column; gap: 1.25rem; overflow-y: auto; max-height: 85vh;">
         <div>
           <span style="font-family: var(--font-title); font-size: 0.8rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;">DÒNG NÓN THỂ THAO ĐỈNH CAO</span>
-          <h2 style="font-family: var(--font-title); font-size: 2rem; font-weight: 900; color: var(--text-primary); line-height: 1.1; margin-top: 0.25rem;">AZOMA DINO</h2>
+          <h2 style="font-family: var(--font-title); font-size: clamp(1.4rem, 4.5vw, 2rem); font-weight: 900; color: var(--text-primary); line-height: 1.1; margin-top: 0.25rem;">AZOMA DINO</h2>
           <span style="font-family: var(--font-title); font-size: 1.3rem; font-weight: 800; color: var(--accent); display: block; margin-top: 0.4rem;">980,000 VNĐ <span style="font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); text-decoration: line-through; margin-left: 0.5rem;">1,250,000 VNĐ</span></span>
         </div>
 
@@ -1173,7 +1173,7 @@
       <article style="display: flex; flex-direction: column; gap: 1.5rem;">
         <div>
           <span style="font-family: var(--font-title); font-size: 0.8rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;" id="news-detail-cat">Thông tin nón bảo hiểm</span>
-          <h2 style="font-family: var(--font-title); font-size: 2.1rem; font-weight: 900; color: var(--text-primary); line-height: 1.2; margin-top: 0.4rem;" id="news-detail-title">Tiêu đề bài viết</h2>
+          <h2 style="font-family: var(--font-title); font-size: clamp(1.4rem, 5vw, 2.1rem); font-weight: 900; color: var(--text-primary); line-height: 1.2; margin-top: 0.4rem;" id="news-detail-title">Tiêu đề bài viết</h2>
           <div style="display: flex; gap: 1rem; align-items: center; margin-top: 0.6rem; font-size: 0.8rem; color: var(--text-secondary); font-weight: 500;">
             <span style="display: flex; align-items: center; gap: 0.3rem;"><i class="ri-calendar-line"></i> <span id="news-detail-date">02/06/2026</span></span>
             <span style="display: flex; align-items: center; gap: 0.3rem;"><i class="ri-user-line"></i> Biên tập bởi AZOMA</span>
